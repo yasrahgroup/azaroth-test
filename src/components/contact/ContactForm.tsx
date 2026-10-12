@@ -1,0 +1,298 @@
+import React, { useState } from 'react';
+import { Send, CheckCircle2, AlertCircle } from 'lucide-react';
+import { ContactFormData } from '../../types';
+import { Button } from '../common/Button';
+import { apiService, ContactSubmission } from '../../services/api';
+
+export const ContactForm: React.FC = () => {
+  const [formData, setFormData] = useState<ContactFormData>({
+    fullName: '',
+    workEmail: '',
+    phone: '',
+    companyName: '',
+    enquiryAbout: 'General',
+    message: '',
+    consent: false,
+    website_url: '', // Honeypot field
+  });
+
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
+
+  const validate = () => {
+    const errs: Record<string, string> = {};
+    if (!formData.fullName.trim()) errs.fullName = 'Full Name is required.';
+    if (!formData.workEmail.trim()) {
+      errs.workEmail = 'Work Email is required.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.workEmail)) {
+      errs.workEmail = 'Please provide a valid email address.';
+    }
+    if (!formData.companyName.trim()) errs.companyName = 'Company name is required.';
+    if (!formData.message.trim() || formData.message.length < 10) {
+      errs.message = 'Please provide at least a brief summary of your requirements (min 10 characters).';
+    }
+    setErrors(errs);
+    return Object.keys(errs).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // Bot check
+    if (formData.website_url) {
+      console.warn('Bot submission blocked via honeypot.');
+      return;
+    }
+
+    if (!validate()) return;
+
+    setIsSubmitting(true);
+    setSubmissionError(null);
+
+    try {
+      const submissionData: ContactSubmission = {
+        fullName: formData.fullName,
+        workEmail: formData.workEmail,
+        phone: formData.phone,
+        companyName: formData.companyName,
+        enquiryAbout: formData.enquiryAbout,
+        message: formData.message,
+        consent: formData.consent,
+      };
+
+      const response = await apiService.submitContactForm(submissionData);
+      
+      if (response.success) {
+        setSubmitted(true);
+      } else {
+        setSubmissionError(response.error || 'Failed to submit form. Please try again.');
+      }
+    } catch (error) {
+      setSubmissionError('An unexpected error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (submitted) {
+    return (
+      <div style={{
+        padding: '3rem 2rem',
+        borderRadius: 'var(--radius-xl)',
+        backgroundColor: '#ffffff',
+        border: '1px solid rgba(122, 12, 22, 0.25)',
+        textAlign: 'center',
+        boxShadow: '0 20px 40px -15px rgba(0, 108, 53, 0.1)',
+      }}>
+        <div style={{
+          width: '4rem',
+          height: '4rem',
+          borderRadius: '50%',
+          backgroundColor: 'rgba(122, 12, 22, 0.12)',
+          color: 'var(--color-primary-maroon)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          margin: '0 auto 1.5rem auto',
+        }}>
+          <CheckCircle2 size={36} />
+        </div>
+
+        <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--color-dark-maroon)', marginBottom: '0.75rem' }}>
+          Message Received
+        </h3>
+
+        <p style={{ maxWidth: '480px', margin: '0 auto 2rem auto', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
+          Thank you, <strong>{formData.fullName}</strong>. We have received your enquiry and will respond soon.
+        </p>
+
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          <Button
+            onClick={() => {
+              setSubmitted(false);
+              setFormData({
+                fullName: '',
+                workEmail: '',
+                phone: '',
+                companyName: '',
+                enquiryAbout: 'General',
+                message: '',
+                consent: false,
+              });
+            }}
+            variant="outline"
+            size="sm"
+          >
+            Send Another Enquiry
+          </Button>
+
+          <Button
+            href="https://wa.me/916379480931"
+            variant="gold"
+            size="sm"
+          >
+            Instant WhatsApp Chat
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} style={{
+      backgroundColor: '#ffffff',
+      padding: '2.5rem',
+      borderRadius: 'var(--radius-xl)',
+      border: '1px solid var(--color-border-subtle)',
+      boxShadow: '0 20px 40px -15px rgba(0, 0, 0, 0.06)',
+    }}>
+      {/* Honeypot Input */}
+      <input
+        type="text"
+        name="website_url"
+        value={formData.website_url}
+        onChange={(e) => setFormData({ ...formData, website_url: e.target.value })}
+        style={{ display: 'none' }}
+        tabIndex={-1}
+        autoComplete="off"
+      />
+
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+        gap: '1.25rem',
+      }}>
+        
+        {/* Full Name */}
+        <div className="form-group">
+          <label className="form-label" htmlFor="fullName">Full Name *</label>
+          <input
+            id="fullName"
+            type="text"
+            className="form-input"
+            placeholder="Enter your full name"
+            value={formData.fullName}
+            onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+          />
+          {errors.fullName && <span className="form-error"><AlertCircle size={13} /> {errors.fullName}</span>}
+        </div>
+
+        {/* Work Email */}
+        <div className="form-group">
+          <label className="form-label" htmlFor="workEmail">Work Email *</label>
+          <input
+            id="workEmail"
+            type="email"
+            className="form-input"
+            placeholder="Enter your business email"
+            value={formData.workEmail}
+            onChange={(e) => setFormData({ ...formData, workEmail: e.target.value })}
+          />
+          {errors.workEmail && <span className="form-error"><AlertCircle size={13} /> {errors.workEmail}</span>}
+        </div>
+
+        {/* Company Name */}
+        <div className="form-group">
+          <label className="form-label" htmlFor="companyName">Company / Organization *</label>
+          <input
+            id="companyName"
+            type="text"
+            className="form-input"
+            placeholder="Enter your company name"
+            value={formData.companyName}
+            onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+          />
+          {errors.companyName && <span className="form-error"><AlertCircle size={13} /> {errors.companyName}</span>}
+        </div>
+
+        {/* Phone */}
+        <div className="form-group">
+          <label className="form-label" htmlFor="phone">Phone / WhatsApp Number</label>
+          <input
+            id="phone"
+            type="tel"
+            className="form-input"
+            placeholder="Enter your phone number"
+            value={formData.phone}
+            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+          />
+          {errors.phone && <span className="form-error"><AlertCircle size={13} /> {errors.phone}</span>}
+        </div>
+
+      </div>
+
+      {/* Enquiry About */}
+      <div className="form-group" style={{ marginTop: '0.5rem' }}>
+          <label className="form-label" htmlFor="enquiryAbout">Enquiry About *</label>
+          <select
+            id="enquiryAbout"
+            className="form-select"
+            value={formData.enquiryAbout}
+            onChange={(e) => setFormData({ ...formData, enquiryAbout: e.target.value })}
+          >
+            <option value="" disabled>Select an option</option>
+            <option value="General">General</option>
+            <option value="Products">Products</option>
+            <option value="Enquiries">Enquiries</option>
+          </select>
+        </div>
+
+      {/* How Can We Help */}
+      <div className="form-group" style={{ marginTop: '0.5rem' }}>
+        <label className="form-label" htmlFor="message">How Can We Help? *</label>
+        <textarea
+          id="message"
+          rows={4}
+          className="form-textarea"
+          placeholder="Describe your requirements or questions in detail..."
+          value={formData.message}
+          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+        />
+        {errors.message && <span className="form-error"><AlertCircle size={13} /> {errors.message}</span>}
+      </div>
+
+      {/* Consent Checkbox */}
+      <div className="form-group" style={{ marginTop: '1rem' }}>
+        <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', fontSize: '0.875rem', color: 'var(--color-text-secondary)', cursor: 'pointer' }}>
+          <input
+            type="checkbox"
+            checked={formData.consent}
+            onChange={(e) => setFormData({ ...formData, consent: e.target.checked })}
+            style={{ marginTop: '0.2rem' }}
+          />
+          <span>I agree that Azaroth Tech-Hive may contact me about this enquiry.</span>
+        </label>
+        {errors.consent && <span className="form-error"><AlertCircle size={13} /> {errors.consent}</span>}
+      </div>
+
+      {/* Submission Error */}
+      {submissionError && (
+        <div style={{
+          marginTop: '1rem',
+          padding: '0.75rem',
+          backgroundColor: 'rgba(239, 68, 68, 0.1)',
+          border: '1px solid rgba(239, 68, 68, 0.3)',
+          borderRadius: 'var(--radius-md)',
+          color: '#ef4444',
+          fontSize: '0.875rem',
+        }}>
+          <AlertCircle size={14} style={{ display: 'inline', marginRight: '0.5rem' }} />
+          {submissionError}
+        </div>
+      )}
+
+      <div style={{ marginTop: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}>
+        <Button
+          type="submit"
+          variant="gold"
+          size="lg"
+          disabled={isSubmitting}
+          icon={<Send size={16} />}
+        >
+          {isSubmitting ? 'Submitting...' : 'Submit'}
+        </Button>
+      </div>
+    </form>
+  );
+};

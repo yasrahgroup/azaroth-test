@@ -1,0 +1,418 @@
+:root {
+  /* ============================================================
+     VIBRANT MULTI-COLOR PALETTE SYSTEM (Light Theme Base)
+     6 Distinct Color Families for Rich Visual Diversity
+     ============================================================ */
+
+  /* --- SAFFRON ORANGE (Primary Brand Accent) --- */
+  --color-saffron-950: #431407;
+  --color-saffron-900: #7c2d12;
+  --color-saffron-850: #9a3412;
+  --color-saffron-800: #c2410c;
+  --color-saffron-700: #ea580c;
+  --color-saffron-600: #f97316;
+  --color-saffron-500: #fb923c;
+  --color-saffron-400: #fdba74;
+  --color-saffron-300: #fed7aa;
+  --color-saffron-200: #ffedd5;
+  --color-saffron-100: #fff7ed;
+  --color-saffron-50:  #fffaf5;
+
+  /* --- EMERALD GREEN (Growth / Success / Secondary) --- */
+  --color-emerald-950: #022c22;
+  --color-emerald-900: #064e3b;
+  --color-emerald-850: #065f46;
+  --color-emerald-800: #047857;
+  --color-emerald-700: #059669;
+  --color-emerald-600: #10b981;
+  --color-emerald-500: #34d399;
+  --color-emerald-400: #6ee7b7;
+  --color-emerald-300: #a7f3d0;
+  --color-emerald-200: #d1fae5;
+  --color-emerald-100: #ecfdf5;
+  --color-emerald-50:  #f4fbf7;
+
+  /* --- ROYAL VIOLET (Rich Accent / Premium) --- */
+  --color-violet-950: #2e1065;
+  --color-violet-900: #4c1d95;
+  --color-violet-850: #5b21b6;
+  --color-violet-800: #6d28d9;
+  --color-violet-700: #7c3aed;
+  --color-violet-600: #8b5cf6;
+  --color-violet-500: #a78bfa;
+  --color-violet-400: #c4b5fd;
+  --color-violet-300: #ddd6fe;
+  --color-violet-200: #ede9fe;
+  --color-violet-100: #f5f3ff;
+  --color-violet-50:  #faf9fe;
+
+  /* --- CORAL ROSE (Warm Highlights / Energy) --- */
+  --color-rose-950: #4c0519;
+  --color-rose-900: #881337;
+  --color-rose-800: #9f1239;
+  --color-rose-700: #be123c;
+  --color-rose-600: #e11d48;
+  --color-rose-500: #f43f5e;
+  --color-rose-400: #fb7185;
+  --color-rose-300: #fca5a5;
+  --color-rose-200: #fecdd3;
+  --color-rose-100: #ffe4e6;
+  --color-rose-50:  #fff1f2;
+
+  /* --- AMBER GOLD (Luxury / Warning / Premium Accents) --- */
+  --color-amber-950: #451a03;
+  --color-amber-900: #78350f;
+  --color-amber-800: #92400e;
+  --color-amber-700: #b45309;
+  --color-amber-600: #d97706;
+  --color-amber-500: #f59e0b;
+  --color-amber-400: #fbbf24;
+  --color-amber-300: #fde047;
+  --color-amber-200: #fef08a;
+  --color-amber-100: #fef9c3;
+  --color-amber-50:  #fefce8;
+
+  /* --- SLATE NEUTRALS (Crisp Light Theme Scaling) --- */
+  --color-slate-950: #020617;
+  --color-slate-900: #0f172a;
+  --color-slate-850: #182236;
+  --color-slate-800: #1e293b;
+  --color-slate-700: #334155;
+  --color-slate-600: #475569;
+  --color-slate-500: #64748b;
+  --color-slate-400: #94a3b8;
+  --color-slate-300: #cbd5e1;
+  --color-slate-200: #e2e8f0;
+  --color-slate-100: #f1f5f9;
+  --color-slate-50:  #f8fafc;
+
+  /* --- WHITE & SURFACE BASE --- */
+  --color-white: #ffffff;
+  --color-warm-white: #fefcf8;
+  --color-warm-surface: #f8fafc;
+  --color-warm-border: #e2e8f0;
+
+  /* ============================================================
+     SEMANTIC COLOR ROLES (Map to Palettes for Consistent Usage)
+     ============================================================ */
+
+  /* Primary Brand - Saffron Orange */
+  --color-primary: var(--color-saffron-600);
+  --color-primary-hover: var(--color-saffron-700);
+  --color-primary-light: var(--color-saffron-100);
+  --color-primary-lighter: var(--color-saffron-50);
+  --color-primary-dark: var(--color-saffron-800);
+  --color-primary-text: var(--color-saffron-900);
+  --color-primary-border: var(--color-saffron-300);
+  --color-primary-glow: rgba(234, 88, 12, 0.35);
+  --color-primary-shadow: rgba(234, 88, 12, 0.25);
+
+  /* Secondary - Emerald Green */
+  --color-secondary: var(--color-emerald-600);
+  --color-secondary-hover: var(--color-emerald-700);
+  --color-secondary-light: var(--color-emerald-100);
+  --color-secondary-lighter: var(--color-emerald-50);
+  --color-secondary-dark: var(--color-emerald-800);
+  --color-secondary-text: var(--color-emerald-900);
+  --color-secondary-border: var(--color-emerald-300);
+  --color-secondary-glow: rgba(16, 185, 129, 0.35);
+  --color-secondary-shadow: rgba(16, 185, 129, 0.25);
+
+  /* Accent - Royal Violet */
+  --color-accent: var(--color-violet-600);
+  --color-accent-hover: var(--color-violet-700);
+  --color-accent-light: var(--color-violet-100);
+  --color-accent-lighter: var(--color-violet-50);
+  --color-accent-dark: var(--color-violet-800);
+  --color-accent-text: var(--color-violet-900);
+  --color-accent-border: var(--color-violet-300);
+  --color-accent-glow: rgba(124, 58, 237, 0.35);
+  --color-accent-shadow: rgba(124, 58, 237, 0.25);
+
+  /* Warm / Energy - Coral Rose */
+  --color-warm: var(--color-rose-600);
+  --color-warm-hover: var(--color-rose-700);
+  --color-warm-light: var(--color-rose-100);
+  --color-warm-lighter: var(--color-rose-50);
+  --color-warm-dark: var(--color-rose-800);
+  --color-warm-text: var(--color-rose-900);
+  --color-warm-border: var(--color-rose-300);
+  --color-warm-glow: rgba(225, 29, 72, 0.35);
+  --color-warm-shadow: rgba(225, 29, 72, 0.25);
+
+  /* Luxury / Premium - Amber Gold */
+  --color-luxury: var(--color-amber-600);
+  --color-luxury-hover: var(--color-amber-700);
+  --color-luxury-light: var(--color-amber-100);
+  --color-luxury-lighter: var(--color-amber-50);
+  --color-luxury-dark: var(--color-amber-800);
+  --color-luxury-text: var(--color-amber-900);
+  --color-luxury-border: var(--color-amber-300);
+  --color-luxury-glow: rgba(217, 119, 6, 0.35);
+  --color-luxury-shadow: rgba(217, 119, 6, 0.25);
+
+  /* Neutral / Text / Surfaces - Slate */
+  --color-neutral-950: var(--color-slate-950);
+  --color-neutral-900: var(--color-slate-900);
+  --color-neutral-850: var(--color-slate-850);
+  --color-neutral-800: var(--color-slate-800);
+  --color-neutral-700: var(--color-slate-700);
+  --color-neutral-600: var(--color-slate-600);
+  --color-neutral-500: var(--color-slate-500);
+  --color-neutral-400: var(--color-slate-400);
+  --color-neutral-300: var(--color-slate-300);
+  --color-neutral-200: var(--color-slate-200);
+  --color-neutral-100: var(--color-slate-100);
+  --color-neutral-50: var(--color-slate-50);
+
+  /* ============================================================
+     CANVAS & SURFACE TOKENS
+     ============================================================ */
+  --color-canvas-bg: var(--color-white);
+  --color-canvas-card: var(--color-white);
+  --color-canvas-card-elevated: var(--color-white);
+  --color-canvas-muted: var(--color-neutral-50);
+  --color-canvas-subtle: var(--color-neutral-100);
+  --color-canvas-hover: var(--color-neutral-50);
+
+  /* Dark mode surfaces (for dark sections) */
+  --color-canvas-dark: var(--color-neutral-900);
+  --color-canvas-dark-surface: var(--color-neutral-850);
+  --color-canvas-dark-card: var(--color-neutral-800);
+  --color-canvas-dark-muted: var(--color-neutral-800);
+  --color-canvas-dark-hover: var(--color-neutral-700);
+  --color-surface-dark-card: rgba(15, 23, 42, 0.9);
+
+  /* ============================================================
+     TYPOGRAPHY COLORS
+     ============================================================ */
+  --color-text-primary: var(--color-neutral-900);
+  --color-text-secondary: var(--color-neutral-700);
+  --color-text-tertiary: var(--color-neutral-500);
+  --color-text-muted: var(--color-neutral-400);
+  --color-text-inverse: var(--color-white);
+  --color-text-inverse-muted: var(--color-neutral-300);
+  --color-text-on-primary: var(--color-white);
+  --color-text-on-dark: var(--color-white);
+
+  /* ============================================================
+     BORDERS & DIVIDERS
+     ============================================================ */
+  --color-border-subtle: var(--color-neutral-200);
+  --color-border-medium: var(--color-neutral-300);
+  --color-border-strong: var(--color-neutral-400);
+  --color-border-focus: var(--color-primary);
+  --color-border-error: var(--color-warm);
+  --color-border-success: var(--color-secondary);
+  --color-border-warning: var(--color-luxury);
+  --color-border-dark: rgba(255, 255, 255, 0.1);
+  --color-border-dark-hover: var(--color-luxury-glow);
+
+  /* ============================================================
+     SEMANTIC FEEDBACK COLORS
+     ============================================================ */
+  --color-success: var(--color-emerald-600);
+  --color-success-hover: var(--color-emerald-700);
+  --color-success-light: var(--color-emerald-100);
+  --color-success-text: var(--color-emerald-900);
+  --color-success-border: var(--color-emerald-300);
+  --color-success-glow: var(--color-secondary-glow);
+
+  --color-warning: var(--color-amber-600);
+  --color-warning-hover: var(--color-amber-700);
+  --color-warning-light: var(--color-amber-100);
+  --color-warning-text: var(--color-amber-900);
+  --color-warning-border: var(--color-amber-300);
+  --color-warning-glow: var(--color-luxury-glow);
+
+  --color-danger: var(--color-rose-600);
+  --color-danger-hover: var(--color-rose-700);
+  --color-danger-light: var(--color-rose-100);
+  --color-danger-text: var(--color-rose-900);
+  --color-danger-border: var(--color-rose-300);
+  --color-danger-glow: var(--color-warm-glow);
+
+  --color-info: var(--color-violet-600);
+  --color-info-hover: var(--color-violet-700);
+  --color-info-light: var(--color-violet-100);
+  --color-info-text: var(--color-violet-900);
+  --color-info-border: var(--color-violet-300);
+  --color-info-glow: var(--color-accent-glow);
+
+  /* ============================================================
+     TYPOGRAPHY FAMILIES
+     ============================================================ */
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  --font-button: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* ============================================================
+     ELEVATION & SHADOWS (Multi-color aware)
+     ============================================================ */
+  --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.03);
+  --shadow-sm: 0 2px 4px 0 rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 24px -4px rgba(15, 23, 42, 0.12);
+  --shadow-xl: 0 20px 32px -8px rgba(15, 23, 42, 0.16);
+  --shadow-2xl: 0 25px 50px -12px rgba(15, 23, 42, 0.2);
+
+  /* Colored shadows for brand moments */
+  --shadow-primary: 0 4px 14px 0 var(--color-primary-shadow);
+  --shadow-primary-lg: 0 12px 28px -4px var(--color-primary-shadow);
+  --shadow-secondary: 0 4px 14px 0 var(--color-secondary-shadow);
+  --shadow-accent: 0 4px 14px 0 var(--color-accent-shadow);
+  --shadow-warm: 0 4px 14px 0 var(--color-warm-shadow);
+  --shadow-luxury: 0 4px 14px 0 var(--color-luxury-shadow);
+  --shadow-glow-primary: 0 0 20px var(--color-primary-glow);
+  --shadow-glow-secondary: 0 0 20px var(--color-secondary-glow);
+  --shadow-glow-accent: 0 0 20px var(--color-accent-glow);
+  --shadow-glow-warm: 0 0 20px var(--color-warm-glow);
+  --shadow-glow-luxury: 0 0 20px var(--color-luxury-glow);
+
+  /* ============================================================
+     BORDER RADII
+     ============================================================ */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-full: 9999px;
+
+  /* ============================================================
+     ANIMATIONS & TRANSITIONS
+     ============================================================ */
+  --transition-fast: 120ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* ============================================================
+     Z-INDEX SCALE
+     ============================================================ */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+  --z-toast: 800;
+
+  /* ============================================================
+     BREAKPOINT TOKENS (for JS/CSS coordination)
+     ============================================================ */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  /* ============================================================
+     SPACING SCALE (for consistent rhythm)
+     ============================================================ */
+  --space-0: 0;
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+  --space-32: 8rem;     /* 128px */
+}
+
+/* ============================================================
+   DARK MODE OVERRIDES (for .dark class or media query)
+   ============================================================ */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --color-canvas-bg: var(--color-neutral-950);
+    --color-canvas-card: var(--color-neutral-900);
+    --color-canvas-card-elevated: var(--color-neutral-850);
+    --color-canvas-muted: var(--color-neutral-800);
+    --color-canvas-subtle: var(--color-neutral-800);
+    --color-canvas-hover: var(--color-neutral-700);
+
+    --color-text-primary: var(--color-white);
+    --color-text-secondary: var(--color-neutral-300);
+    --color-text-tertiary: var(--color-neutral-400);
+    --color-text-muted: var(--color-neutral-500);
+    --color-text-inverse: var(--color-neutral-900);
+
+    --color-border-subtle: var(--color-neutral-700);
+    --color-border-medium: var(--color-neutral-600);
+    --color-border-strong: var(--color-neutral-500);
+
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    --shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+    --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.25);
+    --shadow-xl: 0 20px 32px -8px rgba(0, 0, 0, 0.3);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* Explicit light class for forcing light mode */
+.light {
+  --color-canvas-bg: var(--color-white);
+  --color-canvas-card: var(--color-white);
+  --color-canvas-card-elevated: var(--color-white);
+  --color-canvas-muted: var(--color-neutral-50);
+  --color-canvas-subtle: var(--color-neutral-100);
+  --color-canvas-hover: var(--color-neutral-50);
+
+  --color-text-primary: var(--color-neutral-900);
+  --color-text-secondary: var(--color-neutral-700);
+  --color-text-tertiary: var(--color-neutral-500);
+  --color-text-muted: var(--color-neutral-400);
+  --color-text-inverse: var(--color-white);
+  --color-text-inverse-muted: var(--color-neutral-300);
+
+  --color-border-subtle: var(--color-neutral-200);
+  --color-border-medium: var(--color-neutral-300);
+  --color-border-strong: var(--color-neutral-400);
+
+  --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.03);
+  --shadow-sm: 0 2px 4px 0 rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 24px -4px rgba(15, 23, 42, 0.12);
+  --shadow-xl: 0 20px 32px -8px rgba(15, 23, 42, 0.16);
+  --shadow-2xl: 0 25px 50px -12px rgba(15, 23, 42, 0.2);
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0.01ms;
+    --transition-normal: 0.01ms;
+    --transition-smooth: 0.01ms;
+    --transition-slow: 0.01ms;
+    --transition-bounce: 0.01ms;
+  }
+}
+
+/* ============================================================
+   HIGH CONTRAST MODE
+   ============================================================ */
+@media (forced-colors: active) {
+  :root {
+    --color-primary: CanvasText;
+    --color-secondary: CanvasText;
+    --color-accent: CanvasText;
+    --color-warm: CanvasText;
+    --color-luxury: CanvasText;
+    --color-border-subtle: CanvasText;
+    --color-border-medium: CanvasText;
+    --color-border-strong: CanvasText;
+  }
+}
