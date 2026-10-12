@@ -6,15 +6,24 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const { Pool } = require('pg');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const validator = require('validator');
 const nodemailer = require('nodemailer');
 
 // Database connection
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
-});
+let pool;
+try {
+  pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+  });
+} catch {
+  console.warn('[AI Studio] Database not connected — mock active');
+  pool = {
+    query: async () => ({ rows: [] }),
+    connect: async () => ({ query: async () => ({ rows: [] }), release: () => {} }),
+  };
+}
 
 // Email transporter
 const transporter = nodemailer.createTransporter({

@@ -275,20 +275,22 @@
   /* Missing spacing token referenced by legacy utilities. */
   --space-7: 1.75rem;
 
-  /* --- LEGACY ALIASES (for backward compatibility during transition) --- */
-  --color-dark-maroon: var(--color-text-primary);
-  --color-primary-maroon: var(--color-brand-violet);
-  --color-gold-from: var(--color-brand-gold);
-  --color-gold-to: var(--color-brand-gold-hover);
-  --color-primary-green: var(--color-brand-emerald);
-  --color-dark-forest: var(--color-brand-emerald-text);
-  --color-canvas-bg: var(--color-background);
-  --color-canvas-card: var(--color-white);
-  --color-canvas-muted: var(--color-surface-muted);
-  --color-canvas-subtle: var(--color-surface-subtle);
-  --color-border-subtle: var(--color-border);
-  --color-border-medium: var(--color-border-strong);
-  --color-text-on-primary: var(--color-white);
+  /* --- CLIENT BRAND TOKENS (Per Acceptance Criteria & Reference Audit) --- */
+  --color-primary-green: #006C35;
+  --color-dark-forest: #012411;
+  --color-gold-from: #D4AF37;
+  --color-gold-to: #BF9129;
+  --color-canvas-bg: #fafaf7;
+  --color-canvas-card: #FFFFFF;
+  --color-canvas-muted: #F8F9FA;
+  --color-canvas-subtle: #F1F3F5;
+  --color-border-subtle: rgba(0, 0, 0, 0.08);
+  --color-border-medium: #DEE2E6;
+  --color-text-on-primary: #FFFFFF;
+
+  /* Legacy aliases mapping cleanly to client brand */
+  --color-dark-maroon: #012411;
+  --color-primary-maroon: #006C35;
 }
 
 /* ============================================================

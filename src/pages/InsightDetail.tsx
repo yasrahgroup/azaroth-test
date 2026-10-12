@@ -144,11 +144,11 @@ export const InsightDetail: React.FC = () => {
             <aside style={{ position: 'sticky', top: '6.5rem' }}>
               <div style={{
                 backgroundColor: 'rgba(250, 250, 247, 0.8)',
-                border: '1px solid rgba(122, 12, 22, 0.12)',
+                border: '1px solid rgba(0, 108, 53, 0.15)',
                 borderRadius: 'var(--radius-lg)',
                 padding: '1rem',
               }}>
-                <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--color-primary-maroon)', fontWeight: 800, marginBottom: '0.75rem' }}>
+                <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--color-primary-green, #006C35)', fontWeight: 800, marginBottom: '0.75rem' }}>
                   On this page
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -159,13 +159,13 @@ export const InsightDetail: React.FC = () => {
                       aria-current={activeSection === section.id ? 'true' : undefined}
                       style={{
                         display: 'block',
-                        color: activeSection === section.id ? 'var(--color-primary-maroon)' : 'var(--color-text-secondary)',
+                        color: activeSection === section.id ? 'var(--color-primary-green, #006C35)' : 'var(--color-text-secondary)',
                         fontWeight: activeSection === section.id ? 700 : 600,
                         fontSize: '0.875rem',
                         textDecoration: 'none',
                         padding: '0.45rem 0.6rem',
                         borderRadius: '0.5rem',
-                        backgroundColor: activeSection === section.id ? 'rgba(122, 12, 22, 0.06)' : 'transparent',
+                        backgroundColor: activeSection === section.id ? 'rgba(0, 108, 53, 0.08)' : 'transparent',
                       }}
                     >
                       {section.title}

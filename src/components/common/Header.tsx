@@ -3,30 +3,23 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   Menu,
   X,
-  ChevronDown,
   ArrowRight,
+  ChevronDown,
   Building2,
   Award,
   GitFork,
   ShoppingBag,
   Layers,
-  Briefcase
+  Briefcase,
 } from 'lucide-react';
-import { Button } from './Button';
 import logoImg from '../../assets/Logo.png';
-
-const aboutGroupRoutes = ['/about', '/values', '/delivery-framework'];
-const productsGroupRoutes = ['/products', '/services', '/portfolio'];
 
 export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<'about' | 'products' | null>(null);
   const location = useLocation();
-  const aboutRef = useRef<HTMLDivElement | null>(null);
-  const productsRef = useRef<HTMLDivElement | null>(null);
   const mobileToggleRef = useRef<HTMLButtonElement | null>(null);
-  const drawerRef = useRef<HTMLDivElement | null>(null);
   const closeTimerRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
@@ -54,409 +47,550 @@ export const Header: React.FC = () => {
     };
   }, [mobileMenuOpen]);
 
-  // Escape closes whichever layer is open; outside click closes desktop dropdowns
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape') return;
-      if (openDropdown) {
-        setOpenDropdown(null);
-      }
-      if (mobileMenuOpen) {
-        setMobileMenuOpen(false);
-        mobileToggleRef.current?.focus();
-      }
-    };
-
-    const handlePointerDown = (event: MouseEvent | TouchEvent) => {
-      if (!openDropdown) return;
-      const target = event.target as Node;
-      if (aboutRef.current?.contains(target) || productsRef.current?.contains(target)) return;
-      setOpenDropdown(null);
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('mousedown', handlePointerDown);
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('mousedown', handlePointerDown);
-    };
-  }, [openDropdown, mobileMenuOpen]);
-
-  // Move focus into the drawer when it opens
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      const firstLink = drawerRef.current?.querySelector<HTMLElement>('a, button');
-      firstLink?.focus();
-    }
-  }, [mobileMenuOpen]);
-
-  useEffect(() => () => window.clearTimeout(closeTimerRef.current), []);
-
-  const scheduleClose = (delay = 180) => {
+  const scheduleClose = () => {
     window.clearTimeout(closeTimerRef.current);
-    closeTimerRef.current = window.setTimeout(() => setOpenDropdown(null), delay);
+    closeTimerRef.current = window.setTimeout(() => setOpenDropdown(null), 180);
   };
 
   const cancelClose = () => window.clearTimeout(closeTimerRef.current);
 
-  const headerStyle: React.CSSProperties = {
-    position: 'sticky',
-    top: 0,
-    zIndex: 50,
-    width: '100%',
-    transition: 'all 240ms ease-out',
-    backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.98)' : 'rgba(255, 255, 255, 0.95)',
-    backdropFilter: 'blur(20px)',
-    WebkitBackdropFilter: 'blur(20px)',
-    borderBottom: isScrolled ? '1px solid var(--color-border)' : '1px solid transparent',
-    boxShadow: isScrolled ? '0 4px 24px -2px rgba(38, 48, 59, 0.08)' : 'none',
+  const isActiveRoute = (path: string) => {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname.startsWith(path);
   };
 
-  const navLinkStyle = (path: string, exact = false, isActiveOverride?: boolean) => {
-    const isActive = isActiveOverride ?? (exact ? location.pathname === path : (location.pathname === path || (path !== '/' && location.pathname.startsWith(`${path}/`))));
-    return {
-      fontSize: '0.9375rem',
-      fontWeight: isActive ? 700 : 600,
-      color: isActive ? 'var(--color-brand-violet)' : 'var(--color-text-secondary)',
-      display: 'inline-flex',
-      alignItems: 'center',
-      gap: '0.35rem',
-      padding: '0.5rem 0.75rem',
-      borderRadius: 'var(--radius-sm)',
-      transition: 'all var(--transition-fast)',
-      cursor: 'pointer',
-      backgroundColor: 'transparent',
-      border: 'none',
-      fontFamily: 'inherit',
-    } satisfies React.CSSProperties;
-  };
-
-  const aboutActive = aboutGroupRoutes.some((route) => location.pathname.startsWith(route));
-  const productsActive = productsGroupRoutes.some((route) => location.pathname.startsWith(route));
-
-  const dropdownPanelStyle: React.CSSProperties = {
-    position: 'absolute',
-    top: '100%',
-    left: 0,
-    padding: '0.75rem',
-    backgroundColor: '#ffffff',
-    borderRadius: 'var(--radius-lg)',
-    boxShadow: '0 20px 35px -10px rgba(38, 48, 59, 0.12), 0 0 1px 1px rgba(0,0,0,0.06)',
-    border: '1px solid var(--color-border)',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.35rem',
-    zIndex: 60,
-  };
-
-  const dropdownItemStyle: React.CSSProperties = {
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: '0.75rem',
-    padding: '0.625rem',
-    borderRadius: 'var(--radius-md)',
-    textDecoration: 'none',
-    color: 'inherit',
-    transition: 'background-color 150ms',
-  };
+  const isAboutActive = ['/about', '/values', '/delivery-framework'].some((p) => location.pathname.startsWith(p));
+  const isProductsActive = ['/products', '/portfolio', '/services'].some((p) => location.pathname.startsWith(p));
 
   return (
-    <header style={headerStyle}>
-      <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '4.75rem' }}>
-
-        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', textDecoration: 'none' }} id="nav-brand-logo">
+    <header
+      style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 50,
+        width: '100%',
+        backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.98)' : 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        borderBottom: '1px solid rgba(226, 232, 240, 0.8)',
+        boxShadow: isScrolled ? '0 4px 20px -2px rgba(15, 23, 42, 0.06)' : 'none',
+        transition: 'all 200ms ease-out',
+      }}
+    >
+      <div
+        className="container"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          height: '4.75rem',
+        }}
+      >
+        {/* Brand Logo & Name */}
+        <Link
+          to="/"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.75rem',
+            textDecoration: 'none',
+          }}
+          id="nav-brand-logo"
+        >
           <img
             src={logoImg}
             alt="Azaroth Tech-Hive Logo"
-            width={44}
-            height={44}
             style={{
-              width: '2.75rem',
-              height: '2.75rem',
+              width: '2.5rem',
+              height: '2.5rem',
               objectFit: 'contain',
               flexShrink: 0,
-              filter: 'drop-shadow(0 2px 6px rgba(216, 173, 89, 0.22))',
-              transition: 'transform var(--transition-fast)',
+              filter: 'drop-shadow(0 2px 4px rgba(212, 175, 55, 0.3))',
             }}
-            className="brand-logo-img"
           />
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-text-primary)', letterSpacing: '-0.025em', lineHeight: 1.1 }}>
-              Azaroth
+            <span
+              style={{
+                fontSize: '1.25rem',
+                fontWeight: 800,
+                color: '#006C35',
+                fontFamily: 'serif',
+                letterSpacing: '0.04em',
+                lineHeight: 1.1,
+              }}
+            >
+              AZAROTH
             </span>
-            <span style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--color-brand-violet)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
-              Tech-Hive
+            <span
+              style={{
+                fontSize: '0.625rem',
+                fontWeight: 700,
+                color: '#D4AF37',
+                letterSpacing: '0.22em',
+                textTransform: 'uppercase',
+              }}
+            >
+              TECH-HIVE
             </span>
           </div>
         </Link>
 
-        <nav aria-label="Primary" style={{ display: 'none', gap: '0.35rem', alignItems: 'center' }} className="desktop-nav">
-
-          <Link to="/" style={navLinkStyle('/', true)} id="nav-home">
+        {/* Desktop Navigation Links (Updated per Client Docs) */}
+        <nav
+          aria-label="Primary Navigation"
+          className="hidden md:flex items-center gap-1 lg:gap-2"
+        >
+          {/* 1. Home */}
+          <Link
+            to="/"
+            style={{
+              fontSize: '0.9375rem',
+              fontWeight: isActiveRoute('/') ? 700 : 500,
+              color: isActiveRoute('/') ? '#006C35' : '#475569',
+              padding: '0.5rem 0.875rem',
+              borderRadius: '9999px',
+              textDecoration: 'none',
+              transition: 'all 150ms ease-out',
+              backgroundColor: isActiveRoute('/') ? 'rgba(0, 108, 53, 0.08)' : 'transparent',
+              position: 'relative',
+            }}
+          >
             Home
+            {isActiveRoute('/') && (
+              <span
+                style={{
+                  position: 'absolute',
+                  bottom: '2px',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: '16px',
+                  height: '2px',
+                  backgroundColor: '#D4AF37',
+                  borderRadius: '1px',
+                }}
+              />
+            )}
           </Link>
 
+          {/* 2. About Us (Dropdown: Who we are / About Us, Our Values, Delivery Framework) */}
           <div
-            ref={aboutRef}
             style={{ position: 'relative' }}
             onMouseEnter={() => { cancelClose(); setOpenDropdown('about'); }}
-            onMouseLeave={() => scheduleClose()}
-            id="nav-about-container"
+            onMouseLeave={scheduleClose}
           >
             <button
               type="button"
-              style={navLinkStyle('/about', false, aboutActive)}
-              id="nav-about-trigger"
-              aria-expanded={openDropdown === 'about'}
-              aria-haspopup="true"
-              aria-controls="nav-about-menu"
-              onClick={() => setOpenDropdown((prev) => (prev === 'about' ? null : 'about'))}
-              onKeyDown={(event) => {
-                if (event.key === 'ArrowDown') {
-                  event.preventDefault();
-                  setOpenDropdown('about');
-                  window.setTimeout(() => {
-                    aboutRef.current?.querySelector<HTMLElement>('#nav-about-menu a')?.focus();
-                  }, 0);
-                }
+              style={{
+                fontSize: '0.9375rem',
+                fontWeight: isAboutActive ? 700 : 500,
+                color: isAboutActive ? '#006C35' : '#475569',
+                padding: '0.5rem 0.875rem',
+                borderRadius: '9999px',
+                border: 'none',
+                backgroundColor: isAboutActive ? 'rgba(0, 108, 53, 0.08)' : 'transparent',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.25rem',
+                fontFamily: 'inherit',
               }}
+              onClick={() => setOpenDropdown((prev) => (prev === 'about' ? null : 'about'))}
             >
               <span>About Us</span>
-              <ChevronDown size={15} aria-hidden="true" style={{ transition: 'transform 200ms', transform: openDropdown === 'about' ? 'rotate(180deg)' : 'none' }} />
+              <ChevronDown size={14} style={{ opacity: 0.6 }} />
             </button>
 
             {openDropdown === 'about' && (
-              <div id="nav-about-menu" role="menu" aria-label="About Us" style={{ ...dropdownPanelStyle, width: '300px' }}>
-                <Link to="/about" role="menuitem" style={dropdownItemStyle} className="dropdown-item">
-                  <div aria-hidden="true" style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-lavender)', color: 'var(--color-brand-violet)' }}>
-                    <Building2 size={18} />
-                  </div>
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  width: '280px',
+                  padding: '0.5rem',
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: '12px',
+                  boxShadow: '0 12px 30px -4px rgba(15, 23, 42, 0.12), 0 0 1px rgba(0, 0, 0, 0.1)',
+                  border: '1px solid rgba(226, 232, 240, 0.9)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.25rem',
+                  zIndex: 60,
+                }}
+              >
+                <Link
+                  to="/about"
+                  style={{
+                    padding: '0.625rem 0.75rem',
+                    borderRadius: '8px',
+                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.625rem',
+                    color: '#1E293B',
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                  }}
+                  className="hover:bg-slate-50"
+                >
+                  <Building2 size={16} style={{ color: '#006C35' }} />
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-text-primary)' }}>Who We Are / About Us</div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Purpose, vision and engineering culture</div>
+                    <div>Who we are / About Us</div>
+                    <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 400 }}>Company story &amp; mission</div>
                   </div>
                 </Link>
-
-                <Link to="/values" role="menuitem" style={dropdownItemStyle} className="dropdown-item">
-                  <div aria-hidden="true" style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-peach)', color: 'var(--color-brand-orange)' }}>
-                    <Award size={18} />
-                  </div>
+                <Link
+                  to="/values"
+                  style={{
+                    padding: '0.625rem 0.75rem',
+                    borderRadius: '8px',
+                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.625rem',
+                    color: '#1E293B',
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                  }}
+                  className="hover:bg-slate-50"
+                >
+                  <Award size={16} style={{ color: '#C68A3D' }} />
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-text-primary)' }}>Our Values</div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>6 principles that shape every solution</div>
+                    <div>Our Values</div>
+                    <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 400 }}>6 core engineering principles</div>
                   </div>
                 </Link>
-
-                <Link to="/delivery-framework" role="menuitem" style={dropdownItemStyle} className="dropdown-item">
-                  <div aria-hidden="true" style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-mint)', color: 'var(--color-brand-emerald)' }}>
-                    <GitFork size={18} />
-                  </div>
+                <Link
+                  to="/delivery-framework"
+                  style={{
+                    padding: '0.625rem 0.75rem',
+                    borderRadius: '8px',
+                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.625rem',
+                    color: '#1E293B',
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                  }}
+                  className="hover:bg-slate-50"
+                >
+                  <GitFork size={16} style={{ color: '#2563EB' }} />
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-text-primary)' }}>Delivery Framework</div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>A clear path from idea to impact</div>
+                    <div>Delivery Framework</div>
+                    <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 400 }}>6-step path from idea to impact</div>
                   </div>
                 </Link>
               </div>
             )}
           </div>
 
+          {/* 3. Our Portfolio (Dropdown: Our Portfolio, Explore Products, Explore Services per REQ-01) */}
           <div
-            ref={productsRef}
             style={{ position: 'relative' }}
             onMouseEnter={() => { cancelClose(); setOpenDropdown('products'); }}
-            onMouseLeave={() => scheduleClose()}
-            id="nav-portfolio-container"
+            onMouseLeave={scheduleClose}
           >
             <button
               type="button"
-              style={navLinkStyle('/products', false, productsActive)}
-              id="nav-portfolio-trigger"
-              aria-expanded={openDropdown === 'products'}
-              aria-haspopup="true"
-              aria-controls="nav-portfolio-menu"
-              onClick={() => setOpenDropdown((prev) => (prev === 'products' ? null : 'products'))}
-              onKeyDown={(event) => {
-                if (event.key === 'ArrowDown') {
-                  event.preventDefault();
-                  setOpenDropdown('products');
-                  window.setTimeout(() => {
-                    productsRef.current?.querySelector<HTMLElement>('#nav-portfolio-menu a')?.focus();
-                  }, 0);
-                }
+              style={{
+                fontSize: '0.9375rem',
+                fontWeight: isProductsActive ? 700 : 500,
+                color: isProductsActive ? '#006C35' : '#475569',
+                padding: '0.5rem 0.875rem',
+                borderRadius: '9999px',
+                border: 'none',
+                backgroundColor: isProductsActive ? 'rgba(0, 108, 53, 0.08)' : 'transparent',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.25rem',
+                fontFamily: 'inherit',
               }}
+              onClick={() => setOpenDropdown((prev) => (prev === 'products' ? null : 'products'))}
             >
-              <span>Our Products</span>
-              <ChevronDown size={15} aria-hidden="true" style={{ transition: 'transform 200ms', transform: openDropdown === 'products' ? 'rotate(180deg)' : 'none' }} />
+              <span>Our Portfolio</span>
+              <ChevronDown size={14} style={{ opacity: 0.6 }} />
             </button>
 
             {openDropdown === 'products' && (
-              <div id="nav-portfolio-menu" role="menu" aria-label="Our Products" style={{ ...dropdownPanelStyle, width: '320px' }}>
-                <Link to="/portfolio" role="menuitem" style={dropdownItemStyle} className="dropdown-item">
-                  <div aria-hidden="true" style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-peach)', color: 'var(--color-brand-orange)' }}>
-                    <Briefcase size={18} />
-                  </div>
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  width: '280px',
+                  padding: '0.5rem',
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: '12px',
+                  boxShadow: '0 12px 30px -4px rgba(15, 23, 42, 0.12), 0 0 1px rgba(0, 0, 0, 0.1)',
+                  border: '1px solid rgba(226, 232, 240, 0.9)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.25rem',
+                  zIndex: 60,
+                }}
+              >
+                <Link
+                  to="/portfolio"
+                  style={{
+                    padding: '0.625rem 0.75rem',
+                    borderRadius: '8px',
+                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.625rem',
+                    color: '#1E293B',
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                  }}
+                  className="hover:bg-slate-50"
+                >
+                  <Briefcase size={16} style={{ color: '#D4AF37' }} />
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-text-primary)' }}>Our Portfolio</div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Platforms and services in our catalogue</div>
+                    <div>Our Portfolio</div>
+                    <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 400 }}>Solutions &amp; client work</div>
                   </div>
                 </Link>
-
-                <Link to="/products" role="menuitem" style={dropdownItemStyle} className="dropdown-item">
-                  <div aria-hidden="true" style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-rose)', color: 'var(--color-brand-magenta)' }}>
-                    <ShoppingBag size={18} />
-                  </div>
+                <Link
+                  to="/products"
+                  style={{
+                    padding: '0.625rem 0.75rem',
+                    borderRadius: '8px',
+                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.625rem',
+                    color: '#1E293B',
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                  }}
+                  className="hover:bg-slate-50"
+                >
+                  <ShoppingBag size={16} style={{ color: '#059669' }} />
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-text-primary)' }}>Explore Products</div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>FMS, Omnichannel Commerce &amp; LMP</div>
+                    <div>Explore Products</div>
+                    <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 400 }}>FMS, Commerce &amp; LMP</div>
                   </div>
                 </Link>
-
-                <Link to="/services" role="menuitem" style={dropdownItemStyle} className="dropdown-item">
-                  <div aria-hidden="true" style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-lavender)', color: 'var(--color-brand-violet)' }}>
-                    <Layers size={18} />
-                  </div>
+                <Link
+                  to="/services"
+                  style={{
+                    padding: '0.625rem 0.75rem',
+                    borderRadius: '8px',
+                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.625rem',
+                    color: '#1E293B',
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                  }}
+                  className="hover:bg-slate-50"
+                >
+                  <Layers size={16} style={{ color: '#006C35' }} />
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-text-primary)' }}>Explore Services</div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Transformation, Consulting &amp; Pods</div>
+                    <div>Explore Services</div>
+                    <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 400 }}>Software engineering practices</div>
                   </div>
                 </Link>
               </div>
             )}
           </div>
 
-          <Link to="/technology-insights" style={navLinkStyle('/technology-insights')} id="nav-resource-hub">
+          {/* 4. Resource Hub (Renamed from Technology Insights) */}
+          <Link
+            to="/technology-insights"
+            style={{
+              fontSize: '0.9375rem',
+              fontWeight: isActiveRoute('/technology-insights') ? 700 : 500,
+              color: isActiveRoute('/technology-insights') ? '#006C35' : '#475569',
+              padding: '0.5rem 0.875rem',
+              borderRadius: '9999px',
+              textDecoration: 'none',
+              transition: 'all 150ms ease-out',
+              backgroundColor: isActiveRoute('/technology-insights') ? 'rgba(0, 108, 53, 0.08)' : 'transparent',
+            }}
+          >
             Resource Hub
           </Link>
 
-          <Link to="/connect-with-us" style={navLinkStyle('/connect-with-us')} id="nav-connect">
+          {/* 5. Connect With Us */}
+          <Link
+            to="/connect-with-us"
+            style={{
+              fontSize: '0.9375rem',
+              fontWeight: isActiveRoute('/connect-with-us') ? 700 : 500,
+              color: isActiveRoute('/connect-with-us') ? '#006C35' : '#475569',
+              padding: '0.5rem 0.875rem',
+              borderRadius: '9999px',
+              textDecoration: 'none',
+              transition: 'all 150ms ease-out',
+              backgroundColor: isActiveRoute('/connect-with-us') ? 'rgba(0, 108, 53, 0.08)' : 'transparent',
+            }}
+          >
             Connect With Us
           </Link>
-
         </nav>
 
-        <div style={{ display: 'none', alignItems: 'center', gap: '0.75rem' }} className="desktop-nav">
-          <Button to="/request-for-quote" variant="violet" size="sm" icon={<ArrowRight size={15} />} id="header-rfq-button">
-            Request a quote
-          </Button>
+        {/* Right Action: Request for Quote Button */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.875rem' }}>
+          <Link
+            to="/request-for-quote"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.625rem 1.35rem',
+              borderRadius: '9999px',
+              background: 'linear-gradient(135deg, #D4AF37 0%, #BF9129 100%)',
+              color: '#012411',
+              fontWeight: 700,
+              fontSize: '0.9375rem',
+              textDecoration: 'none',
+              transition: 'all 200ms ease-out',
+              boxShadow: '0 3px 12px rgba(212, 175, 55, 0.35)',
+            }}
+            className="hover:brightness-105 hover:shadow-lg"
+          >
+            <span>Request for Quote</span>
+            <ArrowRight size={15} style={{ color: '#012411' }} />
+          </Link>
+
+          {/* Mobile Menu Button */}
+          <button
+            ref={mobileToggleRef}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? 'Close navigation' : 'Open navigation'}
+            className="md:hidden flex items-center justify-center w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 text-slate-700"
+          >
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
-
-        <button
-          ref={mobileToggleRef}
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-          aria-expanded={mobileMenuOpen}
-          aria-controls="mobile-nav-drawer"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '2.5rem',
-            height: '2.5rem',
-            borderRadius: 'var(--radius-md)',
-            backgroundColor: '#ffffff',
-            border: '1px solid var(--color-border-medium)',
-            color: 'var(--color-dark-maroon)',
-            cursor: 'pointer',
-          }}
-          className="mobile-toggle"
-        >
-          {mobileMenuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
-        </button>
-
       </div>
 
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div
-          ref={drawerRef}
-          id="mobile-nav-drawer"
-          aria-label="Navigation menu"
           style={{
             position: 'fixed',
+            inset: 0,
             top: '4.75rem',
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: '#ffffff',
-            zIndex: 100,
-            padding: '1.5rem',
-            overflowY: 'auto',
+            backgroundColor: 'rgba(15, 23, 42, 0.4)',
+            backdropFilter: 'blur(4px)',
+            zIndex: 99,
             display: 'flex',
             flexDirection: 'column',
-            gap: '1rem',
-            borderTop: '1px solid var(--color-border-subtle)',
-            boxShadow: '0 25px 50px -12px rgba(38, 48, 59, 0.15)',
           }}
+          onClick={() => setMobileMenuOpen(false)}
         >
-          <Link to="/" style={navLinkStyle('/', true)} onClick={() => setMobileMenuOpen(false)}>
-            Home
-          </Link>
+          <div
+            style={{
+              backgroundColor: '#FFFFFF',
+              padding: '1.5rem',
+              borderBottom: '1px solid #E2E8F0',
+              boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.5rem',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Link
+              to="/"
+              style={{
+                padding: '0.75rem 1rem',
+                borderRadius: '8px',
+                fontWeight: 600,
+                color: isActiveRoute('/') ? '#006C35' : '#1E293B',
+                backgroundColor: isActiveRoute('/') ? 'rgba(0, 108, 53, 0.08)' : 'transparent',
+                textDecoration: 'none',
+              }}
+            >
+              Home
+            </Link>
 
-          <div style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--color-border-subtle)', borderTop: '1px solid var(--color-border-subtle)' }}>
-            <span id="mobile-nav-about-label" style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-brand-violet)', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '0.5rem 0.75rem', display: 'block' }}>
+            <div style={{ padding: '0.5rem 1rem 0.25rem', fontSize: '0.75rem', fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase' }}>
               About Us
-            </span>
-            <Link to="/about" style={navLinkStyle('/about')} onClick={() => setMobileMenuOpen(false)}>
-              Who We Are / About Us
+            </div>
+            <Link to="/about" style={{ padding: '0.5rem 1rem 0.5rem 1.5rem', fontSize: '0.875rem', color: '#334155', textDecoration: 'none' }}>
+              &bull; Who we are / About Us
             </Link>
-            <Link to="/values" style={navLinkStyle('/values')} onClick={() => setMobileMenuOpen(false)}>
-              Our Values
+            <Link to="/values" style={{ padding: '0.5rem 1rem 0.5rem 1.5rem', fontSize: '0.875rem', color: '#334155', textDecoration: 'none' }}>
+              &bull; Our Values
             </Link>
-            <Link to="/delivery-framework" style={navLinkStyle('/delivery-framework')} onClick={() => setMobileMenuOpen(false)}>
-              Delivery Framework
+            <Link to="/delivery-framework" style={{ padding: '0.5rem 1rem 0.5rem 1.5rem', fontSize: '0.875rem', color: '#334155', textDecoration: 'none' }}>
+              &bull; Delivery Framework
             </Link>
-          </div>
 
-          <div style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--color-border-subtle)' }}>
-            <span id="mobile-nav-products-label" style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-brand-violet)', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '0.5rem 0.75rem', display: 'block' }}>
-              Our Products
-            </span>
-            <Link to="/portfolio" style={navLinkStyle('/portfolio')} onClick={() => setMobileMenuOpen(false)}>
+            <div style={{ padding: '0.5rem 1rem 0.25rem', fontSize: '0.75rem', fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase' }}>
               Our Portfolio
+            </div>
+            <Link to="/portfolio" style={{ padding: '0.5rem 1rem 0.5rem 1.5rem', fontSize: '0.875rem', color: '#334155', textDecoration: 'none' }}>
+              &bull; Our Portfolio
             </Link>
-            <Link to="/products" style={navLinkStyle('/products')} onClick={() => setMobileMenuOpen(false)}>
-              Explore Products
+            <Link to="/products" style={{ padding: '0.5rem 1rem 0.5rem 1.5rem', fontSize: '0.875rem', color: '#334155', textDecoration: 'none' }}>
+              &bull; Explore Products
             </Link>
-            <Link to="/services" style={navLinkStyle('/services')} onClick={() => setMobileMenuOpen(false)}>
-              Explore Services
+            <Link to="/services" style={{ padding: '0.5rem 1rem 0.5rem 1.5rem', fontSize: '0.875rem', color: '#334155', textDecoration: 'none' }}>
+              &bull; Explore Services
             </Link>
-          </div>
 
-          <Link to="/technology-insights" style={navLinkStyle('/technology-insights')} onClick={() => setMobileMenuOpen(false)}>
-            Resource Hub
-          </Link>
-          <Link to="/connect-with-us" style={navLinkStyle('/connect-with-us')} onClick={() => setMobileMenuOpen(false)}>
-            Connect With Us
-          </Link>
+            <div style={{ height: '1px', backgroundColor: '#E2E8F0', margin: '0.5rem 0' }} />
 
-          <div style={{ marginTop: 'auto', paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-            <Button to="/request-for-quote" variant="violet" size="lg" icon={<ArrowRight size={18} />}>
-              Request a quote
-            </Button>
+            <Link
+              to="/technology-insights"
+              style={{
+                padding: '0.75rem 1rem',
+                borderRadius: '8px',
+                fontWeight: 600,
+                color: isActiveRoute('/technology-insights') ? '#006C35' : '#1E293B',
+                backgroundColor: isActiveRoute('/technology-insights') ? 'rgba(0, 108, 53, 0.08)' : 'transparent',
+                textDecoration: 'none',
+              }}
+            >
+              Resource Hub
+            </Link>
+
+            <Link
+              to="/connect-with-us"
+              style={{
+                padding: '0.75rem 1rem',
+                borderRadius: '8px',
+                fontWeight: 600,
+                color: isActiveRoute('/connect-with-us') ? '#006C35' : '#1E293B',
+                backgroundColor: isActiveRoute('/connect-with-us') ? 'rgba(0, 108, 53, 0.08)' : 'transparent',
+                textDecoration: 'none',
+              }}
+            >
+              Connect With Us
+            </Link>
+
+            <div style={{ marginTop: '1rem' }}>
+              <Link
+                to="/request-for-quote"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.5rem',
+                  padding: '0.75rem',
+                  borderRadius: '9999px',
+                  background: 'linear-gradient(135deg, #D4AF37 0%, #BF9129 100%)',
+                  color: '#012411',
+                  fontWeight: 700,
+                  textDecoration: 'none',
+                }}
+              >
+                <span>Request for Quote</span>
+                <ArrowRight size={16} />
+              </Link>
+            </div>
           </div>
         </div>
       )}
-
-      <style>{`
-        @media (min-width: 1024px) {
-          .desktop-nav {
-            display: flex !important;
-          }
-          .mobile-toggle {
-            display: none !important;
-          }
-        }
-        .dropdown-item:hover {
-          background-color: var(--color-surface-soft) !important;
-        }
-        .dropdown-item:focus-visible {
-          background-color: var(--color-surface-soft) !important;
-          outline: 2px solid var(--color-brand-violet);
-          outline-offset: 2px;
-        }
-        #nav-brand-logo:hover .brand-logo-img {
-          transform: scale(1.06);
-        }
-      `}</style>
     </header>
   );
 };
+
+export default Header;

@@ -42,7 +42,7 @@ export const productsCatalog: Product[] = [
   {
     id: 'prod-commerce',
     slug: 'omnichannel-commerce-platform',
-    name: 'Multi-Store E-Commerce Platform',
+    name: 'Omnichannel Commerce Platform',
     category: 'Digital Commerce',
     badge: 'Under Development',
     tagline: 'Multi-Store Catalog, Inventory & Order Fulfillment Engine',

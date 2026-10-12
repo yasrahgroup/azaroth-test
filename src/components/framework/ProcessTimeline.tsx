@@ -48,15 +48,15 @@ export const ProcessTimeline: React.FC = () => {
                 fontSize: '0.875rem',
                 cursor: 'pointer',
                 transition: 'all 200ms ease-out',
-                boxShadow: isSelected ? '0 4px 12px rgba(122, 12, 22, 0.25)' : 'var(--shadow-xs)',
+                boxShadow: isSelected ? '0 4px 12px rgba(0, 108, 53, 0.25)' : 'var(--shadow-xs)',
               }}
             >
               <span style={{
                 width: '1.5rem',
                 height: '1.5rem',
                 borderRadius: '50%',
-                backgroundColor: isSelected ? '#ffffff' : 'rgba(122, 12, 22, 0.1)',
-                color: isSelected ? 'var(--color-primary-maroon)' : 'var(--color-primary-maroon)',
+                backgroundColor: isSelected ? '#ffffff' : 'rgba(0, 108, 53, 0.1)',
+                color: isSelected ? 'var(--color-primary-green, #006C35)' : 'var(--color-primary-green, #006C35)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -81,8 +81,8 @@ export const ProcessTimeline: React.FC = () => {
             padding="lg"
             style={{
               backgroundColor: '#ffffff',
-              border: '1px solid rgba(122, 12, 22, 0.2)',
-              boxShadow: '0 20px 40px -15px rgba(122, 12, 22, 0.08)',
+              border: '1px solid rgba(0, 108, 53, 0.2)',
+              boxShadow: '0 20px 40px -15px rgba(0, 108, 53, 0.08)',
             }}
           >
             {/* Stage Header */}
@@ -180,16 +180,16 @@ export const ProcessTimeline: React.FC = () => {
                 backgroundColor: 'rgba(250, 250, 247, 0.8)',
                 padding: '1.5rem',
                 borderRadius: 'var(--radius-lg)',
-                border: '1px solid rgba(122, 12, 22, 0.2)',
+                border: '1px solid rgba(0, 108, 53, 0.2)',
               }}>
-                <h4 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--color-dark-maroon)', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <ShieldCheck size={18} style={{ color: 'var(--color-primary-maroon)' }} />
+                <h4 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--color-dark-forest, #012411)', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <ShieldCheck size={18} style={{ color: '#006C35' }} />
                   <span>Verified Quality Gates</span>
                 </h4>
                 <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
                   {stage.qualityGates.map((gate, i) => (
                     <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.625rem', fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
-                      <CheckCircle2 size={16} style={{ color: '#7A0C16', flexShrink: 0, marginTop: '0.15rem' }} />
+                      <CheckCircle2 size={16} style={{ color: '#006C35', flexShrink: 0, marginTop: '0.15rem' }} />
                       <span>{gate}</span>
                     </li>
                   ))}

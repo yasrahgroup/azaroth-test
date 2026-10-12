@@ -1,242 +1,325 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Badge } from '../common/Badge';
-import { Button } from '../common/Button';
-import { Card } from '../common/Card';
-import { ArrowRight, Cpu, Compass, Users, Workflow } from 'lucide-react';
-import { serviceOfferings } from '../../data/servicesData';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import { 
+  ecommercePlatformImg, 
+  mobileBankingAppImg, 
+  analyticsDashboardImg, 
+  creativePortfolioImg 
+} from '../../assets/images';
 
-const getIcon = (name: string) => {
-  switch (name) {
-    case 'Cpu': return <Cpu size={24} />;
-    case 'Compass': return <Compass size={24} />;
-    case 'Users': return <Users size={24} />;
-    case 'Workflow': return <Workflow size={24} />;
-    default: return <Cpu size={24} />;
-  }
-};
+interface ProjectItem {
+  id: string;
+  title: string;
+  categories: string;
+  image: string;
+  description: string;
+  link: string;
+}
+
+const projects: ProjectItem[] = [
+  {
+    id: 'e-commerce-platform',
+    title: 'E-Commerce Platform',
+    categories: 'Web Development \u00B7 E-Commerce',
+    image: ecommercePlatformImg,
+    description: 'High-concurrency headless digital storefront with sub-second checkout and real-time inventory synchronization.',
+    link: '/portfolio#e-commerce-platform',
+  },
+  {
+    id: 'mobile-banking-app',
+    title: 'Mobile Banking App',
+    categories: 'Mobile Apps \u00B7 Fintech',
+    image: mobileBankingAppImg,
+    description: 'Biometric-secured iOS and Android banking app featuring instant payments, budget analytics, and multi-currency accounts.',
+    link: '/portfolio#mobile-banking-app',
+  },
+  {
+    id: 'analytics-dashboard',
+    title: 'Analytics Dashboard',
+    categories: 'Web App \u00B7 Business Intelligence',
+    image: analyticsDashboardImg,
+    description: 'Real-time telemetry and executive data warehouse dashboard processing millions of events per minute.',
+    link: '/portfolio#analytics-dashboard',
+  },
+  {
+    id: 'creative-portfolio',
+    title: 'Creative Portfolio',
+    categories: 'UI/UX Design \u00B7 Branding',
+    image: creativePortfolioImg,
+    description: 'Bespoke design portfolio and digital asset exhibition engineered with fluid micro-interactions and spatial design.',
+    link: '/portfolio#creative-portfolio',
+  },
+];
 
 export const StrategicSolutions: React.FC = () => {
+  const [startIndex, setStartIndex] = useState(0);
+
+  const prev = () => {
+    setStartIndex((prevIndex) => (prevIndex === 0 ? projects.length - 1 : prevIndex - 1));
+  };
+
+  const next = () => {
+    setStartIndex((prevIndex) => (prevIndex + 1) % projects.length);
+  };
+
+  const displayedProjects = [
+    ...projects.slice(startIndex),
+    ...projects.slice(0, startIndex),
+  ];
+
   return (
-    <section style={{
-      backgroundColor: 'var(--color-canvas-bg)',
-      padding: '5rem 0',
-    }}>
+    <section
+      id="projects"
+      style={{
+        backgroundColor: '#F8FAFC',
+        paddingTop: '5.5rem',
+        paddingBottom: '5.5rem',
+        position: 'relative',
+      }}
+      aria-label="Featured Projects"
+    >
       <div className="container">
-        
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 4rem' }}
-        >
-          <Badge variant="emerald" style={{ marginBottom: '1rem' }}>
-            Our Services
-          </Badge>
-          <h2 style={{
-            fontSize: 'clamp(2rem, 3.5vw, 2.5rem)',
-            fontWeight: 800,
-            color: 'var(--color-text-primary)',
-            marginBottom: '1rem',
-            lineHeight: 1.2,
-          }}>
-            Software Engineering for Ideas, Products & Growth
-          </h2>
-          <p style={{
-            fontSize: '1.0625rem',
-            color: 'var(--color-text-secondary)',
-            lineHeight: 1.7,
-            marginBottom: '1.5rem',
-          }}>
-            A quick look at the engineering services behind our work — advisory, modernization, dedicated teams, and process automation. Open any service for full capabilities and deliverables.
-          </p>
-        </motion.div>
+        {/* Section Heading */}
+        <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 3.5rem auto' }}>
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              fontSize: '0.8125rem',
+              fontWeight: 700,
+              color: '#C68A3D',
+              letterSpacing: '0.18em',
+              textTransform: 'uppercase',
+              marginBottom: '0.75rem',
+            }}
+          >
+            &mdash; FEATURED PROJECTS &mdash;
+          </div>
 
-        {/* Service Cards */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '2rem',
-        }}>
-          {serviceOfferings.map((service, index) => (
-            <motion.div
-              key={service.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+          <h2
+            style={{
+              fontSize: 'clamp(2rem, 3.8vw, 2.75rem)',
+              fontWeight: 800,
+              color: '#1E293B',
+              letterSpacing: '-0.02em',
+              lineHeight: 1.2,
+              marginBottom: '1rem',
+            }}
+          >
+            Our{' '}
+            <span
+              style={{
+                background: 'linear-gradient(135deg, #2563EB 0%, #7C3AED 60%, #9333EA 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
             >
-              <Card
-                variant="glass"
-                padding="lg"
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  height: '100%',
-                  border: '1px solid var(--color-border)',
-                  transition: 'all 180ms ease-out',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
-                  e.currentTarget.style.borderColor = 'var(--color-brand-emerald)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = '';
-                  e.currentTarget.style.borderColor = '';
-                }}
-              >
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  marginBottom: '1.25rem',
-                }}>
-                  <div style={{
-                    width: '3rem',
-                    height: '3rem',
-                    borderRadius: '12px',
-                    backgroundColor: 'var(--color-surface-mint)',
-                    color: 'var(--color-brand-emerald)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                    {getIcon(service.iconName)}
-                  </div>
-                  {service.badge && (
-                    <Badge variant="emerald" style={{ fontSize: '0.7rem' }}>
-                      {service.badge}
-                    </Badge>
-                  )}
-                </div>
+              Recent
+            </span>{' '}
+            Work
+          </h2>
 
-                <h3 style={{
-                  fontSize: '1.25rem',
-                  fontWeight: 800,
-                  color: 'var(--color-text-primary)',
-                  marginBottom: '0.75rem',
-                  lineHeight: 1.3,
-                }}>
-                  {service.title}
-                </h3>
-
-                <p style={{
-                  fontSize: '0.9375rem',
-                  color: 'var(--color-text-secondary)',
-                  lineHeight: 1.6,
-                  marginBottom: '1.5rem',
-                  flexGrow: 1,
-                }}>
-                  {service.description}
-                </p>
-
-                {/* Capabilities */}
-                <div style={{
-                  marginBottom: '1.5rem',
-                  padding: '1rem',
-                  backgroundColor: 'var(--color-surface-muted)',
-                  borderRadius: 'var(--radius-md)',
-                  border: '1px solid var(--color-border)',
-                }}>
-                  <div style={{
-                    fontSize: '0.75rem',
-                    fontWeight: 700,
-                    color: 'var(--color-brand-emerald)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.04em',
-                    marginBottom: '0.75rem',
-                  }}>
-                    Key Capabilities
-                  </div>
-                  <ul style={{
-                    listStyle: 'none',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '0.5rem',
-                    margin: 0,
-                    padding: 0,
-                  }}>
-                    {(service.capabilities || []).slice(0, 3).map((cap, i) => (
-                      <li key={i} style={{
-                        fontSize: '0.8125rem',
-                        color: 'var(--color-text-secondary)',
-                        display: 'flex',
-                        alignItems: 'flex-start',
-                        gap: '0.5rem',
-                      }}>
-                        <span style={{ color: 'var(--color-brand-emerald)', fontWeight: 700 }}>•</span>
-                        {cap}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Performance Metrics */}
-                {service.metrics && service.metrics.length > 0 && (
-                  <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(2, 1fr)',
-                    gap: '0.75rem',
-                    marginBottom: '1.5rem',
-                  }}>
-                    {service.metrics.slice(0, 2).map((metric, i) => (
-                      <div key={i} style={{
-                        backgroundColor: 'var(--color-brand-gold-light)',
-                        padding: '0.75rem',
-                        borderRadius: 'var(--radius-sm)',
-                        border: '1px solid var(--color-brand-gold-border)',
-                      }}>
-                        <div style={{
-                          fontSize: '1.25rem',
-                          fontWeight: 800,
-                          color: 'var(--color-brand-gold-text)',
-                          marginBottom: '0.25rem',
-                        }}>
-                          {metric.value}
-                        </div>
-                        <div style={{
-                          fontSize: '0.7rem',
-                          fontWeight: 600,
-                          color: 'var(--color-text-muted)',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.04em',
-                        }}>
-                          {metric.label}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                <Button
-                  to={`/services#${service.slug}`}
-                  variant="outline"
-                  size="sm"
-                  icon={<ArrowRight size={15} />}
-                  style={{ marginTop: 'auto' }}
-                >
-                  View service details
-                </Button>
-              </Card>
-            </motion.div>
-          ))}
+          <p
+            style={{
+              fontSize: '1.0625rem',
+              color: '#64748B',
+              lineHeight: 1.6,
+            }}
+          >
+            Explore some of our latest projects and see how we turn ideas into impactful digital solutions.
+          </p>
         </div>
 
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          style={{ textAlign: 'center', marginTop: '4rem' }}
-        >
-          <Button to="/services" variant="violet" size="lg" icon={<ArrowRight size={18} />}>
-            Explore All Services
-          </Button>
-        </motion.div>
+        {/* Projects Grid Container with Navigation Arrows */}
+        <div style={{ position: 'relative' }}>
+          {/* Left Arrow Button */}
+          <button
+            onClick={prev}
+            aria-label="Previous Project"
+            style={{
+              position: 'absolute',
+              left: '-18px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              zIndex: 20,
+              width: '2.5rem',
+              height: '2.5rem',
+              borderRadius: '50%',
+              backgroundColor: '#FFFFFF',
+              border: '1px solid #E2E8F0',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              color: '#334155',
+            }}
+            className="hover:bg-slate-50 hover:scale-105 hidden sm:flex"
+          >
+            <ChevronLeft size={18} />
+          </button>
+
+          {/* Right Arrow Button */}
+          <button
+            onClick={next}
+            aria-label="Next Project"
+            style={{
+              position: 'absolute',
+              right: '-18px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              zIndex: 20,
+              width: '2.5rem',
+              height: '2.5rem',
+              borderRadius: '50%',
+              backgroundColor: '#FFFFFF',
+              border: '1px solid #E2E8F0',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              color: '#334155',
+            }}
+            className="hover:bg-slate-50 hover:scale-105 hidden sm:flex"
+          >
+            <ChevronRight size={18} />
+          </button>
+
+          {/* 4 Cards (2x2 grid on desktop, 1 col on mobile) */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+              gap: '1.5rem',
+            }}
+          >
+            {displayedProjects.map((proj) => (
+              <div
+                key={proj.id}
+                style={{
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: '1.25rem',
+                  overflow: 'hidden',
+                  border: '1px solid rgba(226, 232, 240, 0.9)',
+                  boxShadow: '0 4px 16px -2px rgba(15, 23, 42, 0.05)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  transition: 'all 240ms cubic-bezier(0.16, 1, 0.3, 1)',
+                }}
+                className="hover:-translate-y-1.5 hover:shadow-xl hover:border-slate-300 group"
+              >
+                {/* Image Container with 16:9 ratio */}
+                <div
+                  style={{
+                    position: 'relative',
+                    width: '100%',
+                    height: '190px',
+                    overflow: 'hidden',
+                    backgroundColor: '#0F172A',
+                  }}
+                >
+                  <img
+                    src={proj.image}
+                    alt={proj.title}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      transition: 'transform 300ms ease-out',
+                    }}
+                    className="group-hover:scale-105"
+                  />
+                </div>
+
+                {/* Card Content */}
+                <div
+                  style={{
+                    padding: '1.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    flex: 1,
+                  }}
+                >
+                  <div>
+                    <h3
+                      style={{
+                        fontSize: '1.125rem',
+                        fontWeight: 700,
+                        color: '#1E293B',
+                        marginBottom: '0.35rem',
+                      }}
+                    >
+                      {proj.title}
+                    </h3>
+                    <p
+                      style={{
+                        fontSize: '0.8125rem',
+                        color: '#64748B',
+                        margin: 0,
+                      }}
+                    >
+                      {proj.categories}
+                    </p>
+                  </div>
+
+                  {/* Circular Arrow Button */}
+                  <Link
+                    to={proj.link}
+                    aria-label={`View ${proj.title}`}
+                    style={{
+                      width: '2.25rem',
+                      height: '2.25rem',
+                      borderRadius: '50%',
+                      border: '1px solid #CBD5E1',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#475569',
+                      flexShrink: 0,
+                      transition: 'all 150ms ease-out',
+                      textDecoration: 'none',
+                    }}
+                    className="hover:border-blue-600 hover:text-blue-600 hover:bg-blue-50"
+                  >
+                    <ArrowRight size={14} />
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* View All Projects Link */}
+        <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+          <Link
+            to="/portfolio"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.75rem 1.5rem',
+              borderRadius: '9999px',
+              border: '1.5px solid #C68A3D',
+              color: '#9A6324',
+              backgroundColor: '#FFFFFF',
+              fontWeight: 600,
+              fontSize: '0.9375rem',
+              textDecoration: 'none',
+              transition: 'all 150ms ease-out',
+            }}
+            className="hover:bg-amber-50"
+          >
+            <span>Explore All Projects &amp; Platforms</span>
+            <ArrowRight size={16} />
+          </Link>
+        </div>
       </div>
     </section>
   );
 };
+
+export default StrategicSolutions;

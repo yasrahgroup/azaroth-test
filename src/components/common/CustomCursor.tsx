@@ -47,13 +47,13 @@ export const CustomCursor: React.FC = () => {
           left: position.x,
           width: isHovering ? '16px' : '12px',
           height: isHovering ? '16px' : '12px',
-          backgroundColor: '#7A0C16',
+          backgroundColor: '#006C35',
           borderRadius: '50%',
           pointerEvents: 'none',
           zIndex: 9999,
           transform: 'translate(-50%, -50%)',
           transition: 'width 0.2s, height 0.2s, background-color 0.2s',
-          boxShadow: '0 0 10px rgba(122, 12, 22, 0.5)',
+          boxShadow: '0 0 10px rgba(0, 108, 53, 0.5)',
         }}
       />
 

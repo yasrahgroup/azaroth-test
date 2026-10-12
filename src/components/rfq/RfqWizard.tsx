@@ -347,8 +347,8 @@ export const RfqWizard: React.FC = () => {
                     style={{
                       padding: '1.25rem',
                       borderRadius: 'var(--radius-lg)',
-                      border: isSelected ? '2px solid var(--color-primary-maroon)' : '1px solid var(--color-border-medium)',
-                      backgroundColor: isSelected ? 'rgba(122, 12, 22, 0.05)' : '#ffffff',
+                      border: isSelected ? '2px solid var(--color-primary-green, #006C35)' : '1px solid var(--color-border-medium)',
+                      backgroundColor: isSelected ? 'rgba(0, 108, 53, 0.06)' : '#ffffff',
                       cursor: 'pointer',
                       display: 'flex',
                       flexDirection: 'column',
@@ -424,12 +424,12 @@ export const RfqWizard: React.FC = () => {
                       style={{
                         padding: '1rem',
                         borderRadius: 'var(--radius-md)',
-                        border: isSelected ? '2px solid var(--color-primary-maroon)' : '1px solid var(--color-border-medium)',
-                        backgroundColor: isSelected ? 'rgba(122, 12, 22, 0.05)' : '#ffffff',
+                        border: isSelected ? '2px solid var(--color-primary-green, #006C35)' : '1px solid var(--color-border-medium)',
+                        backgroundColor: isSelected ? 'rgba(0, 108, 53, 0.06)' : '#ffffff',
                         cursor: 'pointer',
                         fontWeight: isSelected ? 700 : 500,
                         fontSize: '0.875rem',
-                        color: isSelected ? 'var(--color-primary-maroon)' : 'var(--color-text-primary)',
+                        color: isSelected ? 'var(--color-primary-green, #006C35)' : 'var(--color-text-primary)',
                       }}
                     >
                       {scope}
@@ -454,13 +454,13 @@ export const RfqWizard: React.FC = () => {
                       style={{
                         padding: '1rem',
                         borderRadius: 'var(--radius-md)',
-                        border: isSelected ? '2px solid var(--color-primary-maroon)' : '1px solid var(--color-border-medium)',
-                        backgroundColor: isSelected ? 'rgba(122, 12, 22, 0.05)' : '#ffffff',
+                        border: isSelected ? '2px solid var(--color-primary-green, #006C35)' : '1px solid var(--color-border-medium)',
+                        backgroundColor: isSelected ? 'rgba(0, 108, 53, 0.06)' : '#ffffff',
                         cursor: 'pointer',
                         textAlign: 'center',
                         fontWeight: isSelected ? 700 : 500,
                         fontSize: '0.875rem',
-                        color: isSelected ? 'var(--color-primary-maroon)' : 'var(--color-text-primary)',
+                        color: isSelected ? 'var(--color-primary-green, #006C35)' : 'var(--color-text-primary)',
                       }}
                     >
                       {time}
@@ -498,13 +498,13 @@ export const RfqWizard: React.FC = () => {
                       style={{
                         padding: '1rem',
                         borderRadius: 'var(--radius-md)',
-                        border: isSelected ? '2px solid var(--color-primary-maroon)' : '1px solid var(--color-border-medium)',
-                        backgroundColor: isSelected ? 'rgba(122, 12, 22, 0.05)' : '#ffffff',
+                        border: isSelected ? '2px solid var(--color-primary-green, #006C35)' : '1px solid var(--color-border-medium)',
+                        backgroundColor: isSelected ? 'rgba(0, 108, 53, 0.06)' : '#ffffff',
                         cursor: 'pointer',
                         textAlign: 'center',
                         fontWeight: isSelected ? 700 : 500,
                         fontSize: '0.875rem',
-                        color: isSelected ? 'var(--color-primary-maroon)' : 'var(--color-text-primary)',
+                        color: isSelected ? 'var(--color-primary-green, #006C35)' : 'var(--color-text-primary)',
                       }}
                     >
                       {b}
@@ -580,8 +580,8 @@ export const RfqWizard: React.FC = () => {
               }}
               onDragOver={(e) => {
                 e.preventDefault();
-                e.currentTarget.style.borderColor = 'var(--color-primary-maroon)';
-                e.currentTarget.style.backgroundColor = 'rgba(122, 12, 22, 0.05)';
+                e.currentTarget.style.borderColor = 'var(--color-primary-green, #006C35)';
+                e.currentTarget.style.backgroundColor = 'rgba(0, 108, 53, 0.06)';
               }}
               onDragLeave={(e) => {
                 e.preventDefault();
@@ -608,8 +608,8 @@ export const RfqWizard: React.FC = () => {
                 width: '4rem',
                 height: '4rem',
                 borderRadius: '50%',
-                backgroundColor: 'rgba(122, 12, 22, 0.1)',
-                color: 'var(--color-primary-maroon)',
+                backgroundColor: 'rgba(0, 108, 53, 0.1)',
+                color: 'var(--color-primary-green, #006C35)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -802,7 +802,7 @@ export const RfqWizard: React.FC = () => {
               backgroundColor: 'rgba(250, 250, 247, 0.8)',
               padding: '1rem',
               borderRadius: 'var(--radius-md)',
-              border: '1px solid rgba(122, 12, 22, 0.15)',
+              border: '1px solid rgba(0, 108, 53, 0.15)',
               marginTop: '1.25rem',
               fontSize: '0.875rem',
               color: 'var(--color-text-secondary)',

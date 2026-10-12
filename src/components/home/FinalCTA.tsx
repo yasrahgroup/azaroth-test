@@ -38,7 +38,7 @@ export const FinalCTA: React.FC = () => {
             marginBottom: '1.5rem',
             lineHeight: 1.2,
           }}>
-            Discuss the delivery challenge behind your roadmap.
+            Let's Build the Right Digital Solution.
           </h2>
           <p style={{
             fontSize: '1.25rem',
@@ -46,7 +46,7 @@ export const FinalCTA: React.FC = () => {
             lineHeight: 1.7,
             marginBottom: '2.5rem',
           }}>
-            Whether the issue is legacy complexity, delivery risk, or a platform that needs to support growth, we can help you assess the constraints and the right next step.
+            Whether you need to engineer a mission-critical platform, modernize legacy systems, or deploy a dedicated engineering pod, we partner with you to turn ambitious roadmaps into resilient digital reality.
           </p>
           <div style={{
             display: 'flex',

@@ -1,220 +1,553 @@
 import React from 'react';
-import { MapPin, Phone, Mail, MessageSquare, ExternalLink, Building2 } from 'lucide-react';
+import { 
+  MapPin, 
+  Phone, 
+  Mail, 
+  MessageSquare, 
+  ExternalLink, 
+  Target, 
+  Compass, 
+  ShieldCheck, 
+  Zap, 
+  UserCheck, 
+  ArrowRight 
+} from 'lucide-react';
 import { companyInfo, companyVisionMission } from '../data/companyData';
-import { Card } from '../components/common/Card';
-import { Badge } from '../components/common/Badge';
 import { Button } from '../components/common/Button';
 import { SEOHead } from '../components/common/SEOHead';
+import { heroWorkspaceImg } from '../assets/images';
 
 export const About: React.FC = () => {
   return (
     <div>
       <SEOHead
-        title="About Azaroth Tech-Hive — Engineering Better Ways to Work"
-        description="Learn about Azaroth Tech-Hive: our story, vision, mission, and the engineering practices behind dependable software for enterprises in Chennai and worldwide."
+        title="About Us — Turning Ideas into Digital Reality | Azaroth Techhive"
+        description="Learn about Azaroth Techhive: our vision, mission, and the engineering practices behind dependable software for enterprises worldwide."
         canonicalPath="/about"
       />
-      {/* Page Hero */}
-      <section className="section" style={{ backgroundColor: 'var(--color-canvas-bg)', borderBottom: '1px solid var(--color-border-subtle)' }}>
-        <div className="container" style={{ textAlign: 'center', maxWidth: '820px' }}>
-          <Badge variant="gold" style={{ marginBottom: '1rem' }}>
-            Who We Are
-          </Badge>
-          <h1 style={{ marginBottom: '1.25rem' }}>
-            Engineering better ways to work, build, and grow.
+
+      {/* Page Hero Banner */}
+      <section
+        style={{
+          backgroundColor: '#FFFFFF',
+          borderBottom: '1px solid rgba(226, 232, 240, 0.8)',
+          paddingTop: '4.5rem',
+          paddingBottom: '4.5rem',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            width: '450px',
+            height: '450px',
+            background: 'radial-gradient(circle, rgba(198, 138, 61, 0.08) 0%, transparent 70%)',
+            pointerEvents: 'none',
+          }}
+        />
+        <div className="container" style={{ textAlign: 'center', maxWidth: '840px', position: 'relative', zIndex: 1 }}>
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              fontSize: '0.8125rem',
+              fontWeight: 700,
+              color: '#C68A3D',
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase',
+              marginBottom: '1rem',
+            }}
+          >
+            &mdash; WHO WE ARE &mdash;
+          </div>
+          <h1
+            style={{
+              fontSize: 'clamp(2.5rem, 5vw, 3.75rem)',
+              fontWeight: 800,
+              color: '#1E293B',
+              lineHeight: 1.2,
+              marginBottom: '1.25rem',
+            }}
+          >
+            Engineering Meaningful Solutions.{' '}
+            <span
+              style={{
+                background: 'linear-gradient(135deg, #2563EB 0%, #7C3AED 60%, #9333EA 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              Building Lasting Value.
+            </span>
           </h1>
-          <p style={{ fontSize: '1.1875rem', lineHeight: 1.6 }}>
-            We turn ideas and complex challenges into dependable software through lifecycle engineering, intelligent automation, seamless integration, AI capabilities, and continuous improvement.
+          <p style={{ fontSize: '1.1875rem', color: '#64748B', lineHeight: 1.7, maxWidth: '720px', margin: '0 auto' }}>
+            At Azaroth Techhive, we are passionate about technology and driven by a simple goal &mdash; to help businesses build smarter, stronger and more innovative digital solutions with a client-first approach.
           </p>
         </div>
       </section>
 
-      {/* About Us Content - Two Column Layout */}
-      <section className="section" style={{ backgroundColor: '#ffffff' }}>
+      {/* Main Narrative with Visual Workspace Image */}
+      <section style={{ backgroundColor: '#F8FAFC', padding: '5.5rem 0' }}>
         <div className="container">
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '3.5rem',
-            alignItems: 'center',
-          }}>
-            {/* Left: Decorative panel (no photo) */}
-            <div>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+              gap: '4rem',
+              alignItems: 'center',
+            }}
+          >
+            {/* Left: Professional Workspace Photography */}
+            <div style={{ position: 'relative' }}>
               <div
-                aria-hidden="true"
                 style={{
-                  width: '100%',
-                  height: '400px',
-                  borderRadius: '16px',
-                  background: 'linear-gradient(135deg, var(--color-surface-lavender) 0%, var(--color-surface-peach) 100%)',
-                  border: '2px solid var(--color-border)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  position: 'relative',
+                  borderRadius: '24px',
                   overflow: 'hidden',
+                  boxShadow: '0 20px 45px -10px rgba(15, 23, 42, 0.12)',
+                  border: '1px solid rgba(226, 232, 240, 0.9)',
                 }}
               >
-                <div style={{
+                <img
+                  src={heroWorkspaceImg}
+                  alt="Azaroth Techhive Engineering Pods Workspace"
+                  style={{
+                    width: '100%',
+                    height: '420px',
+                    objectFit: 'cover',
+                    display: 'block',
+                  }}
+                />
+              </div>
+
+              {/* Float Experience Badge */}
+              <div
+                style={{
                   position: 'absolute',
-                  top: '20%',
-                  left: '20%',
-                  width: '150px',
-                  height: '150px',
-                  borderRadius: '50%',
-                  background: 'radial-gradient(circle, rgba(117, 68, 216, 0.15) 0%, rgba(117, 68, 216, 0) 70%)',
-                }} />
-                <div style={{
-                  position: 'absolute',
-                  bottom: '20%',
-                  right: '20%',
-                  width: '120px',
-                  height: '120px',
-                  borderRadius: '50%',
-                  background: 'radial-gradient(circle, rgba(216, 173, 89, 0.12) 0%, rgba(216, 173, 89, 0) 70%)',
-                }} />
-                <div style={{
-                  width: '140px',
-                  height: '140px',
-                  borderRadius: '24px',
-                  backgroundColor: 'rgba(255, 255, 255, 0.75)',
-                  border: '2px solid var(--color-border)',
+                  bottom: '-20px',
+                  right: '24px',
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: '16px',
+                  padding: '1rem 1.5rem',
+                  boxShadow: '0 12px 30px -4px rgba(15, 23, 42, 0.15)',
+                  border: '1px solid rgba(226, 232, 240, 0.9)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.875rem',
+                }}
+              >
+                <div
+                  style={{
+                    width: '2.75rem',
+                    height: '2.75rem',
+                    borderRadius: '10px',
+                    backgroundColor: '#EDE9FE',
+                    color: '#7C3AED',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <UserCheck size={20} />
+                </div>
+                <div>
+                  <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1E293B', lineHeight: 1.1 }}>
+                    5+ Years
+                  </div>
+                  <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 600 }}>
+                    Proven Excellence
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Narrative & Philosophy */}
+            <div style={{ maxWidth: '580px' }}>
+              <div
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  fontSize: '0.8125rem',
+                  fontWeight: 700,
+                  color: '#C68A3D',
+                  letterSpacing: '0.18em',
+                  textTransform: 'uppercase',
+                  marginBottom: '1rem',
+                }}
+              >
+                &mdash; OUR STORY &mdash;
+              </div>
+
+              <h2
+                style={{
+                  fontSize: 'clamp(2rem, 3.8vw, 2.75rem)',
+                  fontWeight: 800,
+                  color: '#1E293B',
+                  letterSpacing: '-0.02em',
+                  lineHeight: 1.25,
+                  marginBottom: '1.25rem',
+                }}
+              >
+                Turning Ideas into{' '}
+                <span
+                  style={{
+                    background: 'linear-gradient(135deg, #2563EB 0%, #7C3AED 55%, #9333EA 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}
+                >
+                  Digital Reality
+                </span>
+              </h2>
+
+              <p style={{ fontSize: '1.0625rem', color: '#475569', lineHeight: 1.7, marginBottom: '1.25rem' }}>
+                Azaroth Techhive delivers practical software engineering solutions that help businesses overcome complex technical bottlenecks, modernise legacy operations, and turn high-stakes ideas into dependable digital products.
+              </p>
+              <p style={{ fontSize: '1.0625rem', color: '#475569', lineHeight: 1.7, marginBottom: '2rem' }}>
+                With dedicated engineering pods, cloud modernisation, and custom application development, we bring your vision to life, one line of clean, tested code at a time.
+              </p>
+
+              {/* Stats Bar */}
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(3, 1fr)',
+                  gap: '1rem',
+                  paddingTop: '1.5rem',
+                  borderTop: '1px solid #E2E8F0',
+                  marginBottom: '2rem',
+                }}
+              >
+                <div>
+                  <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#1E293B' }}>5+</div>
+                  <div style={{ fontSize: '0.8125rem', color: '#64748B' }}>Years Experience</div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#059669' }}>50+</div>
+                  <div style={{ fontSize: '0.8125rem', color: '#64748B' }}>Projects Shipped</div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#C68A3D' }}>30+</div>
+                  <div style={{ fontSize: '0.8125rem', color: '#64748B' }}>Happy Clients</div>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                <Button to="/delivery-framework" variant="gold">
+                  Explore Delivery Framework
+                </Button>
+                <Button to="/values" variant="outline">
+                  Our Engineering Values
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2x2 Grid Layout for Vision, Mission & Core Pillars */}
+      <section style={{ backgroundColor: '#FFFFFF', padding: '5.5rem 0' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 3.5rem auto' }}>
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                fontSize: '0.8125rem',
+                fontWeight: 700,
+                color: '#C68A3D',
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase',
+                marginBottom: '0.75rem',
+              }}
+            >
+              &mdash; STRATEGIC FOUNDATIONS &mdash;
+            </div>
+
+            <h2
+              style={{
+                fontSize: 'clamp(2rem, 3.8vw, 2.75rem)',
+                fontWeight: 800,
+                color: '#1E293B',
+                letterSpacing: '-0.02em',
+                lineHeight: 1.2,
+                marginBottom: '1rem',
+              }}
+            >
+              How We Architect{' '}
+              <span
+                style={{
+                  background: 'linear-gradient(135deg, #2563EB 0%, #7C3AED 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                Sustainable Value
+              </span>
+            </h2>
+
+            <p style={{ fontSize: '1.0625rem', color: '#64748B', lineHeight: 1.6 }}>
+              Our 4 foundational pillars ensure every client engagement is transparent, technically sound, and engineered for long-term scalability.
+            </p>
+          </div>
+
+          {/* 2x2 Grid of Pillars */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '1.75rem',
+              maxWidth: '960px',
+              margin: '0 auto',
+            }}
+          >
+            {/* Card 1: Vision */}
+            <div
+              style={{
+                backgroundColor: '#F8FAFC',
+                borderRadius: '1.25rem',
+                padding: '2.25rem 2rem',
+                border: '1px solid rgba(226, 232, 240, 0.9)',
+                display: 'flex',
+                flexDirection: 'column',
+                transition: 'all 200ms ease-out',
+              }}
+              className="hover:shadow-lg hover:border-slate-300"
+            >
+              <div
+                style={{
+                  width: '3.25rem',
+                  height: '3.25rem',
+                  borderRadius: '12px',
+                  backgroundColor: '#EDE9FE',
+                  color: '#7C3AED',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: 'var(--color-brand-violet)',
-                  boxShadow: 'var(--shadow-lg)',
-                }}>
-                  <Building2 size={64} strokeWidth={1.5} aria-hidden="true" />
-                </div>
+                  marginBottom: '1.25rem',
+                }}
+              >
+                <Compass size={24} />
               </div>
-            </div>
-
-            {/* Right: Content */}
-            <div>
-              <Badge variant="gold" style={{ marginBottom: '1rem' }}>
-                About Us
-              </Badge>
-              <h2 style={{ fontSize: '2.25rem', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: '1.25rem' }}>
-                Engineering meaningful solutions. Building lasting value.
-              </h2>
-              <p style={{ fontSize: '1rem', lineHeight: 1.7, marginBottom: '1.25rem' }}>
-                Azaroth Tech-Hive delivers practical software engineering solutions that help businesses overcome technical challenges, improve operations, and turn ideas into dependable digital products. We partner with organizations to build systems that scale, evolve, and drive meaningful business outcomes.
-              </p>
-              <p style={{ fontSize: '1rem', lineHeight: 1.7, marginBottom: '1.5rem' }}>
-                From custom applications and enterprise platforms to cloud infrastructure and AI-powered capabilities, we deliver end-to-end engineering excellence that empowers organizations to innovate, adapt, and scale with confidence in an ever-evolving digital landscape.
-              </p>
-
-              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                <Button to="/delivery-framework" variant="violet">
-                  Review Delivery Process
-                </Button>
-                <Button to="/values" variant="outline">
-                  Read Our Values
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Vision Section */}
-      <section className="section" style={{ backgroundColor: 'var(--color-canvas-bg)' }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 3.5rem auto' }}>
-            <Badge variant="gold" style={{ marginBottom: '1rem' }}>
-              {companyVisionMission.vision.title}
-            </Badge>
-            <h2 style={{ fontSize: '2.25rem', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: '1.25rem' }}>
-              The future we are engineering for
-            </h2>
-            <p style={{ fontSize: '1.125rem', color: 'var(--color-text-secondary)', lineHeight: 1.7 }}>
-              {companyVisionMission.vision.statement}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Mission Section */}
-      <section className="section" style={{ backgroundColor: '#ffffff' }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 3.5rem auto' }}>
-            <Badge variant="gold" style={{ marginBottom: '1rem' }}>
-              {companyVisionMission.mission.title}
-            </Badge>
-            <h2 style={{ fontSize: '2.25rem', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: '1.25rem' }}>
-              How we deliver on it
-            </h2>
-            <p style={{ fontSize: '1.125rem', color: 'var(--color-text-secondary)', lineHeight: 1.7 }}>
-              {companyVisionMission.mission.statement}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Information Card */}
-      <section className="section" style={{ backgroundColor: 'var(--color-canvas-bg)' }}>
-        <div className="container">
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '3.5rem',
-            alignItems: 'center',
-          }}>
-            <div>
-              <Badge variant="gold" style={{ marginBottom: '1rem' }}>
-                Contact Us
-              </Badge>
-              <h2 style={{ fontSize: '2.25rem', marginBottom: '1.25rem' }}>
-                Global Head Office
-              </h2>
-              <p style={{ fontSize: '1rem', lineHeight: 1.7, marginBottom: '1.5rem' }}>
-                Reach out to discuss your project requirements, explore partnership opportunities, or learn more about our engineering services.
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#1E293B', marginBottom: '0.75rem' }}>
+                Long-Horizon Vision
+              </h3>
+              <p style={{ color: '#64748B', fontSize: '0.9375rem', lineHeight: 1.65, margin: 0 }}>
+                {companyVisionMission.vision.statement}
               </p>
             </div>
 
-            {/* Chennai Engineering Hub Card */}
-            <Card
-              variant="glass"
-              padding="lg"
+            {/* Card 2: Mission */}
+            <div
               style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                border: '1px solid var(--color-border)',
+                backgroundColor: '#F8FAFC',
+                borderRadius: '1.25rem',
+                padding: '2.25rem 2rem',
+                border: '1px solid rgba(226, 232, 240, 0.9)',
+                display: 'flex',
+                flexDirection: 'column',
+                transition: 'all 200ms ease-out',
+              }}
+              className="hover:shadow-lg hover:border-slate-300"
+            >
+              <div
+                style={{
+                  width: '3.25rem',
+                  height: '3.25rem',
+                  borderRadius: '12px',
+                  backgroundColor: '#D1FAE5',
+                  color: '#059669',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: '1.25rem',
+                }}
+              >
+                <Target size={24} />
+              </div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#1E293B', marginBottom: '0.75rem' }}>
+                Precision Delivery Mission
+              </h3>
+              <p style={{ color: '#64748B', fontSize: '0.9375rem', lineHeight: 1.65, margin: 0 }}>
+                {companyVisionMission.mission.statement}
+              </p>
+            </div>
+
+            {/* Card 3: Engineering Rigor */}
+            <div
+              style={{
+                backgroundColor: '#F8FAFC',
+                borderRadius: '1.25rem',
+                padding: '2.25rem 2rem',
+                border: '1px solid rgba(226, 232, 240, 0.9)',
+                display: 'flex',
+                flexDirection: 'column',
+                transition: 'all 200ms ease-out',
+              }}
+              className="hover:shadow-lg hover:border-slate-300"
+            >
+              <div
+                style={{
+                  width: '3.25rem',
+                  height: '3.25rem',
+                  borderRadius: '12px',
+                  backgroundColor: '#E0F2FE',
+                  color: '#0284C7',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: '1.25rem',
+                }}
+              >
+                <ShieldCheck size={24} />
+              </div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#1E293B', marginBottom: '0.75rem' }}>
+                Enterprise Quality &amp; Security
+              </h3>
+              <p style={{ color: '#64748B', fontSize: '0.9375rem', lineHeight: 1.65, margin: 0 }}>
+                Rigorous automated testing, zero-trust cloud infrastructure, continuous vulnerability scanning, and strict 99.9% uptime SLA commitments for high-load platforms.
+              </p>
+            </div>
+
+            {/* Card 4: Rapid Execution */}
+            <div
+              style={{
+                backgroundColor: '#F8FAFC',
+                borderRadius: '1.25rem',
+                padding: '2.25rem 2rem',
+                border: '1px solid rgba(226, 232, 240, 0.9)',
+                display: 'flex',
+                flexDirection: 'column',
+                transition: 'all 200ms ease-out',
+              }}
+              className="hover:shadow-lg hover:border-slate-300"
+            >
+              <div
+                style={{
+                  width: '3.25rem',
+                  height: '3.25rem',
+                  borderRadius: '12px',
+                  backgroundColor: '#FEF3C7',
+                  color: '#D97706',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: '1.25rem',
+                }}
+              >
+                <Zap size={24} />
+              </div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#1E293B', marginBottom: '0.75rem' }}>
+                Agile Pod Execution
+              </h3>
+              <p style={{ color: '#64748B', fontSize: '0.9375rem', lineHeight: 1.65, margin: 0 }}>
+                Dedicated 100% focused engineering pods that embed with your stakeholder teams to design, iterate, and deploy release candidates every two weeks.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Global Locations & Head Office Section */}
+      <section style={{ backgroundColor: '#F8FAFC', padding: '5.5rem 0' }}>
+        <div className="container">
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+              gap: '3.5rem',
+              alignItems: 'center',
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  fontSize: '0.8125rem',
+                  fontWeight: 700,
+                  color: '#C68A3D',
+                  letterSpacing: '0.18em',
+                  textTransform: 'uppercase',
+                  marginBottom: '1rem',
+                }}
+              >
+                &mdash; GLOBAL PRESENCE &mdash;
+              </div>
+              <h2 style={{ fontSize: '2.25rem', fontWeight: 800, color: '#1E293B', marginBottom: '1.25rem' }}>
+                Headquarters &amp; Engineering Hubs
+              </h2>
+              <p style={{ fontSize: '1.0625rem', color: '#64748B', lineHeight: 1.7, marginBottom: '1.5rem' }}>
+                Serving global enterprises across the GCC, Asia-Pacific, Europe, and North America from our key hubs in Doha, Qatar and Chennai, India.
+              </p>
+              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                <Button to="/connect-with-us" variant="gold" icon={<ArrowRight size={16} />}>
+                  Connect With Our Team
+                </Button>
+                <Button to="/request-for-quote" variant="outline">
+                  Submit an RFQ
+                </Button>
+              </div>
+            </div>
+
+            {/* Office Info Card */}
+            <div
+              style={{
+                backgroundColor: '#FFFFFF',
+                borderRadius: '1.5rem',
+                padding: '2.5rem',
+                border: '1px solid rgba(226, 232, 240, 0.9)',
+                boxShadow: '0 12px 35px -5px rgba(15, 23, 42, 0.08)',
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
-                <div style={{
-                  padding: '0.625rem',
-                  borderRadius: '10px',
-                  backgroundColor: 'var(--color-brand-gold)',
-                  color: '#ffffff',
-                }}>
-                  <MapPin size={22} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.875rem', marginBottom: '1.5rem' }}>
+                <div
+                  style={{
+                    padding: '0.75rem',
+                    borderRadius: '12px',
+                    backgroundColor: '#FEF3C7',
+                    color: '#D97706',
+                  }}
+                >
+                  <MapPin size={24} />
                 </div>
                 <div>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-text-primary)' }}>
-                    Chennai, Tamil Nadu, India
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1E293B', margin: 0 }}>
+                    Chennai Engineering Hub
                   </h3>
+                  <div style={{ fontSize: '0.8125rem', color: '#64748B' }}>Primary Delivery Center</div>
                 </div>
               </div>
 
-              <p style={{ color: 'var(--color-text-primary)', fontSize: '0.9375rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+              <p style={{ color: '#475569', fontSize: '0.9375rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
                 <strong>Address:</strong><br />
                 {companyInfo.headquarters.address}
               </p>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '2rem', fontSize: '0.875rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <Phone size={16} style={{ color: 'var(--color-brand-gold)' }} />
-                  <span>{companyInfo.headquarters.phone}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', color: '#334155' }}>
+                  <Phone size={16} style={{ color: '#C68A3D' }} />
+                  <a href={`tel:${companyInfo.headquarters.phone}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                    {companyInfo.headquarters.phone}
+                  </a>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <MessageSquare size={16} style={{ color: 'var(--color-brand-gold)' }} />
-                  <span>WhatsApp: {companyInfo.headquarters.whatsapp}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', color: '#334155' }}>
+                  <MessageSquare size={16} style={{ color: '#059669' }} />
+                  <a href={`https://wa.me/${companyInfo.headquarters.whatsapp.replace(/[^0-9]/g, '')}`} target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>
+                    WhatsApp: {companyInfo.headquarters.whatsapp}
+                  </a>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <Mail size={16} style={{ color: 'var(--color-brand-gold)' }} />
-                  <span>{companyInfo.headquarters.email}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', color: '#334155' }}>
+                  <Mail size={16} style={{ color: '#2563EB' }} />
+                  <a href={`mailto:${companyInfo.headquarters.email}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                    {companyInfo.headquarters.email}
+                  </a>
                 </div>
               </div>
 
@@ -227,10 +560,12 @@ export const About: React.FC = () => {
               >
                 View on Google Maps
               </Button>
-            </Card>
+            </div>
           </div>
         </div>
       </section>
     </div>
   );
 };
+
+export default About;

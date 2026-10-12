@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { describe, it, expect } from 'vitest';
 import { Home } from '../../pages/Home';
 import { SlaMatrix } from './SlaMatrix';
@@ -7,9 +8,11 @@ import { SlaMatrix } from './SlaMatrix';
 describe('SlaMatrix', () => {
   it('uses scope-based delivery language instead of unsupported SLA guarantees', () => {
     render(
-      <MemoryRouter>
-        <SlaMatrix />
-      </MemoryRouter>
+      <HelmetProvider>
+        <MemoryRouter>
+          <SlaMatrix />
+        </MemoryRouter>
+      </HelmetProvider>
     );
 
     expect(screen.getByText(/Transparent engagement models/i)).toBeInTheDocument();
@@ -19,14 +22,20 @@ describe('SlaMatrix', () => {
 });
 
 describe('Home page', () => {
-  it('promotes enterprise-ready homepage messaging that clarifies business value', () => {
+  it('promotes enterprise-ready homepage messaging that matches temp.jpeg reference', () => {
     render(
-      <MemoryRouter>
-        <Home />
-      </MemoryRouter>
+      <HelmetProvider>
+        <MemoryRouter>
+          <Home />
+        </MemoryRouter>
+      </HelmetProvider>
     );
 
-    expect(screen.getByText(/Enterprise software engineering for business-critical systems/i)).toBeInTheDocument();
-    expect(screen.getAllByText(/Schedule a consultation/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/Intelligence, Engineered/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Innovation/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/Comprehensive/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Digital Solutions/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Turning Ideas into/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Learn More/i).length).toBeGreaterThan(0);
   });
 });

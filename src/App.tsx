@@ -44,6 +44,7 @@ export const App: React.FC = () => {
           {/* Portfolio & Case Studies */}
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/portfolio/:slug" element={<Portfolio />} />
+          <Route path="/projects" element={<Navigate to="/portfolio" replace />} />
 
           {/* Resource Hub & Technology Insights */}
           <Route path="/technology-insights" element={<Insights />} />
@@ -51,6 +52,7 @@ export const App: React.FC = () => {
 
           {/* Direct Communication & Conversion Portals */}
           <Route path="/connect-with-us" element={<Connect />} />
+          <Route path="/contact" element={<Navigate to="/connect-with-us" replace />} />
 
           <Route path="/request-for-quote" element={<RequestQuote />} />
 

@@ -89,7 +89,7 @@ export const ContactForm: React.FC = () => {
         padding: '3rem 2rem',
         borderRadius: 'var(--radius-xl)',
         backgroundColor: '#ffffff',
-        border: '1px solid rgba(122, 12, 22, 0.25)',
+        border: '1px solid rgba(0, 108, 53, 0.25)',
         textAlign: 'center',
         boxShadow: '0 20px 40px -15px rgba(0, 108, 53, 0.1)',
       }}>
@@ -97,8 +97,8 @@ export const ContactForm: React.FC = () => {
           width: '4rem',
           height: '4rem',
           borderRadius: '50%',
-          backgroundColor: 'rgba(122, 12, 22, 0.12)',
-          color: 'var(--color-primary-maroon)',
+          backgroundColor: 'rgba(0, 108, 53, 0.12)',
+          color: '#006C35',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -107,7 +107,7 @@ export const ContactForm: React.FC = () => {
           <CheckCircle2 size={36} />
         </div>
 
-        <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--color-dark-maroon)', marginBottom: '0.75rem' }}>
+        <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--color-dark-forest, #012411)', marginBottom: '0.75rem' }}>
           Message Received
         </h3>
 

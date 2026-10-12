@@ -1,368 +1,380 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
-
-interface HeroSlide {
-  id: string;
-  src: string;
-  alt: string;
-  title: string;
-  caption: string;
-}
-
-const heroSlides: HeroSlide[] = [
-  {
-    id: 'slide-1',
-    src: '/images/hero/slide-1.jpg',
-    alt: 'Network cabling and server racks inside a modern data centre',
-    title: 'Cloud & platform engineering',
-    caption: 'Resilient architectures for systems that carry day-to-day operations.',
-  },
-  {
-    id: 'slide-2',
-    src: '/images/hero/slide-2.jpg',
-    alt: 'Source code displayed on a developer workstation',
-    title: 'Product & software engineering',
-    caption: 'Discovery, build and release owned end to end by one delivery team.',
-  },
-  {
-    id: 'slide-3',
-    src: '/images/hero/slide-3.jpg',
-    alt: 'Operational analytics dashboard showing usage and performance charts',
-    title: 'Data, analytics & applied AI',
-    caption: 'Operational data shaped into reporting and decisions teams can defend.',
-  },
-  {
-    id: 'slide-4',
-    src: '/images/hero/slide-4.jpg',
-    alt: 'Illuminated printed circuit board under close inspection',
-    title: 'Legacy system modernisation',
-    caption: 'Critical estates evolved in stages, without pausing the business.',
-  },
-];
-
-const SLIDE_INTERVAL_MS = 6000;
+import { 
+  ArrowRight, 
+  Code2, 
+  Smartphone, 
+  Cloud, 
+  PenTool, 
+  BarChart3 
+} from 'lucide-react';
+import { heroWorkspaceImg } from '../../assets/images';
 
 export const Hero: React.FC = () => {
-  const reduceMotion = useReducedMotion();
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [imagesLoaded, setImagesLoaded] = useState<boolean[]>(() => heroSlides.map(() => false));
-  const sectionRef = useRef<HTMLElement | null>(null);
-
-  const nextSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % heroSlides.length);
-  }, []);
-
-  const prevSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
-  }, []);
-
-  const markLoaded = useCallback((index: number) => {
-    setImagesLoaded((prev) => {
-      if (prev[index]) return prev;
-      const next = [...prev];
-      next[index] = true;
-      return next;
-    });
-  }, []);
-
-  useEffect(() => {
-    if (reduceMotion) {
-      setIsPlaying(false);
-    }
-  }, [reduceMotion]);
-
-  useEffect(() => {
-    if (!isPlaying || reduceMotion) return undefined;
-    const id = window.setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % heroSlides.length);
-    }, SLIDE_INTERVAL_MS);
-    return () => window.clearInterval(id);
-  }, [isPlaying, reduceMotion]);
-
-  const pauseForInteraction = () => setIsPlaying(false);
-
-  const currentSlide = heroSlides[currentIndex];
-
   return (
     <section
-      ref={sectionRef}
-      aria-roledescription="carousel"
-      aria-label="Azaroth Tech-Hive engineering capabilities"
-      onMouseEnter={() => setIsPlaying(false)}
-      onMouseLeave={() => {
-        if (!reduceMotion) setIsPlaying(true);
+      style={{
+        position: 'relative',
+        overflow: 'hidden',
+        backgroundColor: '#FFFFFF',
+        paddingTop: '3.5rem',
+        paddingBottom: '5rem',
       }}
-      onFocusCapture={pauseForInteraction}
-      style={{ position: 'relative', minHeight: 'min(92vh, 780px)', overflow: 'hidden', backgroundColor: '#1a0508' }}
+      aria-label="Azaroth Tech-Hive Hero"
     >
-      {/* Background slides */}
-      <div style={{ position: 'absolute', inset: 0 }} aria-hidden="true">
-        {heroSlides.map((slide, index) => (
-          <img
-            key={slide.id}
-            src={slide.src}
-            alt=""
-            fetchPriority={index === 0 ? 'high' : 'auto'}
-            loading={index === 0 ? 'eager' : 'lazy'}
-            decoding="async"
-            onLoad={() => markLoaded(index)}
-            style={{
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              opacity: index === currentIndex ? 1 : 0,
-              transition: reduceMotion ? 'none' : 'opacity 1200ms ease-in-out',
-            }}
-          />
-        ))}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background:
-              'linear-gradient(105deg, rgba(26, 5, 8, 0.94) 0%, rgba(59, 5, 11, 0.82) 42%, rgba(26, 5, 8, 0.55) 100%)',
-          }}
-        />
-      </div>
-
-      {/* Content */}
-      <div
-        style={{
-          position: 'relative',
-          zIndex: 10,
-          minHeight: 'min(92vh, 780px)',
-          display: 'flex',
-          alignItems: 'center',
-          maxWidth: '1400px',
-          margin: '0 auto',
-          padding: '7rem 1.5rem 9rem',
-        }}
-      >
-        <div style={{ maxWidth: '780px' }}>
-          <motion.h1
-            initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            style={{
-              fontSize: 'clamp(2.25rem, 4.6vw, 4rem)',
-              fontWeight: 800,
-              color: '#ffffff',
-              marginBottom: '1.25rem',
-              lineHeight: 1.12,
-              letterSpacing: '-0.02em',
-            }}
-          >
-            Enterprise software engineering for business-critical systems
-          </motion.h1>
-
-          <motion.p
-            initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.12, ease: 'easeOut' }}
-            style={{
-              fontSize: 'clamp(1.0625rem, 1.6vw, 1.25rem)',
-              color: 'rgba(255, 255, 255, 0.88)',
-              lineHeight: 1.65,
-              marginBottom: '1.75rem',
-              maxWidth: '620px',
-            }}
-          >
-            Azaroth Tech-Hive designs, builds and modernises the platforms behind commerce,
-            healthcare, education, logistics and ERP operations — with a delivery framework
-            that keeps scope, quality and communication visible at every stage.
-          </motion.p>
-
-          {/* Rotating capability caption (decorative for assistive tech; mirrored above) */}
-          <div aria-hidden="true" style={{ minHeight: '3.75rem', marginBottom: '2rem' }}>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentSlide.id}
-                initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
-                transition={{ duration: 0.45, ease: 'easeOut' }}
-                style={{
-                  display: 'inline-flex',
-                  flexDirection: 'column',
-                  gap: '0.25rem',
-                  padding: '0.75rem 1.25rem',
-                  borderRadius: '12px',
-                  backgroundColor: 'rgba(255, 255, 255, 0.08)',
-                  border: '1px solid rgba(255, 255, 255, 0.18)',
-                  backdropFilter: 'blur(8px)',
-                }}
-              >
-                <span style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#D4AF37' }}>
-                  {currentSlide.title}
-                </span>
-                <span style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.82)' }}>
-                  {currentSlide.caption}
-                </span>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.24, ease: 'easeOut' }}
-            style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}
-          >
-            <Link
-              to="/request-for-quote"
-              style={{
-                padding: '0.95rem 1.9rem',
-                background: 'linear-gradient(135deg, #D4AF37 0%, #BF9129 100%)',
-                border: 'none',
-                borderRadius: '12px',
-                color: '#2B0408',
-                fontWeight: 700,
-                fontSize: '1rem',
-                textDecoration: 'none',
-                transition: 'transform 180ms ease-out, box-shadow 180ms ease-out',
-                boxShadow: '0 4px 20px rgba(212, 175, 55, 0.35)',
-              }}
-            >
-              Request a quote
-            </Link>
-            <Link
-              to="/products"
-              style={{
-                padding: '0.95rem 1.9rem',
-                backgroundColor: 'rgba(255, 255, 255, 0.12)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255, 255, 255, 0.32)',
-                borderRadius: '12px',
-                color: '#ffffff',
-                fontWeight: 700,
-                fontSize: '1rem',
-                textDecoration: 'none',
-                transition: 'background-color 180ms ease-out',
-              }}
-            >
-              See the 4 platforms
-            </Link>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Controls */}
+      {/* Soft ambient gradient background blooms */}
       <div
         style={{
           position: 'absolute',
-          bottom: '1.75rem',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 20,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem',
+          top: '-10%',
+          right: '-5%',
+          width: '600px',
+          height: '600px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(198, 138, 61, 0.08) 0%, rgba(255, 255, 255, 0) 70%)',
+          pointerEvents: 'none',
         }}
-      >
-        <button
-          type="button"
-          onClick={prevSlide}
-          aria-label="Previous slide"
+      />
+      <div
+        style={{
+          position: 'absolute',
+          top: '15%',
+          left: '-10%',
+          width: '550px',
+          height: '550px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(99, 102, 241, 0.06) 0%, rgba(255, 255, 255, 0) 70%)',
+          pointerEvents: 'none',
+        }}
+      />
+
+      <div className="container" style={{ position: 'relative', zIndex: 10 }}>
+        <div
           style={{
-            width: '44px',
-            height: '44px',
-            borderRadius: '50%',
-            backgroundColor: 'rgba(255, 255, 255, 0.14)',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255, 255, 255, 0.3)',
-            display: 'flex',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '3rem',
             alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            color: '#ffffff',
           }}
         >
-          <ChevronLeft size={22} aria-hidden="true" />
-        </button>
-
-        <div role="group" aria-label="Choose slide" style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-          {heroSlides.map((slide, index) => (
-            <button
-              key={slide.id}
-              type="button"
-              onClick={() => setCurrentIndex(index)}
-              aria-label={`Slide ${index + 1}: ${slide.title}`}
-              aria-current={index === currentIndex ? 'true' : undefined}
+          {/* Left Column: Headlines & CTAs (Per Client Docs) */}
+          <div style={{ maxWidth: '580px' }}>
+            {/* Tagline Overline */}
+            <div
               style={{
-                width: index === currentIndex ? '28px' : '10px',
-                height: '10px',
-                borderRadius: '5px',
-                backgroundColor: index === currentIndex ? '#D4AF37' : 'rgba(255, 255, 255, 0.35)',
-                border: 'none',
-                cursor: 'pointer',
-                transition: 'width 180ms ease-out, background-color 180ms ease-out',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                fontSize: '0.8125rem',
+                fontWeight: 700,
+                color: '#C68A3D',
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase',
+                marginBottom: '1.25rem',
               }}
-            />
-          ))}
+            >
+              <span>Innovation</span>
+              <span style={{ opacity: 0.6 }}>&bull;</span>
+              <span>Technology</span>
+              <span style={{ opacity: 0.6 }}>&bull;</span>
+              <span>Excellence</span>
+            </div>
+
+            {/* Main Title: "Intelligence, Engineered and Innovation Unleashed." */}
+            <h1
+              style={{
+                fontSize: 'clamp(2.5rem, 5vw, 3.85rem)',
+                fontWeight: 800,
+                color: '#1E293B',
+                lineHeight: 1.15,
+                letterSpacing: '-0.025em',
+                marginBottom: '1.5rem',
+              }}
+            >
+              Intelligence, Engineered and{' '}
+              <span
+                style={{
+                  background: 'linear-gradient(135deg, #2563EB 0%, #7C3AED 55%, #A855F7 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                Innovation
+              </span>{' '}
+              Unleashed.
+            </h1>
+
+            {/* Subtext (Per Client Docs) */}
+            <p
+              style={{
+                fontSize: '1.125rem',
+                color: '#64748B',
+                lineHeight: 1.65,
+                marginBottom: '2.25rem',
+                maxWidth: '520px',
+              }}
+            >
+              Azaroth Tech-Hive engineers, evolves, and sustains intelligent software solutions, delivering end-to-end engineering excellence that empowers businesses to innovate, adapt, and scale with confidence.
+            </p>
+
+            {/* Action Buttons: "Request for Quote" & "Our Portfolio" */}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+                gap: '1rem',
+              }}
+            >
+              <Link
+                to="/request-for-quote"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.625rem',
+                  padding: '0.875rem 1.75rem',
+                  borderRadius: '9999px',
+                  backgroundColor: '#C68A3D',
+                  color: '#FFFFFF',
+                  fontWeight: 600,
+                  fontSize: '1rem',
+                  textDecoration: 'none',
+                  boxShadow: '0 4px 14px rgba(198, 138, 61, 0.35)',
+                  transition: 'all 200ms ease-out',
+                }}
+                className="hover:bg-amber-600 hover:shadow-lg"
+              >
+                <span>Request for Quote</span>
+                <ArrowRight size={17} />
+              </Link>
+
+              <Link
+                to="/portfolio"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.625rem',
+                  padding: '0.875rem 1.75rem',
+                  borderRadius: '9999px',
+                  backgroundColor: '#FFFFFF',
+                  color: '#475569',
+                  border: '1.5px solid #CBD5E1',
+                  fontWeight: 600,
+                  fontSize: '1rem',
+                  textDecoration: 'none',
+                  transition: 'all 200ms ease-out',
+                }}
+                className="hover:border-slate-400 hover:text-slate-800"
+              >
+                <span>Our Portfolio</span>
+                <ArrowRight size={17} style={{ opacity: 0.7 }} />
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Column: Hero Visual with Floating Service Badges */}
+          <div style={{ position: 'relative' }}>
+            {/* Main Laptop Workspace Image */}
+            <div
+              style={{
+                position: 'relative',
+                borderRadius: '24px',
+                overflow: 'hidden',
+                boxShadow: '0 25px 50px -12px rgba(15, 23, 42, 0.15)',
+                border: '1px solid rgba(226, 232, 240, 0.8)',
+              }}
+            >
+              <img
+                src={heroWorkspaceImg}
+                alt="Azaroth Tech-Hive digital engineering workspace"
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  display: 'block',
+                  objectFit: 'cover',
+                  maxHeight: '440px',
+                }}
+              />
+            </div>
+
+            {/* Floating Badge 1: Web Development */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-18px',
+                left: '12%',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                backdropFilter: 'blur(8px)',
+                padding: '0.45rem 0.85rem',
+                borderRadius: '9999px',
+                boxShadow: '0 10px 25px -4px rgba(15, 23, 42, 0.12)',
+                border: '1px solid rgba(226, 232, 240, 0.9)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                fontSize: '0.8125rem',
+                fontWeight: 600,
+                color: '#1E293B',
+              }}
+            >
+              <div
+                style={{
+                  width: '1.75rem',
+                  height: '1.75rem',
+                  borderRadius: '6px',
+                  backgroundColor: '#EDE9FE',
+                  color: '#7C3AED',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Code2 size={13} />
+              </div>
+              <span>Web Development</span>
+            </div>
+
+            {/* Floating Badge 2: Mobile Apps */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-24px',
+                left: '48%',
+                transform: 'translateX(-20%)',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                backdropFilter: 'blur(8px)',
+                padding: '0.45rem 0.85rem',
+                borderRadius: '9999px',
+                boxShadow: '0 10px 25px -4px rgba(15, 23, 42, 0.12)',
+                border: '1px solid rgba(226, 232, 240, 0.9)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                fontSize: '0.8125rem',
+                fontWeight: 600,
+                color: '#1E293B',
+              }}
+            >
+              <div
+                style={{
+                  width: '1.75rem',
+                  height: '1.75rem',
+                  borderRadius: '6px',
+                  backgroundColor: '#D1FAE5',
+                  color: '#059669',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Smartphone size={13} />
+              </div>
+              <span>Mobile Apps</span>
+            </div>
+
+            {/* Floating Badge 3: Cloud Solutions */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-15px',
+                right: '18%',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                backdropFilter: 'blur(8px)',
+                padding: '0.45rem 0.85rem',
+                borderRadius: '9999px',
+                boxShadow: '0 10px 25px -4px rgba(15, 23, 42, 0.12)',
+                border: '1px solid rgba(226, 232, 240, 0.9)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                fontSize: '0.8125rem',
+                fontWeight: 600,
+                color: '#1E293B',
+              }}
+            >
+              <div
+                style={{
+                  width: '1.75rem',
+                  height: '1.75rem',
+                  borderRadius: '6px',
+                  backgroundColor: '#E0F2FE',
+                  color: '#0284C7',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Cloud size={13} />
+              </div>
+              <span>Cloud Solutions</span>
+            </div>
+
+            {/* Floating Badge 4: UI/UX Design */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '25%',
+                right: '-16px',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                backdropFilter: 'blur(8px)',
+                padding: '0.45rem 0.85rem',
+                borderRadius: '9999px',
+                boxShadow: '0 10px 25px -4px rgba(15, 23, 42, 0.12)',
+                border: '1px solid rgba(226, 232, 240, 0.9)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                fontSize: '0.8125rem',
+                fontWeight: 600,
+                color: '#1E293B',
+              }}
+            >
+              <div
+                style={{
+                  width: '1.75rem',
+                  height: '1.75rem',
+                  borderRadius: '6px',
+                  backgroundColor: '#FCE7F3',
+                  color: '#DB2777',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <PenTool size={13} />
+              </div>
+              <span>UI/UX Design</span>
+            </div>
+
+            {/* Floating Badge 5: Analytics Chart Widget */}
+            <div
+              style={{
+                position: 'absolute',
+                bottom: '15%',
+                right: '-12px',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                backdropFilter: 'blur(8px)',
+                padding: '0.5rem 0.75rem',
+                borderRadius: '12px',
+                boxShadow: '0 10px 25px -4px rgba(15, 23, 42, 0.12)',
+                border: '1px solid rgba(226, 232, 240, 0.9)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+              }}
+            >
+              <BarChart3 size={20} style={{ color: '#2563EB' }} />
+              <div style={{ display: 'flex', gap: '2px', alignItems: 'flex-end', height: '14px' }}>
+                <div style={{ width: '3px', height: '6px', backgroundColor: '#38BDF8', borderRadius: '1px' }} />
+                <div style={{ width: '3px', height: '10px', backgroundColor: '#6366F1', borderRadius: '1px' }} />
+                <div style={{ width: '3px', height: '14px', backgroundColor: '#10B981', borderRadius: '1px' }} />
+              </div>
+            </div>
+          </div>
         </div>
-
-        <button
-          type="button"
-          onClick={nextSlide}
-          aria-label="Next slide"
-          style={{
-            width: '44px',
-            height: '44px',
-            borderRadius: '50%',
-            backgroundColor: 'rgba(255, 255, 255, 0.14)',
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255, 255, 255, 0.3)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            color: '#ffffff',
-          }}
-        >
-          <ChevronRight size={22} aria-hidden="true" />
-        </button>
-
-        {!reduceMotion && (
-          <button
-            type="button"
-            onClick={() => setIsPlaying((prev) => !prev)}
-            aria-label={isPlaying ? 'Pause slide rotation' : 'Resume slide rotation'}
-            style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '50%',
-              backgroundColor: 'rgba(255, 255, 255, 0.14)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255, 255, 255, 0.3)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              color: '#ffffff',
-            }}
-          >
-            {isPlaying ? <Pause size={17} aria-hidden="true" /> : <Play size={17} aria-hidden="true" />}
-          </button>
-        )}
       </div>
-
-      {/* Screen-reader summary of all slides */}
-      <ul className="sr-only">
-        {heroSlides.map((slide) => (
-          <li key={slide.id}>
-            {slide.title}: {slide.caption}
-          </li>
-        ))}
-      </ul>
-
-      {!imagesLoaded[currentIndex] && (
-        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 1, backgroundColor: '#1a0508' }} />
-      )}
     </section>
   );
 };
+
+export default Hero;

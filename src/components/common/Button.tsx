@@ -38,7 +38,11 @@ export const Button: React.FC<ButtonProps> = ({
 
   if (to) {
     return (
-      <Link to={to} className={combinedClasses} {...restProps}>
+      <Link
+        {...(restProps as unknown as Omit<React.ComponentPropsWithoutRef<typeof Link>, 'to'>)}
+        to={to}
+        className={combinedClasses}
+      >
         {content}
       </Link>
     );
@@ -48,10 +52,10 @@ export const Button: React.FC<ButtonProps> = ({
     const isExternal = /^https?:\/\//i.test(href);
     return (
       <a
+        {...(restProps as unknown as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
         href={href}
         className={combinedClasses}
         {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-        {...restProps}
       >
         {content}
       </a>

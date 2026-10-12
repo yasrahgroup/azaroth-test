@@ -50,7 +50,7 @@ export const PublicLayout: React.FC = () => {
             top: 0,
             zIndex: 200,
             padding: '0.75rem 1.25rem',
-            backgroundColor: 'var(--color-primary-maroon, #7A0C16)',
+            backgroundColor: 'var(--color-primary-green, #006C35)',
             color: '#ffffff',
             fontWeight: 700,
             textDecoration: 'none',

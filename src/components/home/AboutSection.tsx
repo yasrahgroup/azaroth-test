@@ -1,346 +1,346 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Badge } from '../common/Badge';
-import { Card } from '../common/Card';
-import { Cpu, Cloud, Users, Workflow, Building2 } from 'lucide-react';
+import { 
+  Code2, 
+  GitBranch, 
+  Cpu, 
+  Users, 
+  ArrowRight 
+} from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { heroWorkspaceImg } from '../../assets/images';
 
-const capabilities = [
+interface CapabilityCard {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  iconBg: string;
+  iconColor: string;
+}
+
+const capabilities: CapabilityCard[] = [
   {
-    icon: <Cpu size={24} />,
     title: 'End-to-End Software Engineering',
-    description: 'Full lifecycle development from architecture to deployment and maintenance.',
+    description: 'Design, develop, integrate, and enhance robust software applications and digital solutions that address complex business requirements, improve operational performance, and support sustainable growth.',
+    icon: <Code2 size={22} />,
+    iconBg: '#EDE9FE',
+    iconColor: '#7C3AED',
   },
   {
-    icon: <Cloud size={24} />,
     title: 'Technology Modernization & Evolution',
-    description: 'Modernizing legacy systems and adopting contemporary technology stacks.',
+    description: 'Enhance existing systems, improve technical foundations, streamline development practices, and evolve software environments to strengthen reliability, maintainability, adaptability, and long-term business value.',
+    icon: <GitBranch size={22} />,
+    iconBg: '#D1FAE5',
+    iconColor: '#059669',
   },
   {
-    icon: <Users size={24} />,
-    title: 'Dedicated Engineering & Delivery Teams',
-    description: 'Specialized teams aligned with your business goals and delivery timelines.',
-  },
-  {
-    icon: <Workflow size={24} />,
     title: 'Business Process Optimization & Automation',
-    description: 'Streamlining operations through intelligent automation and workflow design.',
-  },
-];
-
-const principles = [
-  {
-    title: 'Discovery-led',
-    label: 'Delivery approach',
-    description: 'Every engagement starts with requirements, constraints, and measurable outcomes.',
+    description: 'Transform business processes through intelligent workflow design, system integration, and targeted automation that reduces manual effort, improves operational efficiency, strengthens data consistency, and enables informed decision-making.',
+    icon: <Cpu size={22} />,
+    iconBg: '#FEF3C7',
+    iconColor: '#D97706',
   },
   {
-    title: 'Architecture-first',
-    label: 'Execution model',
-    description: 'We align technology choices with business context before implementation begins.',
-  },
-  {
-    title: 'Transparent',
-    label: 'Communication',
-    description: 'Progress, blockers, and decisions are surfaced in a way teams can act on quickly.',
-  },
-  {
-    title: 'Partnership',
-    label: 'Working style',
-    description: 'We support long-term product evolution rather than one-off feature delivery.',
+    title: 'Dedicated Engineering & Delivery Teams',
+    description: 'Extend your capabilities with skilled, cross-functional engineering professionals who collaborate with your organization to accelerate development, address technical challenges, maintain quality, and deliver on strategic objectives.',
+    icon: <Users size={22} />,
+    iconBg: '#E0F2FE',
+    iconColor: '#0284C7',
   },
 ];
 
 export const AboutSection: React.FC = () => {
   return (
-    <>
-      {/* Who We Are Section */}
-      <section style={{
-        backgroundColor: 'var(--color-canvas-bg)',
-        padding: '5rem 0',
-      }}>
-        <div className="container">
-          <div style={{
+    <section
+      id="who-we-are"
+      style={{
+        backgroundColor: '#FFFFFF',
+        paddingTop: '5.5rem',
+        paddingBottom: '5.5rem',
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+      aria-label="Who We Are"
+    >
+      <div className="container">
+        {/* Main Split: One Side Description, One Side Image */}
+        <div
+          style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
             gap: '4rem',
             alignItems: 'center',
-          }}>
-            
-            {/* Left: Content */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            marginBottom: '4.5rem',
+          }}
+        >
+          {/* Left Column: Image with stylish framing */}
+          <div style={{ position: 'relative' }}>
+            <div
+              style={{
+                position: 'relative',
+                zIndex: 1,
+                borderRadius: '24px',
+                overflow: 'hidden',
+                boxShadow: '0 20px 45px -10px rgba(15, 23, 42, 0.12)',
+                border: '1px solid rgba(226, 232, 240, 0.9)',
+              }}
             >
-              <Badge variant="blue" style={{ marginBottom: '1rem' }}>
-                Enterprise Technology Partner
-              </Badge>
-              <h2 style={{
-                fontSize: 'clamp(2rem, 4vw, 2.5rem)',
-                fontWeight: 800,
-                color: 'var(--color-text-primary)',
-                marginBottom: '1.5rem',
-                lineHeight: 1.2,
-              }}>
-                Engineered solutions for complex enterprise challenges.
-              </h2>
-              <p style={{
-                fontSize: '1.0625rem',
-                color: 'var(--color-text-secondary)',
-                lineHeight: 1.7,
-              }}>
-                We work with enterprise teams responsible for complex, business-critical systems. Our engineers design, build, and modernize the software those operations run on — platforms, integrations, and automated workflows — and can embed dedicated engineers alongside your own team to deliver them.
-              </p>
-            </motion.div>
-
-            {/* Right: Decorative panel (no photo) */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <div
-                aria-hidden="true"
+              <img
+                src={heroWorkspaceImg}
+                alt="Azaroth Tech-Hive Engineering Team"
                 style={{
                   width: '100%',
-                  height: '400px',
-                  borderRadius: '16px',
-                  background: 'linear-gradient(135deg, var(--color-surface-lavender) 0%, var(--color-surface-peach) 100%)',
-                  border: '2px solid var(--color-border)',
-                  display: 'flex',
+                  height: '460px',
+                  objectFit: 'cover',
+                  display: 'block',
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Right Column: Copy per Client Docs */}
+          <div style={{ maxWidth: '620px' }}>
+            <h2
+              style={{
+                fontSize: 'clamp(2.25rem, 4.2vw, 3.25rem)',
+                fontWeight: 800,
+                color: '#1E293B',
+                letterSpacing: '-0.025em',
+                lineHeight: 1.15,
+                marginBottom: '1.5rem',
+              }}
+            >
+              Engineering Software.{' '}
+              <span
+                style={{
+                  background: 'linear-gradient(135deg, #2563EB 0%, #7C3AED 55%, #9333EA 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                Enabling Progress.
+              </span>
+            </h2>
+
+            <p
+              style={{
+                fontSize: '1.0625rem',
+                color: '#475569',
+                lineHeight: 1.75,
+                marginBottom: '1.25rem',
+              }}
+            >
+              Azaroth Tech-Hive delivers practical software engineering solutions that help businesses overcome technical challenges, improve operations, and turn ideas into dependable digital products. We work across the software lifecycle&mdash;from developing applications and integrating systems to enhancing existing solutions and addressing complex technical requirements. Our approach combines thoughtful problem-solving, sound engineering principles, and a clear understanding of each project&apos;s goals.
+            </p>
+
+            <p
+              style={{
+                fontSize: '1.0625rem',
+                color: '#475569',
+                lineHeight: 1.75,
+                marginBottom: '2rem',
+              }}
+            >
+              From initial discovery and solution design to development, testing, deployment, and ongoing support, we focus on building software that is reliable, secure, maintainable, and ready to evolve. We prioritise code quality, performance, usability, and long-term adaptability, ensuring every solution serves a meaningful purpose without introducing unnecessary complexity. Whether creating something new or improving what already exists, we help businesses make better use of technology and build a strong foundation for future opportunities.
+            </p>
+
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              <Link
+                to="/about"
+                style={{
+                  display: 'inline-flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  position: 'relative',
-                  overflow: 'hidden',
-                }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '20%',
-                  left: '20%',
-                  width: '150px',
-                  height: '150px',
-                  borderRadius: '50%',
-                  background: 'radial-gradient(circle, rgba(117, 68, 216, 0.15) 0%, rgba(117, 68, 216, 0) 70%)',
-                }} />
-                <div style={{
-                  position: 'absolute',
-                  bottom: '20%',
-                  right: '20%',
-                  width: '120px',
-                  height: '120px',
-                  borderRadius: '50%',
-                  background: 'radial-gradient(circle, rgba(216, 173, 89, 0.12) 0%, rgba(216, 173, 89, 0) 70%)',
-                }} />
-                <div
-                  aria-hidden="true"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <div style={{
-                    width: '140px',
-                    height: '140px',
-                    borderRadius: '24px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.75)',
-                    border: '2px solid var(--color-border)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'var(--color-brand-violet)',
-                    boxShadow: 'var(--shadow-lg)',
-                  }}>
-                    <Building2 size={64} strokeWidth={1.5} aria-hidden="true" />
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+                  gap: '0.5rem',
+                  fontSize: '0.9375rem',
+                  fontWeight: 600,
+                  color: '#C68A3D',
+                  textDecoration: 'none',
+                }}
+                className="hover:gap-3"
+              >
+                <span>Read more about our vision &amp; values</span>
+                <ArrowRight size={15} />
+              </Link>
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* Engineering Capabilities */}
-      <section style={{
-        backgroundColor: '#ffffff',
-        padding: '5rem 0',
-      }}>
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 4rem' }}
+        {/* 4 Capabilities ("Try Dynamic Design") */}
+        <div style={{ marginBottom: '4.5rem' }}>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '1.5rem',
+            }}
           >
-            <Badge variant="gold" style={{ marginBottom: '1rem' }}>
-              Technical Expertise
-            </Badge>
-            <h2 style={{
-              fontSize: 'clamp(2rem, 3.5vw, 2.5rem)',
-              fontWeight: 800,
-              color: 'var(--color-text-primary)',
-              marginBottom: '1rem',
-            }}>
-              Enterprise engineering capabilities for modern businesses
-            </h2>
-          </motion.div>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '2rem',
-          }}>
-            {capabilities.map((capability, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-100px' }}
-                transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+            {capabilities.map((cap, idx) => (
+              <div
+                key={idx}
+                style={{
+                  backgroundColor: '#F8FAFC',
+                  borderRadius: '1.25rem',
+                  padding: '2rem 1.75rem',
+                  border: '1px solid rgba(226, 232, 240, 0.9)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  transition: 'all 240ms cubic-bezier(0.16, 1, 0.3, 1)',
+                }}
+                className="hover:-translate-y-1 hover:shadow-lg hover:border-slate-300 hover:bg-white"
               >
-                <Card
-                  variant="solid"
-                  padding="lg"
+                <div
                   style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: '100%',
-                    border: '1px solid var(--color-border)',
-                    transition: 'all 180ms ease-out',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = 'var(--shadow-lg)'
-                    e.currentTarget.style.borderColor = 'var(--color-brand-violet)'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.boxShadow = ''
-                    e.currentTarget.style.borderColor = ''
-                  }}
-                >
-                  <div style={{
-                    width: '3rem',
-                    height: '3rem',
+                    width: '3.25rem',
+                    height: '3.25rem',
                     borderRadius: '12px',
-                    backgroundColor: 'var(--color-surface-lavender)',
-                    color: 'var(--color-brand-violet)',
+                    backgroundColor: cap.iconBg,
+                    color: cap.iconColor,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     marginBottom: '1.25rem',
-                  }}>
-                    {capability.icon}
-                  </div>
-                  <h3 style={{
-                    fontSize: '1.25rem',
-                    fontWeight: 800,
-                    color: 'var(--color-text-primary)',
-                    marginBottom: '0.75rem',
-                  }}>
-                    {capability.title}
-                  </h3>
-                  <p style={{
-                    fontSize: '0.9375rem',
-                    color: 'var(--color-text-secondary)',
-                    lineHeight: 1.6,
-                  }}>
-                    {capability.description}
-                  </p>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How We Work Section */}
-      <section style={{
-        backgroundColor: 'var(--color-surface-muted)',
-        padding: '5rem 0',
-      }}>
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 4rem' }}
-          >
-            <Badge variant="gold" style={{ marginBottom: '1rem' }}>
-              Founded 2024
-            </Badge>
-            <h2 style={{
-              fontSize: 'clamp(2rem, 3.5vw, 2.5rem)',
-              fontWeight: 800,
-              color: 'var(--color-text-primary)',
-              marginBottom: '1rem',
-            }}>
-              How we work
-            </h2>
-            <p style={{
-              fontSize: '1.0625rem',
-              color: 'var(--color-text-secondary)',
-              lineHeight: 1.7,
-            }}>
-              Azaroth Tech-Hive was founded in 2024. These are the working principles we apply on every engagement today.
-            </p>
-          </motion.div>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '2rem',
-          }}>
-            {principles.map((principle, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-100px' }}
-                transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <Card
-                  variant="glass"
-                  padding="lg"
-                  style={{
-                    textAlign: 'center',
-                    border: '1px solid var(--color-border)',
                   }}
                 >
-                  <h3 style={{
-                    fontSize: '1.25rem',
-                    fontWeight: 800,
-                    color: 'var(--color-text-primary)',
-                    marginBottom: '0.5rem',
-                    lineHeight: 1.3,
-                  }}>
-                    {principle.title}
-                  </h3>
-                  <div style={{
-                    fontSize: '0.75rem',
+                  {cap.icon}
+                </div>
+
+                <h3
+                  style={{
+                    fontSize: '1.2rem',
                     fontWeight: 700,
-                    color: 'var(--color-brand-violet)',
+                    color: '#1E293B',
                     marginBottom: '0.75rem',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.04em',
-                  }}>
-                    {principle.label}
-                  </div>
-                  <p style={{
-                    fontSize: '0.875rem',
-                    color: 'var(--color-text-secondary)',
-                    lineHeight: 1.5,
-                  }}>
-                    {principle.description}
-                  </p>
-                </Card>
-              </motion.div>
+                    lineHeight: 1.3,
+                  }}
+                >
+                  {cap.title}
+                </h3>
+
+                <p
+                  style={{
+                    fontSize: '0.9375rem',
+                    color: '#64748B',
+                    lineHeight: 1.65,
+                    margin: 0,
+                  }}
+                >
+                  {cap.description}
+                </p>
+              </div>
             ))}
           </div>
         </div>
-      </section>
-    </>
+
+        {/* Dynamic & Responsive Metrics / Trust Banner ("Try NewDesign") */}
+        <div
+          style={{
+            background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)',
+            borderRadius: '24px',
+            padding: '3rem 2.5rem',
+            border: '1px solid rgba(198, 138, 61, 0.35)',
+            boxShadow: '0 20px 45px -10px rgba(15, 23, 42, 0.25)',
+            color: '#FFFFFF',
+          }}
+        >
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+              gap: '2.5rem',
+              alignItems: 'center',
+            }}
+          >
+            {/* Metric 1 */}
+            <div style={{ textAlign: 'center' }}>
+              <div
+                style={{
+                  fontSize: 'clamp(2.5rem, 4vw, 3.25rem)',
+                  fontWeight: 800,
+                  color: '#C68A3D',
+                  lineHeight: 1,
+                  marginBottom: '0.5rem',
+                  fontFamily: 'serif',
+                }}
+              >
+                95%
+              </div>
+              <div style={{ fontSize: '1.125rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.25rem' }}>
+                Client Satisfaction
+              </div>
+              <div style={{ fontSize: '0.8125rem', color: '#94A3B8', lineHeight: 1.5 }}>
+                Focused on client expectations and outcomes
+              </div>
+            </div>
+
+            {/* Metric 2 */}
+            <div style={{ textAlign: 'center' }}>
+              <div
+                style={{
+                  fontSize: 'clamp(2.5rem, 4vw, 3.25rem)',
+                  fontWeight: 800,
+                  color: '#10B981',
+                  lineHeight: 1,
+                  marginBottom: '0.5rem',
+                  fontFamily: 'serif',
+                }}
+              >
+                100%
+              </div>
+              <div style={{ fontSize: '1.125rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.25rem' }}>
+                Commitment to Quality
+              </div>
+              <div style={{ fontSize: '0.8125rem', color: '#94A3B8', lineHeight: 1.5 }}>
+                Quality-driven engineering practices
+              </div>
+            </div>
+
+            {/* Metric 3 */}
+            <div style={{ textAlign: 'center' }}>
+              <div
+                style={{
+                  fontSize: 'clamp(2.5rem, 4vw, 3.25rem)',
+                  fontWeight: 800,
+                  color: '#38BDF8',
+                  lineHeight: 1,
+                  marginBottom: '0.5rem',
+                  fontFamily: 'serif',
+                }}
+              >
+                90%
+              </div>
+              <div style={{ fontSize: '1.125rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.25rem' }}>
+                On-Time Delivery
+              </div>
+              <div style={{ fontSize: '0.8125rem', color: '#94A3B8', lineHeight: 1.5 }}>
+                360&deg; Software Engineering
+              </div>
+            </div>
+
+            {/* Metric 4 */}
+            <div style={{ textAlign: 'center' }}>
+              <div
+                style={{
+                  fontSize: 'clamp(2rem, 3.5vw, 2.75rem)',
+                  fontWeight: 800,
+                  color: '#A855F7',
+                  lineHeight: 1,
+                  marginBottom: '0.5rem',
+                  fontFamily: 'serif',
+                }}
+              >
+                Long-Term
+              </div>
+              <div style={{ fontSize: '1.125rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.25rem' }}>
+                Client Partnerships
+              </div>
+              <div style={{ fontSize: '0.8125rem', color: '#94A3B8', lineHeight: 1.5 }}>
+                Built around continuity and evolving needs
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
+
+export default AboutSection;

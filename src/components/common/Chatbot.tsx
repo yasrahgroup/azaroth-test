@@ -23,7 +23,7 @@ export const Chatbot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'Hello! I\'m the automated Azaroth site guide. Ask me about our platforms, services or how to reach the team.',
+      text: 'Hello! I\'m the automated Azaroth site guide. Ask me about our platforms, engineering services or how to reach the team.',
       sender: 'bot',
       timestamp: new Date(),
     },
@@ -69,63 +69,60 @@ export const Chatbot: React.FC = () => {
 
     if (lowerMessage.includes('product') || lowerMessage.includes('platform')) {
       return {
-        text: 'We offer 4 enterprise software platforms: Fitness Management System, Multi-Store E-Commerce Platform, Learning Management Platform, and Healthcare Management System. You can learn more about each on our Products page.',
+        text: 'We offer 3 enterprise software platforms: Fitness Management System (FMS), Omnichannel Commerce Platform, and Learning Management Platform (LMP). You can explore them on our Products page.',
+        buttons: [{ label: 'Explore Products', action: '/products' }],
       };
     }
-    if (lowerMessage.includes('service') || lowerMessage.includes('consulting')) {
+    if (lowerMessage.includes('service') || lowerMessage.includes('consulting') || lowerMessage.includes('engineering')) {
       return {
-        text: 'We provide comprehensive software engineering services including Digital Transformation, Strategic Consulting, On-Demand Workforce Solutions, and Business Process Management. Visit our Services page for details.',
+        text: 'We provide comprehensive software engineering services including Digital Transformation, Strategic Consulting, On-Demand Workforce Solutions, and Business Process Management.',
+        buttons: [{ label: 'Explore Services', action: '/services' }],
       };
     }
-    if (lowerMessage.includes('quote') || lowerMessage.includes('pricing') || lowerMessage.includes('cost')) {
+    if (lowerMessage.includes('quote') || lowerMessage.includes('pricing') || lowerMessage.includes('cost') || lowerMessage.includes('rfq')) {
       return {
-        text: 'For pricing and quotes, please use our Request for Quote form. Our team will review your requirements and provide a detailed proposal.',
+        text: 'For pricing and tailored proposals, please use our Request for Quote form. Our solutions team will review your requirements and provide an estimate.',
+        buttons: [{ label: 'Request a Quote', action: '/request-for-quote' }],
       };
     }
-    if (lowerMessage.includes('contact') || lowerMessage.includes('email') || lowerMessage.includes('phone')) {
+    if (lowerMessage.includes('contact') || lowerMessage.includes('email') || lowerMessage.includes('phone') || lowerMessage.includes('reach')) {
       return {
-        text: 'You can reach us at hello@azaroth-techhive.com or call +91 6379480931. You can also use our Contact form for inquiries.',
+        text: 'You can reach us at hello@azaroth-techhive.com or call +91 6379480931. You can also connect directly via our Connect page.',
+        buttons: [{ label: 'Connect With Us', action: '/connect-with-us' }],
       };
     }
-    if (lowerMessage.includes('about') || lowerMessage.includes('company')) {
+    if (lowerMessage.includes('about') || lowerMessage.includes('company') || lowerMessage.includes('who')) {
       return {
-        text: 'Azaroth Tech-Hive engineers, evolves, and sustains intelligent software solutions, delivering end-to-end engineering excellence. We\'re based in Chennai, India.',
+        text: 'Azaroth Tech-Hive engineers, evolves, and sustains intelligent software solutions, delivering end-to-end engineering excellence across Chennai and global enterprises.',
+        buttons: [{ label: 'About Us', action: '/about' }],
       };
     }
     if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
       return {
-        text: 'Hello! Welcome to Azaroth Tech-Hive. How can I assist you with your software engineering needs today?',
+        text: 'Hello! Welcome to Azaroth Tech-Hive. How can I assist you with your software engineering requirements today?',
       };
     }
     if (lowerMessage.includes('thank')) {
       return {
-        text: 'You\'re welcome! Is there anything else I can help you with?',
-      };
-    }
-    if (lowerMessage.includes('bye') || lowerMessage.includes('goodbye')) {
-      return {
-        text: 'Thank you for chatting with us! Feel free to reach out anytime. Have a great day!',
+        text: 'You\'re very welcome! Let us know if you need any technical guidance or wish to schedule a consultation.',
       };
     }
 
-    // Generic fallback - show navigation buttons
     return {
-      text: 'I\'d be happy to help! You can ask me about our products, services, pricing, or how to contact us.',
+      text: 'Thank you for your question. You can explore our software solutions, review our delivery framework, or connect with our engineering team directly.',
       buttons: [
-        { label: 'View Products', action: '/products' },
-        { label: 'View Services', action: '/services' },
-        { label: 'Contact Us', action: '/connect-with-us' },
-        { label: 'Request Quote', action: '/request-for-quote' },
+        { label: 'Our Portfolio', action: '/portfolio' },
+        { label: 'Connect With Us', action: '/connect-with-us' },
       ],
     };
   };
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = () => {
     if (!inputText.trim()) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
-      text: inputText,
+      text: inputText.trim(),
       sender: 'user',
       timestamp: new Date(),
     };
@@ -136,17 +133,18 @@ export const Chatbot: React.FC = () => {
 
     window.clearTimeout(replyTimerRef.current);
     replyTimerRef.current = window.setTimeout(() => {
-      const response = generateBotResponse(inputText);
-      const botResponse: Message = {
+      const botResponse = generateBotResponse(userMessage.text);
+      const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: response.text,
+        text: botResponse.text,
         sender: 'bot',
         timestamp: new Date(),
-        buttons: response.buttons,
+        buttons: botResponse.buttons,
       };
-      setMessages((prev) => [...prev, botResponse]);
+
+      setMessages((prev) => [...prev, botMessage]);
       setIsTyping(false);
-    }, 700);
+    }, 600);
   };
 
   const handleButtonClick = (action: string) => {
@@ -167,7 +165,7 @@ export const Chatbot: React.FC = () => {
 
   return (
     <>
-      {/* Floating Chat Button */}
+      {/* Floating Chat Button (Brand Emerald & Imperial Gold per Client Docs) */}
       {!isOpen && (
         <button
           ref={launchButtonRef}
@@ -180,27 +178,29 @@ export const Chatbot: React.FC = () => {
             width: '3.5rem',
             height: '3.5rem',
             borderRadius: '50%',
-            backgroundColor: '#7A0C16',
-            color: '#ffffff',
+            background: 'linear-gradient(135deg, #006C35 0%, #012411 100%)',
+            color: '#FFFFFF',
             border: '2px solid #D4AF37',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 4px 12px rgba(122, 12, 22, 0.4)',
-            transition: 'all 180ms ease-out',
+            boxShadow: '0 6px 20px rgba(0, 108, 53, 0.4)',
+            transition: 'all 200ms cubic-bezier(0.16, 1, 0.3, 1)',
             zIndex: 1000,
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.1)';
-            e.currentTarget.style.boxShadow = '0 6px 16px rgba(122, 12, 22, 0.5)';
+            e.currentTarget.style.transform = 'scale(1.08)';
+            e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 108, 53, 0.55), 0 0 15px rgba(212, 175, 55, 0.35)';
+            e.currentTarget.style.background = 'linear-gradient(135deg, #059669 0%, #006C35 100%)';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 12px rgba(122, 12, 22, 0.4)';
+            e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 108, 53, 0.4)';
+            e.currentTarget.style.background = 'linear-gradient(135deg, #006C35 0%, #012411 100%)';
           }}
         >
-          <MessageSquare size={20} aria-hidden="true" />
+          <MessageSquare size={20} style={{ color: '#F8FAFC' }} aria-hidden="true" />
         </button>
       )}
 
@@ -217,10 +217,10 @@ export const Chatbot: React.FC = () => {
             width: isMinimized ? '300px' : '400px',
             maxWidth: 'calc(100vw - 4rem)',
             maxHeight: isMinimized ? 'auto' : '600px',
-            backgroundColor: '#ffffff',
+            backgroundColor: '#FFFFFF',
             borderRadius: '16px',
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
-            border: '1px solid rgba(122, 12, 22, 0.15)',
+            boxShadow: '0 16px 48px rgba(1, 36, 17, 0.25), 0 0 1px rgba(0, 108, 53, 0.3)',
+            border: '1px solid rgba(0, 108, 53, 0.25)',
             zIndex: 1000,
             display: 'flex',
             flexDirection: 'column',
@@ -228,15 +228,15 @@ export const Chatbot: React.FC = () => {
             transition: 'all 180ms ease-out',
           }}
         >
-          {/* Header */}
+          {/* Header in Dark Forest & Emerald with Imperial Gold */}
           <div
             style={{
-              backgroundColor: '#7A0C16',
+              background: 'linear-gradient(135deg, #012411 0%, #006C35 100%)',
               padding: '1rem',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              borderBottom: '1px solid rgba(212, 175, 55, 0.3)',
+              borderBottom: '1px solid rgba(212, 175, 55, 0.35)',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -248,15 +248,15 @@ export const Chatbot: React.FC = () => {
                   height: '2.5rem',
                   borderRadius: '8px',
                   objectFit: 'contain',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.25)',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
                 }}
               />
               <div>
-                <div id="chat-assistant-title" style={{ color: '#ffffff', fontWeight: 700, fontSize: '0.9375rem' }}>
+                <div id="chat-assistant-title" style={{ color: '#FFFFFF', fontWeight: 700, fontSize: '0.9375rem' }}>
                   Azaroth Site Guide
                 </div>
-                <div style={{ color: 'rgba(255, 255, 255, 0.75)', fontSize: '0.75rem' }}>
-                  Automated responses
+                <div style={{ color: '#D4AF37', fontSize: '0.75rem', fontWeight: 600 }}>
+                  Automated engineering assistant
                 </div>
               </div>
             </div>
@@ -270,7 +270,7 @@ export const Chatbot: React.FC = () => {
                   borderRadius: '8px',
                   border: 'none',
                   backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                  color: '#ffffff',
+                  color: '#FFFFFF',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
@@ -298,7 +298,7 @@ export const Chatbot: React.FC = () => {
                   borderRadius: '8px',
                   border: 'none',
                   backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                  color: '#ffffff',
+                  color: '#FFFFFF',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
@@ -325,7 +325,7 @@ export const Chatbot: React.FC = () => {
                   flex: 1,
                   padding: '1rem',
                   overflowY: 'auto',
-                  backgroundColor: '#fafaf7',
+                  backgroundColor: '#F8FAFC',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '0.75rem',
@@ -342,29 +342,35 @@ export const Chatbot: React.FC = () => {
                     }}
                   >
                     {message.sender === 'bot' && (
-                      <img
-                        src={faviconImg}
-                        alt="Azaroth Assistant"
+                      <div
                         style={{
                           width: '2rem',
                           height: '2rem',
-                          borderRadius: '6px',
-                          objectFit: 'contain',
+                          borderRadius: '8px',
+                          backgroundColor: '#012411',
+                          color: '#D4AF37',
+                          border: '1px solid rgba(212, 175, 55, 0.35)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
                           flexShrink: 0,
-                          boxShadow: '0 1px 4px rgba(122, 12, 22, 0.25)',
+                          boxShadow: '0 1px 4px rgba(0, 0, 0, 0.15)',
                         }}
-                      />
+                      >
+                        <Bot size={14} />
+                      </div>
                     )}
                     <div
                       style={{
-                        maxWidth: '70%',
+                        maxWidth: '75%',
                         padding: '0.75rem 1rem',
                         borderRadius: '12px',
-                        backgroundColor: message.sender === 'user' ? '#7A0C16' : '#ffffff',
-                        color: message.sender === 'user' ? '#ffffff' : '#1f2937',
+                        backgroundColor: message.sender === 'user' ? '#012411' : '#FFFFFF',
+                        color: message.sender === 'user' ? '#FFFFFF' : '#1E293B',
+                        border: message.sender === 'user' ? '1px solid #006C35' : '1px solid #E2E8F0',
                         fontSize: '0.875rem',
                         lineHeight: 1.5,
-                        boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
+                        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
                       }}
                     >
                       {message.text}
@@ -372,7 +378,8 @@ export const Chatbot: React.FC = () => {
                         style={{
                           fontSize: '0.6875rem',
                           marginTop: '0.25rem',
-                          opacity: 0.7,
+                          opacity: 0.65,
+                          textAlign: message.sender === 'user' ? 'right' : 'left',
                         }}
                       >
                         {formatTime(message.timestamp)}
@@ -391,23 +398,23 @@ export const Chatbot: React.FC = () => {
                               key={index}
                               onClick={() => handleButtonClick(button.action)}
                               style={{
-                                padding: '0.5rem 0.75rem',
+                                padding: '0.45rem 0.75rem',
                                 borderRadius: '6px',
-                                border: '1px solid #7A0C16',
-                                backgroundColor: '#ffffff',
-                                color: '#7A0C16',
+                                border: '1px solid #006C35',
+                                backgroundColor: '#FFFFFF',
+                                color: '#006C35',
                                 fontSize: '0.75rem',
                                 fontWeight: 600,
                                 cursor: 'pointer',
                                 transition: 'all 180ms ease-out',
                               }}
                               onMouseEnter={(e) => {
-                                e.currentTarget.style.backgroundColor = '#7A0C16';
-                                e.currentTarget.style.color = '#ffffff';
+                                e.currentTarget.style.backgroundColor = '#006C35';
+                                e.currentTarget.style.color = '#FFFFFF';
                               }}
                               onMouseLeave={(e) => {
-                                e.currentTarget.style.backgroundColor = '#ffffff';
-                                e.currentTarget.style.color = '#7A0C16';
+                                e.currentTarget.style.backgroundColor = '#FFFFFF';
+                                e.currentTarget.style.color = '#006C35';
                               }}
                             >
                               {button.label}
@@ -422,14 +429,14 @@ export const Chatbot: React.FC = () => {
                           width: '2rem',
                           height: '2rem',
                           borderRadius: '50%',
-                          backgroundColor: '#D4AF37',
+                          backgroundColor: '#006C35',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                           flexShrink: 0,
                         }}
                       >
-                        <User size={14} style={{ color: '#1f2937' }} />
+                        <User size={14} style={{ color: '#FFFFFF' }} />
                       </div>
                     )}
                   </div>
@@ -440,49 +447,51 @@ export const Chatbot: React.FC = () => {
                       style={{
                         width: '2rem',
                         height: '2rem',
-                        borderRadius: '50%',
-                        backgroundColor: '#7A0C16',
+                        borderRadius: '8px',
+                        backgroundColor: '#012411',
+                        color: '#D4AF37',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                       }}
                     >
-                      <Bot size={14} style={{ color: '#D4AF37' }} />
+                      <Bot size={14} />
                     </div>
                     <div
                       style={{
                         padding: '0.75rem 1rem',
                         borderRadius: '12px',
-                        backgroundColor: '#ffffff',
+                        backgroundColor: '#FFFFFF',
+                        border: '1px solid #E2E8F0',
                         display: 'flex',
                         gap: '0.25rem',
                       }}
                     >
-                      <span
+                      <div
                         style={{
                           width: '6px',
                           height: '6px',
                           borderRadius: '50%',
-                          backgroundColor: '#7A0C16',
-                          animation: 'bounce 1.4s infinite ease-in-out both',
+                          backgroundColor: '#006C35',
+                          animation: 'bounce 1s infinite',
                         }}
                       />
-                      <span
+                      <div
                         style={{
                           width: '6px',
                           height: '6px',
                           borderRadius: '50%',
-                          backgroundColor: '#7A0C16',
-                          animation: 'bounce 1.4s infinite ease-in-out both 0.2s',
+                          backgroundColor: '#006C35',
+                          animation: 'bounce 1s infinite 0.2s',
                         }}
                       />
-                      <span
+                      <div
                         style={{
                           width: '6px',
                           height: '6px',
                           borderRadius: '50%',
-                          backgroundColor: '#7A0C16',
-                          animation: 'bounce 1.4s infinite ease-in-out both 0.4s',
+                          backgroundColor: '#006C35',
+                          animation: 'bounce 1s infinite 0.4s',
                         }}
                       />
                     </div>
@@ -494,79 +503,86 @@ export const Chatbot: React.FC = () => {
               {/* Input Area */}
               <div
                 style={{
-                  padding: '1rem',
-                  borderTop: '1px solid rgba(122, 12, 22, 0.1)',
-                  backgroundColor: '#ffffff',
+                  padding: '0.875rem 1rem',
+                  borderTop: '1px solid #E2E8F0',
+                  backgroundColor: '#FFFFFF',
                 }}
               >
                 <div
                   style={{
                     display: 'flex',
                     gap: '0.5rem',
-                    alignItems: 'flex-end',
+                    alignItems: 'center',
                   }}
                 >
                   <input
+                    ref={inputRef}
                     type="text"
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
-                    onKeyPress={handleKeyPress}
+                    onKeyDown={handleKeyDown}
                     placeholder="Type your message..."
                     style={{
                       flex: 1,
-                      padding: '0.75rem 1rem',
+                      padding: '0.625rem 0.875rem',
                       borderRadius: '8px',
-                      border: '1px solid rgba(122, 12, 22, 0.2)',
+                      border: '1px solid #CBD5E1',
                       fontSize: '0.875rem',
                       outline: 'none',
                       transition: 'border-color 180ms ease-out',
                     }}
                     onFocus={(e) => {
-                      e.currentTarget.style.borderColor = '#7A0C16';
+                      e.currentTarget.style.borderColor = '#006C35';
                     }}
                     onBlur={(e) => {
-                      e.currentTarget.style.borderColor = 'rgba(122, 12, 22, 0.2)';
+                      e.currentTarget.style.borderColor = '#CBD5E1';
                     }}
                   />
                   <button
                     onClick={handleSendMessage}
                     disabled={!inputText.trim()}
+                    aria-label="Send message"
                     style={{
                       width: '2.5rem',
                       height: '2.5rem',
                       borderRadius: '8px',
                       border: 'none',
-                      backgroundColor: inputText.trim() ? '#7A0C16' : 'rgba(122, 12, 22, 0.3)',
-                      color: '#ffffff',
+                      backgroundColor: inputText.trim() ? '#006C35' : '#E2E8F0',
+                      color: inputText.trim() ? '#FFFFFF' : '#94A3B8',
                       cursor: inputText.trim() ? 'pointer' : 'not-allowed',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      transition: 'background-color 180ms ease-out',
+                      transition: 'all 180ms ease-out',
+                    }}
+                    onMouseEnter={(e) => {
+                      if (inputText.trim()) e.currentTarget.style.backgroundColor = '#059669';
+                    }}
+                    onMouseLeave={(e) => {
+                      if (inputText.trim()) e.currentTarget.style.backgroundColor = '#006C35';
                     }}
                   >
-                    <Send size={16} />
+                    <Send size={15} />
                   </button>
+                </div>
+                <div
+                  id="chat-assistant-note"
+                  style={{
+                    fontSize: '0.6875rem',
+                    color: '#64748B',
+                    textAlign: 'center',
+                    marginTop: '0.5rem',
+                  }}
+                >
+                  Replies are automated guidance. For tailored RFQ proposals, use our quote form.
                 </div>
               </div>
             </>
           )}
         </div>
       )}
-
-      {/* Add bounce animation keyframes */}
-      <style>
-        {`
-          @keyframes bounce {
-            0%, 80%, 100% {
-              transform: scale(0);
-            }
-            40% {
-              transform: scale(1);
-            }
-          }
-        `}
-      </style>
     </>
   );
 };
+
+export default Chatbot;
