@@ -23,7 +23,7 @@ export const Chatbot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'Hello! I\'m the Azaroth Tech-Hive assistant. How can I help you today?',
+      text: 'Hello! I\'m the automated Azaroth site guide. Ask me about our platforms, services or how to reach the team.',
       sender: 'bot',
       timestamp: new Date(),
     },
@@ -31,14 +31,38 @@ export const Chatbot: React.FC = () => {
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const replyTimerRef = useRef<number | undefined>(undefined);
+  const launchButtonRef = useRef<HTMLButtonElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    messagesEndRef.current?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
   };
 
   useEffect(() => {
     scrollToBottom();
   }, [messages, isMinimized]);
+
+  useEffect(() => () => window.clearTimeout(replyTimerRef.current), []);
+
+  useEffect(() => {
+    if (isOpen && !isMinimized) {
+      inputRef.current?.focus();
+    }
+  }, [isOpen, isMinimized]);
+
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false);
+        launchButtonRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
 
   const generateBotResponse = (userMessage: string): BotResponse => {
     const lowerMessage = userMessage.toLowerCase();
@@ -110,8 +134,8 @@ export const Chatbot: React.FC = () => {
     setInputText('');
     setIsTyping(true);
 
-    // Simulate bot response delay
-    setTimeout(() => {
+    window.clearTimeout(replyTimerRef.current);
+    replyTimerRef.current = window.setTimeout(() => {
       const response = generateBotResponse(inputText);
       const botResponse: Message = {
         id: (Date.now() + 1).toString(),
@@ -122,7 +146,7 @@ export const Chatbot: React.FC = () => {
       };
       setMessages((prev) => [...prev, botResponse]);
       setIsTyping(false);
-    }, 1000);
+    }, 700);
   };
 
   const handleButtonClick = (action: string) => {
@@ -130,7 +154,7 @@ export const Chatbot: React.FC = () => {
     setIsOpen(false);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
@@ -146,7 +170,9 @@ export const Chatbot: React.FC = () => {
       {/* Floating Chat Button */}
       {!isOpen && (
         <button
+          ref={launchButtonRef}
           onClick={() => setIsOpen(true)}
+          aria-label="Open the Azaroth site guide"
           style={{
             position: 'fixed',
             bottom: '2rem',
@@ -174,13 +200,16 @@ export const Chatbot: React.FC = () => {
             e.currentTarget.style.boxShadow = '0 4px 12px rgba(122, 12, 22, 0.4)';
           }}
         >
-          <MessageSquare size={20} />
+          <MessageSquare size={20} aria-hidden="true" />
         </button>
       )}
 
       {/* Chat Window */}
       {isOpen && (
         <div
+          role="dialog"
+          aria-labelledby="chat-assistant-title"
+          aria-describedby="chat-assistant-note"
           style={{
             position: 'fixed',
             bottom: '2rem',
@@ -223,17 +252,18 @@ export const Chatbot: React.FC = () => {
                 }}
               />
               <div>
-                <div style={{ color: '#ffffff', fontWeight: 700, fontSize: '0.9375rem' }}>
-                  Azaroth Assistant
+                <div id="chat-assistant-title" style={{ color: '#ffffff', fontWeight: 700, fontSize: '0.9375rem' }}>
+                  Azaroth Site Guide
                 </div>
-                <div style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.75rem' }}>
-                  Online
+                <div style={{ color: 'rgba(255, 255, 255, 0.75)', fontSize: '0.75rem' }}>
+                  Automated responses
                 </div>
               </div>
             </div>
             <div style={{ display: 'flex', gap: '0.5rem' }}>
               <button
                 onClick={() => setIsMinimized(!isMinimized)}
+                aria-label={isMinimized ? 'Expand site guide' : 'Minimize site guide'}
                 style={{
                   width: '2rem',
                   height: '2rem',
@@ -254,10 +284,14 @@ export const Chatbot: React.FC = () => {
                   e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
                 }}
               >
-                {isMinimized ? <Maximize2 size={16} /> : <Minimize2 size={16} />}
+                {isMinimized ? <Maximize2 size={16} aria-hidden="true" /> : <Minimize2 size={16} aria-hidden="true" />}
               </button>
               <button
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false);
+                  launchButtonRef.current?.focus();
+                }}
+                aria-label="Close site guide"
                 style={{
                   width: '2rem',
                   height: '2rem',
@@ -278,7 +312,7 @@ export const Chatbot: React.FC = () => {
                   e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
                 }}
               >
-                <X size={16} />
+                <X size={16} aria-hidden="true" />
               </button>
             </div>
           </div>

@@ -26,32 +26,40 @@ export const Button: React.FC<ButtonProps> = ({
   const sizeClass = size === 'sm' ? 'btn-sm' : size === 'lg' ? 'btn-lg' : '';
   const combinedClasses = `btn ${variantClass} ${sizeClass} ${className}`.trim();
 
+  const { type, ...restProps } = props;
+
   const content = (
     <>
-      {icon && iconPosition === 'left' && <span className="btn-icon">{icon}</span>}
+      {icon && iconPosition === 'left' && <span className="btn-icon" aria-hidden="true">{icon}</span>}
       <span>{children}</span>
-      {icon && iconPosition === 'right' && <span className="btn-icon">{icon}</span>}
+      {icon && iconPosition === 'right' && <span className="btn-icon" aria-hidden="true">{icon}</span>}
     </>
   );
 
   if (to) {
     return (
-      <Link to={to} className={combinedClasses}>
+      <Link to={to} className={combinedClasses} {...restProps}>
         {content}
       </Link>
     );
   }
 
   if (href) {
+    const isExternal = /^https?:\/\//i.test(href);
     return (
-      <a href={href} className={combinedClasses} target="_blank" rel="noopener noreferrer">
+      <a
+        href={href}
+        className={combinedClasses}
+        {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        {...restProps}
+      >
         {content}
       </a>
     );
   }
 
   return (
-    <button className={combinedClasses} {...props}>
+    <button className={combinedClasses} type={type ?? 'button'} {...restProps}>
       {content}
     </button>
   );

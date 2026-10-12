@@ -1,44 +1,48 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { 
-  Menu, 
-  X, 
-  ChevronDown, 
-  ArrowRight, 
-  Building2, 
-  Award, 
-  GitFork, 
-  ShoppingBag, 
-  Layers, 
+import {
+  Menu,
+  X,
+  ChevronDown,
+  ArrowRight,
+  Building2,
+  Award,
+  GitFork,
+  ShoppingBag,
+  Layers,
   Briefcase
 } from 'lucide-react';
 import { Button } from './Button';
 import logoImg from '../../assets/Logo.png';
 
+const aboutGroupRoutes = ['/about', '/values', '/delivery-framework'];
+const productsGroupRoutes = ['/products', '/services', '/portfolio'];
+
 export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
-  const [portfolioDropdownOpen, setPortfolioDropdownOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<'about' | 'products' | null>(null);
   const location = useLocation();
+  const aboutRef = useRef<HTMLDivElement | null>(null);
+  const productsRef = useRef<HTMLDivElement | null>(null);
+  const mobileToggleRef = useRef<HTMLButtonElement | null>(null);
+  const drawerRef = useRef<HTMLDivElement | null>(null);
+  const closeTimerRef = useRef<number | undefined>(undefined);
 
-  // Scroll detection for sticky header shadow and backdrop
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 15);
     };
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close menus on route navigation
   useEffect(() => {
     setMobileMenuOpen(false);
-    setAboutDropdownOpen(false);
-    setPortfolioDropdownOpen(false);
+    setOpenDropdown(null);
   }, [location.pathname]);
 
-  // Lock body scroll when mobile drawer is open
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -49,6 +53,51 @@ export const Header: React.FC = () => {
       document.body.style.overflow = '';
     };
   }, [mobileMenuOpen]);
+
+  // Escape closes whichever layer is open; outside click closes desktop dropdowns
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      if (openDropdown) {
+        setOpenDropdown(null);
+      }
+      if (mobileMenuOpen) {
+        setMobileMenuOpen(false);
+        mobileToggleRef.current?.focus();
+      }
+    };
+
+    const handlePointerDown = (event: MouseEvent | TouchEvent) => {
+      if (!openDropdown) return;
+      const target = event.target as Node;
+      if (aboutRef.current?.contains(target) || productsRef.current?.contains(target)) return;
+      setOpenDropdown(null);
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('mousedown', handlePointerDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('mousedown', handlePointerDown);
+    };
+  }, [openDropdown, mobileMenuOpen]);
+
+  // Move focus into the drawer when it opens
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      const firstLink = drawerRef.current?.querySelector<HTMLElement>('a, button');
+      firstLink?.focus();
+    }
+  }, [mobileMenuOpen]);
+
+  useEffect(() => () => window.clearTimeout(closeTimerRef.current), []);
+
+  const scheduleClose = (delay = 180) => {
+    window.clearTimeout(closeTimerRef.current);
+    closeTimerRef.current = window.setTimeout(() => setOpenDropdown(null), delay);
+  };
+
+  const cancelClose = () => window.clearTimeout(closeTimerRef.current);
 
   const headerStyle: React.CSSProperties = {
     position: 'sticky',
@@ -63,8 +112,8 @@ export const Header: React.FC = () => {
     boxShadow: isScrolled ? '0 4px 24px -2px rgba(38, 48, 59, 0.08)' : 'none',
   };
 
-  const navLinkStyle = (path: string, exact = false) => {
-    const isActive = exact ? location.pathname === path : (location.pathname === path || (path !== '/' && location.pathname.startsWith(`${path}/`)));
+  const navLinkStyle = (path: string, exact = false, isActiveOverride?: boolean) => {
+    const isActive = isActiveOverride ?? (exact ? location.pathname === path : (location.pathname === path || (path !== '/' && location.pathname.startsWith(`${path}/`))));
     return {
       fontSize: '0.9375rem',
       fontWeight: isActive ? 700 : 600,
@@ -76,18 +125,51 @@ export const Header: React.FC = () => {
       borderRadius: 'var(--radius-sm)',
       transition: 'all var(--transition-fast)',
       cursor: 'pointer',
-    };
+      backgroundColor: 'transparent',
+      border: 'none',
+      fontFamily: 'inherit',
+    } satisfies React.CSSProperties;
+  };
+
+  const aboutActive = aboutGroupRoutes.some((route) => location.pathname.startsWith(route));
+  const productsActive = productsGroupRoutes.some((route) => location.pathname.startsWith(route));
+
+  const dropdownPanelStyle: React.CSSProperties = {
+    position: 'absolute',
+    top: '100%',
+    left: 0,
+    padding: '0.75rem',
+    backgroundColor: '#ffffff',
+    borderRadius: 'var(--radius-lg)',
+    boxShadow: '0 20px 35px -10px rgba(38, 48, 59, 0.12), 0 0 1px 1px rgba(0,0,0,0.06)',
+    border: '1px solid var(--color-border)',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.35rem',
+    zIndex: 60,
+  };
+
+  const dropdownItemStyle: React.CSSProperties = {
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: '0.75rem',
+    padding: '0.625rem',
+    borderRadius: 'var(--radius-md)',
+    textDecoration: 'none',
+    color: 'inherit',
+    transition: 'background-color 150ms',
   };
 
   return (
     <header style={headerStyle}>
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '4.75rem' }}>
-        
-        {/* Brand Logo & Mark - Azaroth Tech-Hive */}
+
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', textDecoration: 'none' }} id="nav-brand-logo">
           <img
             src={logoImg}
             alt="Azaroth Tech-Hive Logo"
+            width={44}
+            height={44}
             style={{
               width: '2.75rem',
               height: '2.75rem',
@@ -108,58 +190,45 @@ export const Header: React.FC = () => {
           </div>
         </Link>
 
-        {/* Desktop Navigation Links */}
-        <nav style={{ display: 'none', gap: '0.35rem', alignItems: 'center' }} className="desktop-nav">
-          
-          {/* Home */}
+        <nav aria-label="Primary" style={{ display: 'none', gap: '0.35rem', alignItems: 'center' }} className="desktop-nav">
+
           <Link to="/" style={navLinkStyle('/', true)} id="nav-home">
             Home
           </Link>
 
-          {/* About Us (Dropdown / In-Page Navigation: Who we are / About Us, Our Values, Delivery Framework) */}
-          <div 
+          <div
+            ref={aboutRef}
             style={{ position: 'relative' }}
-            onMouseEnter={() => setAboutDropdownOpen(true)}
-            onMouseLeave={() => setAboutDropdownOpen(false)}
+            onMouseEnter={() => { cancelClose(); setOpenDropdown('about'); }}
+            onMouseLeave={() => scheduleClose()}
             id="nav-about-container"
           >
-            <div 
-              style={navLinkStyle('/about')}
-              role="button"
-              tabIndex={0}
+            <button
+              type="button"
+              style={navLinkStyle('/about', false, aboutActive)}
               id="nav-about-trigger"
+              aria-expanded={openDropdown === 'about'}
+              aria-haspopup="true"
+              aria-controls="nav-about-menu"
+              onClick={() => setOpenDropdown((prev) => (prev === 'about' ? null : 'about'))}
+              onKeyDown={(event) => {
+                if (event.key === 'ArrowDown') {
+                  event.preventDefault();
+                  setOpenDropdown('about');
+                  window.setTimeout(() => {
+                    aboutRef.current?.querySelector<HTMLElement>('#nav-about-menu a')?.focus();
+                  }, 0);
+                }
+              }}
             >
               <span>About Us</span>
-              <ChevronDown size={15} style={{ transition: 'transform 200ms', transform: aboutDropdownOpen ? 'rotate(180deg)' : 'none' }} />
-            </div>
+              <ChevronDown size={15} aria-hidden="true" style={{ transition: 'transform 200ms', transform: openDropdown === 'about' ? 'rotate(180deg)' : 'none' }} />
+            </button>
 
-            {aboutDropdownOpen && (
-              <div style={{
-                position: 'absolute',
-                top: '100%',
-                left: 0,
-                width: '300px',
-                padding: '0.75rem',
-                backgroundColor: '#ffffff',
-                borderRadius: 'var(--radius-lg)',
-                boxShadow: '0 20px 35px -10px rgba(38, 48, 59, 0.12), 0 0 1px 1px rgba(0,0,0,0.06)',
-                border: '1px solid var(--color-border)',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.35rem',
-                zIndex: 60,
-              }}>
-                <Link to="/about" style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '0.75rem',
-                  padding: '0.625rem',
-                  borderRadius: 'var(--radius-md)',
-                  textDecoration: 'none',
-                  color: 'inherit',
-                  transition: 'background-color 150ms'
-                }} className="dropdown-item">
-                  <div style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-lavender)', color: 'var(--color-brand-violet)' }}>
+            {openDropdown === 'about' && (
+              <div id="nav-about-menu" role="menu" aria-label="About Us" style={{ ...dropdownPanelStyle, width: '300px' }}>
+                <Link to="/about" role="menuitem" style={dropdownItemStyle} className="dropdown-item">
+                  <div aria-hidden="true" style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-lavender)', color: 'var(--color-brand-violet)' }}>
                     <Building2 size={18} />
                   </div>
                   <div>
@@ -168,17 +237,8 @@ export const Header: React.FC = () => {
                   </div>
                 </Link>
 
-                <Link to="/values" style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '0.75rem',
-                  padding: '0.625rem',
-                  borderRadius: 'var(--radius-md)',
-                  textDecoration: 'none',
-                  color: 'inherit',
-                  transition: 'background-color 150ms'
-                }} className="dropdown-item">
-                  <div style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-peach)', color: 'var(--color-brand-orange)' }}>
+                <Link to="/values" role="menuitem" style={dropdownItemStyle} className="dropdown-item">
+                  <div aria-hidden="true" style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-peach)', color: 'var(--color-brand-orange)' }}>
                     <Award size={18} />
                   </div>
                   <div>
@@ -187,17 +247,8 @@ export const Header: React.FC = () => {
                   </div>
                 </Link>
 
-                <Link to="/delivery-framework" style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '0.75rem',
-                  padding: '0.625rem',
-                  borderRadius: 'var(--radius-md)',
-                  textDecoration: 'none',
-                  color: 'inherit',
-                  transition: 'background-color 150ms'
-                }} className="dropdown-item">
-                  <div style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-mint)', color: 'var(--color-brand-emerald)' }}>
+                <Link to="/delivery-framework" role="menuitem" style={dropdownItemStyle} className="dropdown-item">
+                  <div aria-hidden="true" style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-mint)', color: 'var(--color-brand-emerald)' }}>
                     <GitFork size={18} />
                   </div>
                   <div>
@@ -209,122 +260,92 @@ export const Header: React.FC = () => {
             )}
           </div>
 
-          {/* Our Products (Dropdown / In-Page Navigation: Our Portfolio, Explore Products, Explore Services) */}
-          <div 
+          <div
+            ref={productsRef}
             style={{ position: 'relative' }}
-            onMouseEnter={() => setPortfolioDropdownOpen(true)}
-            onMouseLeave={() => setPortfolioDropdownOpen(false)}
+            onMouseEnter={() => { cancelClose(); setOpenDropdown('products'); }}
+            onMouseLeave={() => scheduleClose()}
             id="nav-portfolio-container"
           >
-            <div 
-              style={navLinkStyle('/products')}
-              role="button"
-              tabIndex={0}
+            <button
+              type="button"
+              style={navLinkStyle('/products', false, productsActive)}
               id="nav-portfolio-trigger"
+              aria-expanded={openDropdown === 'products'}
+              aria-haspopup="true"
+              aria-controls="nav-portfolio-menu"
+              onClick={() => setOpenDropdown((prev) => (prev === 'products' ? null : 'products'))}
+              onKeyDown={(event) => {
+                if (event.key === 'ArrowDown') {
+                  event.preventDefault();
+                  setOpenDropdown('products');
+                  window.setTimeout(() => {
+                    productsRef.current?.querySelector<HTMLElement>('#nav-portfolio-menu a')?.focus();
+                  }, 0);
+                }
+              }}
             >
               <span>Our Products</span>
-              <ChevronDown size={15} style={{ transition: 'transform 200ms', transform: portfolioDropdownOpen ? 'rotate(180deg)' : 'none' }} />
-            </div>
+              <ChevronDown size={15} aria-hidden="true" style={{ transition: 'transform 200ms', transform: openDropdown === 'products' ? 'rotate(180deg)' : 'none' }} />
+            </button>
 
-            {portfolioDropdownOpen && (
-              <div style={{
-                position: 'absolute',
-                top: '100%',
-                left: 0,
-                width: '320px',
-                padding: '0.75rem',
-                backgroundColor: '#ffffff',
-                borderRadius: 'var(--radius-lg)',
-                boxShadow: '0 20px 35px -10px rgba(38, 48, 59, 0.12), 0 0 1px 1px rgba(0,0,0,0.06)',
-                border: '1px solid var(--color-border)',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.35rem',
-                zIndex: 60,
-              }}>
-                <Link to="/portfolio" style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '0.75rem',
-                  padding: '0.625rem',
-                  borderRadius: 'var(--radius-md)',
-                  textDecoration: 'none',
-                  color: 'inherit',
-                  transition: 'background-color 150ms'
-                }} className="dropdown-item">
-                  <div style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-peach)', color: 'var(--color-brand-orange)' }}>
+            {openDropdown === 'products' && (
+              <div id="nav-portfolio-menu" role="menu" aria-label="Our Products" style={{ ...dropdownPanelStyle, width: '320px' }}>
+                <Link to="/portfolio" role="menuitem" style={dropdownItemStyle} className="dropdown-item">
+                  <div aria-hidden="true" style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-peach)', color: 'var(--color-brand-orange)' }}>
                     <Briefcase size={18} />
                   </div>
                   <div>
                     <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-text-primary)' }}>Our Portfolio</div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Case studies and delivered systems</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Platforms and services in our catalogue</div>
                   </div>
                 </Link>
 
-                <Link to="/products" style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '0.75rem',
-                  padding: '0.625rem',
-                  borderRadius: 'var(--radius-md)',
-                  textDecoration: 'none',
-                  color: 'inherit',
-                  transition: 'background-color 150ms'
-                }} className="dropdown-item">
-                  <div style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-rose)', color: 'var(--color-brand-magenta)' }}>
+                <Link to="/products" role="menuitem" style={dropdownItemStyle} className="dropdown-item">
+                  <div aria-hidden="true" style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-rose)', color: 'var(--color-brand-magenta)' }}>
                     <ShoppingBag size={18} />
                   </div>
                   <div>
                     <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-text-primary)' }}>Explore Products</div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>FMS, Omnichannel Commerce & LMP</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>FMS, Omnichannel Commerce &amp; LMP</div>
                   </div>
                 </Link>
 
-                <Link to="/services" style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '0.75rem',
-                  padding: '0.625rem',
-                  borderRadius: 'var(--radius-md)',
-                  textDecoration: 'none',
-                  color: 'inherit',
-                  transition: 'background-color 150ms'
-                }} className="dropdown-item">
-                  <div style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-lavender)', color: 'var(--color-brand-violet)' }}>
+                <Link to="/services" role="menuitem" style={dropdownItemStyle} className="dropdown-item">
+                  <div aria-hidden="true" style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-lavender)', color: 'var(--color-brand-violet)' }}>
                     <Layers size={18} />
                   </div>
                   <div>
                     <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-text-primary)' }}>Explore Services</div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Transformation, Consulting & Pods</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Transformation, Consulting &amp; Pods</div>
                   </div>
                 </Link>
               </div>
             )}
           </div>
 
-          {/* Resource Hub (renamed from Technology Insights) */}
           <Link to="/technology-insights" style={navLinkStyle('/technology-insights')} id="nav-resource-hub">
             Resource Hub
           </Link>
 
-          {/* Connect With Us */}
           <Link to="/connect-with-us" style={navLinkStyle('/connect-with-us')} id="nav-connect">
             Connect With Us
           </Link>
 
         </nav>
 
-        {/* Right Action CTA Button - Request for Quote */}
         <div style={{ display: 'none', alignItems: 'center', gap: '0.75rem' }} className="desktop-nav">
           <Button to="/request-for-quote" variant="violet" size="sm" icon={<ArrowRight size={15} />} id="header-rfq-button">
-            Request for Quote
+            Request a quote
           </Button>
         </div>
 
-        {/* Mobile Hamburger Toggle */}
         <button
+          ref={mobileToggleRef}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle navigation menu"
+          aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-nav-drawer"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -339,35 +360,39 @@ export const Header: React.FC = () => {
           }}
           className="mobile-toggle"
         >
-          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          {mobileMenuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
         </button>
 
       </div>
 
-      {/* Mobile Slide-Over Drawer */}
       {mobileMenuOpen && (
-        <div style={{
-          position: 'fixed',
-          top: '4.75rem',
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: '#ffffff',
-          zIndex: 100,
-          padding: '1.5rem',
-          overflowY: 'auto',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem',
-          borderTop: '1px solid var(--color-border-subtle)',
-          boxShadow: '0 25px 50px -12px rgba(38, 48, 59, 0.15)',
-        }}>
+        <div
+          ref={drawerRef}
+          id="mobile-nav-drawer"
+          aria-label="Navigation menu"
+          style={{
+            position: 'fixed',
+            top: '4.75rem',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: '#ffffff',
+            zIndex: 100,
+            padding: '1.5rem',
+            overflowY: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem',
+            borderTop: '1px solid var(--color-border-subtle)',
+            boxShadow: '0 25px 50px -12px rgba(38, 48, 59, 0.15)',
+          }}
+        >
           <Link to="/" style={navLinkStyle('/', true)} onClick={() => setMobileMenuOpen(false)}>
             Home
           </Link>
 
           <div style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--color-border-subtle)', borderTop: '1px solid var(--color-border-subtle)' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-brand-violet)', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '0.5rem 0.75rem', display: 'block' }}>
+            <span id="mobile-nav-about-label" style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-brand-violet)', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '0.5rem 0.75rem', display: 'block' }}>
               About Us
             </span>
             <Link to="/about" style={navLinkStyle('/about')} onClick={() => setMobileMenuOpen(false)}>
@@ -382,10 +407,10 @@ export const Header: React.FC = () => {
           </div>
 
           <div style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--color-border-subtle)' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-brand-violet)', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '0.5rem 0.75rem', display: 'block' }}>
+            <span id="mobile-nav-products-label" style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-brand-violet)', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '0.5rem 0.75rem', display: 'block' }}>
               Our Products
             </span>
-            <Link to="/products" style={navLinkStyle('/products')} onClick={() => setMobileMenuOpen(false)}>
+            <Link to="/portfolio" style={navLinkStyle('/portfolio')} onClick={() => setMobileMenuOpen(false)}>
               Our Portfolio
             </Link>
             <Link to="/products" style={navLinkStyle('/products')} onClick={() => setMobileMenuOpen(false)}>
@@ -405,13 +430,12 @@ export const Header: React.FC = () => {
 
           <div style={{ marginTop: 'auto', paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             <Button to="/request-for-quote" variant="violet" size="lg" icon={<ArrowRight size={18} />}>
-              Request for Quote
+              Request a quote
             </Button>
           </div>
         </div>
       )}
 
-      {/* Inline styles for responsive breakpoints */}
       <style>{`
         @media (min-width: 1024px) {
           .desktop-nav {
@@ -423,6 +447,11 @@ export const Header: React.FC = () => {
         }
         .dropdown-item:hover {
           background-color: var(--color-surface-soft) !important;
+        }
+        .dropdown-item:focus-visible {
+          background-color: var(--color-surface-soft) !important;
+          outline: 2px solid var(--color-brand-violet);
+          outline-offset: 2px;
         }
         #nav-brand-logo:hover .brand-logo-img {
           transform: scale(1.06);

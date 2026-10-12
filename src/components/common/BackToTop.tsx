@@ -6,11 +6,7 @@ export const BackToTop: React.FC = () => {
 
   useEffect(() => {
     const toggleVisibility = () => {
-      if (window.scrollY > 500) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
+      setIsVisible(window.scrollY > 500);
     };
 
     window.addEventListener('scroll', toggleVisibility, { passive: true });
@@ -18,9 +14,10 @@ export const BackToTop: React.FC = () => {
   }, []);
 
   const scrollToTop = () => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
     });
   };
 
@@ -31,10 +28,10 @@ export const BackToTop: React.FC = () => {
       onClick={scrollToTop}
       style={{
         position: 'fixed',
-        bottom: '2rem',
-        right: '2rem',
-        width: '48px',
-        height: '48px',
+        bottom: '6.5rem',
+        right: '1.5rem',
+        width: '46px',
+        height: '46px',
         borderRadius: '50%',
         backgroundColor: 'var(--color-primary-maroon)',
         color: '#ffffff',
@@ -57,7 +54,7 @@ export const BackToTop: React.FC = () => {
       }}
       aria-label="Back to top"
     >
-      <ArrowUp size={24} />
+      <ArrowUp size={22} aria-hidden="true" />
     </button>
   );
 };
