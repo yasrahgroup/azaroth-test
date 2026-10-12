@@ -1,26 +1,32 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Badge } from '../common/Badge';
-import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-const testimonials = [
+const scenarios = [
   {
-    name: 'Director',
-    company: 'Vaken Technologies',
-    content: 'Azaroth has consistently provided highly skilled professionals who seamlessly integrate into our team. Their dedication to understanding our needs and delivering the right talent is outstanding.',
-    rating: 5,
+    situation: 'A legacy ERP estate that blocks reporting',
+    challenge:
+      'Siloed business applications, duplicated data, and disconnected finance, inventory, and operational workflows slow reporting down. Teams wait on manual reconciliations before they can trust a single number.',
+    response:
+      'We review the existing systems, integrations, and API constraints first, then connect finance, procurement, inventory, sales, and reporting so business information lives in one place and operational visibility improves.',
+    serviceArea: 'ERP & systems integration',
   },
   {
-    name: 'CEO',
-    company: 'Tontine Groups',
-    content: 'Working with Azaroth\'s dedicated and skilled professionals was truly rewarding, showcasing exceptional responsiveness and technical expertise. My sincere thanks to the entire team.',
-    rating: 5,
+    situation: 'A commerce platform that cannot carry peak traffic',
+    challenge:
+      'Disconnected sales channels, inconsistent inventory visibility, and manual order processing already create friction across the customer journey. When the platform slows under peak demand, those problems surface as abandoned carts and disputed orders.',
+    response:
+      'We modernize the application foundation and connect storefronts, inventory, order management, and payment gateways, with load, stress, and latency benchmarking built into the testing stage before release.',
+    serviceArea: 'Platform modernization',
   },
   {
-    name: 'Founder',
-    company: 'Tech Startup',
-    content: 'Working with Azaroth has been transformative. Their team truly understood our goals and crafted a custom app tailored to our needs. From seamless cloud solutions to AI-powered analytics, every detail was handled with care.',
-    rating: 5,
+    situation: 'Operations still running on manual handoffs',
+    challenge:
+      'Repetitive data entry, paper-based approvals, and fragmented systems consume team time and introduce errors that are usually caught late, after they have already affected the process downstream.',
+    response:
+      'We re-engineer the workflow, automate document and approval routes, and integrate the systems involved so cycle times shorten, manual entry drops, and operational reporting is available in real time.',
+    serviceArea: 'Process automation',
   },
 ];
 
@@ -28,21 +34,21 @@ export const Testimonials: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const shouldReduceMotion = useReducedMotion();
 
-  const nextTestimonial = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+  const nextScenario = () => {
+    setCurrentIndex((prev) => (prev + 1) % scenarios.length);
   };
 
-  const prevTestimonial = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  const prevScenario = () => {
+    setCurrentIndex((prev) => (prev - 1 + scenarios.length) % scenarios.length);
   };
 
   return (
     <section style={{
-      backgroundColor: '#ffffff',
+      backgroundColor: 'var(--color-canvas-bg)',
       padding: '5rem 0',
     }}>
       <div className="container mx-auto px-6 lg:px-8">
-        
+
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -52,24 +58,31 @@ export const Testimonials: React.FC = () => {
           style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto 4rem' }}
         >
           <Badge variant="gold" style={{ marginBottom: '1rem' }}>
-            Client Testimonials
+            Engagement Scenarios
           </Badge>
           <h2 style={{
             fontSize: 'clamp(2rem, 4vw, 2.5rem)',
             fontWeight: 800,
-            color: '#1e293b',
+            color: 'var(--color-text-primary)',
             marginBottom: '1rem',
             lineHeight: 1.2,
           }}>
-            Client Testimonials that Inspire Growth
+            Problems our engineering teams are built to solve
           </h2>
+          <p style={{
+            fontSize: '1.0625rem',
+            color: 'var(--color-text-secondary)',
+            lineHeight: 1.7,
+          }}>
+            The scenarios below describe typical client situations and how our services respond to them — drawn from the work itself, not attributed testimonials.
+          </p>
         </motion.div>
 
-        {/* Testimonials Carousel */}
+        {/* Scenarios Carousel */}
         <div
           role="region"
           aria-roledescription="carousel"
-          aria-label="Client testimonials"
+          aria-label="Engagement scenarios"
           aria-live="polite"
           style={{
           maxWidth: '800px',
@@ -81,71 +94,76 @@ export const Testimonials: React.FC = () => {
               key={currentIndex}
               role="group"
               aria-roledescription="slide"
-              aria-label={`Testimonial ${currentIndex + 1} of ${testimonials.length}`}
+              aria-label={`Scenario ${currentIndex + 1} of ${scenarios.length}`}
               initial={shouldReduceMotion ? false : { opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -50 }}
               transition={{ duration: shouldReduceMotion ? 0 : 0.4, ease: [0.22, 1, 0.36, 1] }}
               style={{
-                backgroundColor: 'var(--color-canvas-bg)',
+                backgroundColor: 'var(--color-surface-muted)',
                 padding: '3rem',
                 borderRadius: 'var(--radius-md)',
-                border: '1px solid var(--color-border-subtle)',
+                border: '1px solid var(--color-border)',
               }}
             >
-              {/* Stars */}
-              <div style={{ display: 'flex', gap: '0.25rem', marginBottom: '1.5rem' }}>
-                {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
-                  <Star key={i} size={20} fill="var(--color-gold-from)" color="var(--color-gold-from)" />
-                ))}
-              </div>
-
-              {/* Quote */}
-              <p style={{
-                fontSize: '1.25rem',
-                color: 'var(--color-dark-maroon)',
-                lineHeight: 1.7,
-                marginBottom: '2rem',
-                fontStyle: 'italic',
+              {/* Situation */}
+              <h3 style={{
+                fontSize: '1.375rem',
+                fontWeight: 800,
+                color: 'var(--color-text-primary)',
+                lineHeight: 1.3,
+                marginBottom: '1rem',
               }}>
-                "{testimonials[currentIndex].content}"
+                {scenarios[currentIndex].situation}
+              </h3>
+
+              {/* Challenge */}
+              <p style={{
+                fontSize: '1.0625rem',
+                color: 'var(--color-text-secondary)',
+                lineHeight: 1.7,
+                marginBottom: '1.75rem',
+              }}>
+                {scenarios[currentIndex].challenge}
               </p>
 
-              {/* Author */}
+              {/* Response */}
               <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '1rem',
+                backgroundColor: 'var(--color-canvas-card)',
+                border: '1px solid var(--color-border)',
+                borderLeft: '3px solid var(--color-brand-violet)',
+                borderRadius: 'var(--radius-sm)',
+                padding: '1.25rem 1.5rem',
+                marginBottom: '1.5rem',
               }}>
                 <div style={{
-                  width: '48px',
-                  height: '48px',
-                  borderRadius: '50%',
-                  backgroundColor: 'var(--color-primary-maroon)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#ffffff',
+                  fontSize: '0.75rem',
                   fontWeight: 700,
-                  fontSize: '1.25rem',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.04em',
+                  color: 'var(--color-brand-violet)',
+                  marginBottom: '0.5rem',
                 }}>
-                  {testimonials[currentIndex].name.charAt(0)}
+                  How Azaroth responds
                 </div>
-                <div>
-                  <div style={{
-                    fontWeight: 700,
-                    color: 'var(--color-dark-maroon)',
-                    fontSize: '1rem',
-                  }}>
-                    {testimonials[currentIndex].name}
-                  </div>
-                  <div style={{
-                    fontSize: '0.875rem',
-                    color: 'var(--color-text-muted)',
-                  }}>
-                    {testimonials[currentIndex].company}
-                  </div>
-                </div>
+                <p style={{
+                  fontSize: '0.9375rem',
+                  color: 'var(--color-text-primary)',
+                  lineHeight: 1.7,
+                  margin: 0,
+                }}>
+                  {scenarios[currentIndex].response}
+                </p>
+              </div>
+
+              {/* Byline: service area */}
+              <div style={{
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: 'var(--color-text-muted)',
+                letterSpacing: '0.02em',
+              }}>
+                {scenarios[currentIndex].serviceArea}
               </div>
             </motion.div>
           </AnimatePresence>
@@ -159,8 +177,8 @@ export const Testimonials: React.FC = () => {
           }}>
             <button
               type="button"
-              aria-label="Previous testimonial"
-              onClick={prevTestimonial}
+              aria-label="Previous scenario"
+              onClick={prevScenario}
               style={{
                 width: '48px',
                 height: '48px',
@@ -174,14 +192,14 @@ export const Testimonials: React.FC = () => {
                 transition: 'all 180ms ease-out',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--color-primary-maroon)';
-                e.currentTarget.style.borderColor = 'var(--color-primary-maroon)';
+                e.currentTarget.style.backgroundColor = 'var(--color-brand-gold)';
+                e.currentTarget.style.borderColor = 'var(--color-brand-gold)';
                 e.currentTarget.style.color = '#ffffff';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.backgroundColor = '#ffffff';
                 e.currentTarget.style.borderColor = 'var(--color-border-medium)';
-                e.currentTarget.style.color = 'var(--color-dark-maroon)';
+                e.currentTarget.style.color = 'var(--color-text-primary)';
               }}
             >
               <ChevronLeft size={24} />
@@ -189,8 +207,8 @@ export const Testimonials: React.FC = () => {
 
             <button
               type="button"
-              aria-label="Next testimonial"
-              onClick={nextTestimonial}
+              aria-label="Next scenario"
+              onClick={nextScenario}
               style={{
                 width: '48px',
                 height: '48px',
@@ -204,14 +222,14 @@ export const Testimonials: React.FC = () => {
                 transition: 'all 180ms ease-out',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--color-primary-maroon)';
-                e.currentTarget.style.borderColor = 'var(--color-primary-maroon)';
+                e.currentTarget.style.backgroundColor = 'var(--color-brand-gold)';
+                e.currentTarget.style.borderColor = 'var(--color-brand-gold)';
                 e.currentTarget.style.color = '#ffffff';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.backgroundColor = '#ffffff';
                 e.currentTarget.style.borderColor = 'var(--color-border-medium)';
-                e.currentTarget.style.color = 'var(--color-dark-maroon)';
+                e.currentTarget.style.color = 'var(--color-text-primary)';
               }}
             >
               <ChevronRight size={24} />
@@ -225,18 +243,18 @@ export const Testimonials: React.FC = () => {
             gap: '0.5rem',
             marginTop: '1.5rem',
           }}>
-            {testimonials.map((_, index) => (
+            {scenarios.map((_, index) => (
               <button
                 key={index}
                 type="button"
-                aria-label={`Go to testimonial ${index + 1}`}
+                aria-label={`Go to scenario ${index + 1}`}
                 aria-pressed={index === currentIndex}
                 onClick={() => setCurrentIndex(index)}
                 style={{
                   width: index === currentIndex ? '24px' : '8px',
                   height: '8px',
                   borderRadius: '4px',
-                  backgroundColor: index === currentIndex ? 'var(--color-primary-maroon)' : 'var(--color-border-medium)',
+                  backgroundColor: index === currentIndex ? 'var(--color-brand-gold)' : 'var(--color-border-medium)',
                   border: 'none',
                   cursor: 'pointer',
                   transition: 'all 180ms ease-out',

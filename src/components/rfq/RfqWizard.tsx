@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   ArrowRight, 
   ArrowLeft, 
@@ -20,47 +20,96 @@ import { apiService, RfqSubmission } from '../../services/api';
 
 const STORAGE_KEY = 'azr_rfq_draft_v1';
 
+const budgetOptions = [
+  '$25,000 – $50,000',
+  '$50,000 – $100,000',
+  '$100,000 – $250,000',
+  '$250,000+ Enterprise',
+];
+
+const createDraft = (): RfqFormData => ({
+  solutionCategories: ['Dedicated Engineering Pods'],
+  projectScope: 'Full Scale Platform Engineering',
+  targetTimeline: '1 - 3 Months',
+  budgetRange: budgetOptions[1],
+  requirementsDescription: '',
+  ndaRequired: true,
+  contact: {
+    fullName: '',
+    workEmail: '',
+    phone: '',
+    companyName: '',
+    country: '',
+  },
+});
+
+const isUsableDraft = (value: unknown): value is RfqFormData => {
+  if (typeof value !== 'object' || value === null) return false;
+  const draft = value as Record<string, unknown>;
+  const contact = draft.contact as Record<string, unknown> | null | undefined;
+  return (
+    (draft.step === undefined || typeof draft.step === 'number') &&
+    Array.isArray(draft.solutionCategories) &&
+    draft.solutionCategories.every((c) => typeof c === 'string') &&
+    typeof draft.budgetRange === 'string' &&
+    typeof draft.projectScope === 'string' &&
+    typeof draft.targetTimeline === 'string' &&
+    typeof draft.requirementsDescription === 'string' &&
+    typeof draft.ndaRequired === 'boolean' &&
+    typeof contact === 'object' &&
+    contact !== null &&
+    typeof contact.fullName === 'string' &&
+    typeof contact.workEmail === 'string' &&
+    typeof contact.phone === 'string' &&
+    typeof contact.companyName === 'string' &&
+    typeof contact.country === 'string'
+  );
+};
+
+const loadDraft = (): RfqFormData | null => {
+  try {
+    const saved = sessionStorage.getItem(STORAGE_KEY);
+    if (!saved) return null;
+    const draft: unknown = JSON.parse(saved);
+    if (isUsableDraft(draft)) return draft;
+    if (import.meta.env.DEV) console.warn('Discarding RFQ draft with an unexpected shape.');
+  } catch (e) {
+    if (import.meta.env.DEV) console.warn('Failed to parse saved draft RFQ:', e);
+  }
+  return null;
+};
+
 export const RfqWizard: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [submittedRefId, setSubmittedRefId] = useState<string | null>(null);
+  const [refIdFromServer, setRefIdFromServer] = useState<boolean>(false);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [stepAnnouncement, setStepAnnouncement] = useState<string>('');
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
+  const shouldFocusStepRef = useRef(false);
 
-  const [formData, setFormData] = useState<RfqFormData>(() => {
-    try {
-      const saved = sessionStorage.getItem(STORAGE_KEY);
-      if (saved) return JSON.parse(saved);
-    } catch (e) {
-      console.warn('Failed to parse saved draft RFQ:', e);
-    }
-    return {
-      solutionCategories: ['Dedicated Engineering Pods'],
-      projectScope: 'Full Scale Platform Engineering',
-      targetTimeline: '1 - 3 Months',
-      budgetRange: '$50k - $100k',
-      requirementsDescription: '',
-      ndaRequired: true,
-      contact: {
-        fullName: '',
-        workEmail: '',
-        phone: '',
-        companyName: '',
-        country: '',
-      },
-    };
-  });
+  const [formData, setFormData] = useState<RfqFormData>(() => loadDraft() ?? createDraft());
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [fileErrors, setFileErrors] = useState<Record<string, string>>({});
 
   // Persist draft to sessionStorage on changes
   useEffect(() => {
     try {
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
     } catch (e) {
-      console.warn('Failed to save RFQ draft to sessionStorage:', e);
+      if (import.meta.env.DEV) console.warn('Failed to save RFQ draft to sessionStorage:', e);
     }
   }, [formData]);
+
+  useEffect(() => {
+    if (shouldFocusStepRef.current) {
+      shouldFocusStepRef.current = false;
+      stepHeadingRef.current?.focus();
+    }
+  }, [currentStep]);
 
   const stepTitles = [
     'Solutions',
@@ -90,13 +139,6 @@ export const RfqWizard: React.FC = () => {
     '1 - 3 Months',
     '3 - 6 Months',
     'Flexible / Planning Horizon',
-  ];
-
-  const budgetOptions = [
-    '$25,000 – $50,000',
-    '$50,000 – $100,000',
-    '$100,000 – $250,000',
-    '$250,000+ Enterprise',
   ];
 
   const toggleCategory = (cat: string) => {
@@ -134,27 +176,32 @@ export const RfqWizard: React.FC = () => {
     return Object.keys(errs).length === 0;
   };
 
+  const goToStep = (step: number) => {
+    shouldFocusStepRef.current = true;
+    setCurrentStep(step);
+    setStepAnnouncement(`Step ${step} of ${stepTitles.length}: ${stepTitles[step - 1]}`);
+    window.scrollTo({ top: 150, behavior: 'smooth' });
+  };
+
   const handleNext = () => {
     if (validateStep(currentStep)) {
-      setCurrentStep((prev) => Math.min(prev + 1, 5));
-      window.scrollTo({ top: 150, behavior: 'smooth' });
+      goToStep(Math.min(currentStep + 1, 5));
     }
   };
 
   const handleBack = () => {
-    setCurrentStep((prev) => Math.max(prev - 1, 1));
-    window.scrollTo({ top: 150, behavior: 'smooth' });
+    goToStep(Math.max(currentStep - 1, 1));
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
+  const handleFileUpload = (files: FileList) => {
+    const fileList = Array.from(files);
     const MAX_SIZE = 15 * 1024 * 1024; // 15MB
     const ALLOWED_FORMATS = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'image/png', 'image/jpeg', 'application/zip', 'application/x-zip-compressed'];
 
     const validFiles: File[] = [];
     const errs: Record<string, string> = {};
 
-    files.forEach((file) => {
+    fileList.forEach((file) => {
       if (file.size > MAX_SIZE) {
         errs[file.name] = 'File size exceeds 15MB limit.';
       } else if (!ALLOWED_FORMATS.includes(file.type)) {
@@ -164,8 +211,13 @@ export const RfqWizard: React.FC = () => {
       }
     });
 
-    setErrors(errs);
+    setFileErrors(errs);
     setUploadedFiles((prev) => [...prev, ...validFiles]);
+  };
+
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) handleFileUpload(e.target.files);
+    e.target.value = '';
   };
 
   const removeFile = (index: number) => {
@@ -195,7 +247,9 @@ export const RfqWizard: React.FC = () => {
       
       if (response.success) {
         sessionStorage.removeItem(STORAGE_KEY);
-        setSubmittedRefId(response.data?.referenceId || `AZR-RFQ-2026-${Math.floor(1000 + Math.random() * 9000)}`);
+        const serverReferenceId = response.data?.referenceId;
+        setRefIdFromServer(Boolean(serverReferenceId));
+        setSubmittedRefId(serverReferenceId || `AZR-RFQ-2026-${Math.floor(1000 + Math.random() * 9000)}`);
       } else {
         setSubmissionError(response.error || 'Failed to submit RFQ. Please try again.');
       }
@@ -208,29 +262,20 @@ export const RfqWizard: React.FC = () => {
 
   const resetForm = () => {
     setSubmittedRefId(null);
+    setRefIdFromServer(false);
     setCurrentStep(1);
+    setStepAnnouncement('');
     setUploadedFiles([]);
-    setFormData({
-      solutionCategories: ['Dedicated Engineering Pods'],
-      projectScope: 'Full Scale Platform Engineering',
-      targetTimeline: '1 - 3 Months',
-      budgetRange: '$50k - $100k',
-      requirementsDescription: '',
-      ndaRequired: true,
-      contact: {
-        fullName: '',
-        workEmail: '',
-        phone: '',
-        companyName: '',
-        country: '',
-      },
-    });
+    setFileErrors({});
+    setErrors({});
+    setFormData(createDraft());
   };
 
   if (submittedRefId) {
     return (
       <RfqSuccessModal
         referenceId={submittedRefId}
+        issuedByServer={refIdFromServer}
         clientName={formData.contact.fullName}
         onReset={resetForm}
       />
@@ -250,6 +295,22 @@ export const RfqWizard: React.FC = () => {
       }}
     >
       {/* Visual Stepper */}
+      <div
+        aria-live="polite"
+        style={{
+          position: 'absolute',
+          width: '1px',
+          height: '1px',
+          padding: 0,
+          margin: '-1px',
+          overflow: 'hidden',
+          clip: 'rect(0, 0, 0, 0)',
+          whiteSpace: 'nowrap',
+          border: 0,
+        }}
+      >
+        {stepAnnouncement}
+      </div>
       <StepIndicator
         currentStep={currentStep}
         totalSteps={5}
@@ -262,7 +323,7 @@ export const RfqWizard: React.FC = () => {
         {currentStep === 1 && (
           <div>
             <div style={{ marginBottom: '1.75rem' }}>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-dark-maroon)', marginBottom: '0.375rem' }}>
+              <h3 ref={stepHeadingRef} tabIndex={-1} style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-dark-maroon)', marginBottom: '0.375rem' }}>
                 Select Architecture & Engineering Focus
               </h3>
               <p style={{ fontSize: '0.9375rem', color: 'var(--color-text-secondary)' }}>
@@ -270,7 +331,13 @@ export const RfqWizard: React.FC = () => {
               </p>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
+            <div
+              role="group"
+              aria-label="Solution categories"
+              aria-invalid={Boolean(errors.solutions)}
+              aria-describedby={errors.solutions ? 'rfq-solutions-error' : undefined}
+              style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}
+            >
               {solutionOptions.map((opt) => {
                 const isSelected = formData.solutionCategories.includes(opt.title);
                 return (
@@ -326,7 +393,7 @@ export const RfqWizard: React.FC = () => {
                 );
               })}
             </div>
-            {errors.solutions && <div className="form-error" style={{ marginBottom: '1.5rem' }}><AlertCircle size={14} /> {errors.solutions}</div>}
+            {errors.solutions && <div id="rfq-solutions-error" role="alert" className="form-error" style={{ marginBottom: '1.5rem' }}><AlertCircle size={14} /> {errors.solutions}</div>}
           </div>
         )}
 
@@ -334,7 +401,7 @@ export const RfqWizard: React.FC = () => {
         {currentStep === 2 && (
           <div>
             <div style={{ marginBottom: '1.75rem' }}>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-dark-maroon)', marginBottom: '0.375rem' }}>
+              <h3 ref={stepHeadingRef} tabIndex={-1} style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-dark-maroon)', marginBottom: '0.375rem' }}>
                 Project Scope & Target Timeline
               </h3>
               <p style={{ fontSize: '0.9375rem', color: 'var(--color-text-secondary)' }}>
@@ -409,7 +476,7 @@ export const RfqWizard: React.FC = () => {
         {currentStep === 3 && (
           <div>
             <div style={{ marginBottom: '1.75rem' }}>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-dark-maroon)', marginBottom: '0.375rem' }}>
+              <h3 ref={stepHeadingRef} tabIndex={-1} style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-dark-maroon)', marginBottom: '0.375rem' }}>
                 Budget Allocation & Architectural Requirements
               </h3>
               <p style={{ fontSize: '0.9375rem', color: 'var(--color-text-secondary)' }}>
@@ -458,8 +525,10 @@ export const RfqWizard: React.FC = () => {
                 placeholder="Describe your project requirements and objectives..."
                 value={formData.requirementsDescription}
                 onChange={(e) => setFormData({ ...formData, requirementsDescription: e.target.value })}
+                aria-invalid={Boolean(errors.requirements)}
+                aria-describedby={errors.requirements ? 'rfq-requirements-error' : undefined}
               />
-              {errors.requirements && <span className="form-error"><AlertCircle size={13} /> {errors.requirements}</span>}
+              {errors.requirements && <span id="rfq-requirements-error" role="alert" className="form-error"><AlertCircle size={13} /> {errors.requirements}</span>}
             </div>
 
             <div style={{
@@ -491,7 +560,7 @@ export const RfqWizard: React.FC = () => {
         {currentStep === 4 && (
           <div>
             <div style={{ marginBottom: '1.75rem' }}>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-dark-maroon)', marginBottom: '0.375rem' }}>
+              <h3 ref={stepHeadingRef} tabIndex={-1} style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-dark-maroon)', marginBottom: '0.375rem' }}>
                 Share Your Project Documents
               </h3>
               <p style={{ fontSize: '0.9375rem', color: 'var(--color-text-secondary)' }}>
@@ -523,8 +592,7 @@ export const RfqWizard: React.FC = () => {
                 e.preventDefault();
                 e.currentTarget.style.borderColor = 'var(--color-border-medium)';
                 e.currentTarget.style.backgroundColor = 'rgba(250, 250, 247, 0.5)';
-                const files = Array.from(e.dataTransfer.files);
-                handleFileUpload({ target: { files: files as any } } as React.ChangeEvent<HTMLInputElement>);
+                handleFileUpload(e.dataTransfer.files);
               }}
               onClick={() => document.getElementById('fileUpload')?.click()}
             >
@@ -533,7 +601,7 @@ export const RfqWizard: React.FC = () => {
                 type="file"
                 multiple
                 accept=".pdf,.docx,.xlsx,.png,.jpg,.jpeg,.zip"
-                onChange={handleFileUpload}
+                onChange={handleFileInputChange}
                 style={{ display: 'none' }}
               />
               <div style={{
@@ -610,10 +678,10 @@ export const RfqWizard: React.FC = () => {
             )}
 
             {/* File Upload Errors */}
-            {Object.keys(errors).length > 0 && (
+            {Object.keys(fileErrors).length > 0 && (
               <div style={{ marginTop: '1rem' }}>
-                {Object.entries(errors).map(([fileName, error]) => (
-                  <div key={fileName} className="form-error" style={{ marginBottom: '0.5rem' }}>
+                {Object.entries(fileErrors).map(([fileName, error]) => (
+                  <div key={fileName} role="alert" className="form-error" style={{ marginBottom: '0.5rem' }}>
                     <AlertCircle size={13} /> {fileName}: {error}
                   </div>
                 ))}
@@ -626,7 +694,7 @@ export const RfqWizard: React.FC = () => {
         {currentStep === 5 && (
           <div>
             <div style={{ marginBottom: '1.75rem' }}>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-dark-maroon)', marginBottom: '0.375rem' }}>
+              <h3 ref={stepHeadingRef} tabIndex={-1} style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-dark-maroon)', marginBottom: '0.375rem' }}>
                 Contact & Verification Details
               </h3>
               <p style={{ fontSize: '0.9375rem', color: 'var(--color-text-secondary)' }}>
@@ -648,8 +716,10 @@ export const RfqWizard: React.FC = () => {
                     ...formData,
                     contact: { ...formData.contact, fullName: e.target.value }
                   })}
+                  aria-invalid={Boolean(errors.fullName)}
+                  aria-describedby={errors.fullName ? 'rfq-fullName-error' : undefined}
                 />
-                {errors.fullName && <span className="form-error"><AlertCircle size={13} /> {errors.fullName}</span>}
+                {errors.fullName && <span id="rfq-fullName-error" role="alert" className="form-error"><AlertCircle size={13} /> {errors.fullName}</span>}
               </div>
 
               <div className="form-group">
@@ -664,8 +734,10 @@ export const RfqWizard: React.FC = () => {
                     ...formData,
                     contact: { ...formData.contact, workEmail: e.target.value }
                   })}
+                  aria-invalid={Boolean(errors.workEmail)}
+                  aria-describedby={errors.workEmail ? 'rfq-workEmail-error' : undefined}
                 />
-                {errors.workEmail && <span className="form-error"><AlertCircle size={13} /> {errors.workEmail}</span>}
+                {errors.workEmail && <span id="rfq-workEmail-error" role="alert" className="form-error"><AlertCircle size={13} /> {errors.workEmail}</span>}
               </div>
 
               <div className="form-group">
@@ -680,8 +752,10 @@ export const RfqWizard: React.FC = () => {
                     ...formData,
                     contact: { ...formData.contact, companyName: e.target.value }
                   })}
+                  aria-invalid={Boolean(errors.companyName)}
+                  aria-describedby={errors.companyName ? 'rfq-companyName-error' : undefined}
                 />
-                {errors.companyName && <span className="form-error"><AlertCircle size={13} /> {errors.companyName}</span>}
+                {errors.companyName && <span id="rfq-companyName-error" role="alert" className="form-error"><AlertCircle size={13} /> {errors.companyName}</span>}
               </div>
 
               <div className="form-group">

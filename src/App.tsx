@@ -21,7 +21,7 @@ import { NotFound } from './pages/NotFound';
 
 export const App: React.FC = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
         <Route element={<PublicLayout />}>
           {/* Canonical Homepage */}
@@ -33,7 +33,6 @@ export const App: React.FC = () => {
 
           {/* Methodology & Delivery */}
           <Route path="/delivery-framework" element={<DeliveryFramework />} />
-          <Route path="/how-we-work" element={<Navigate to="/delivery-framework" replace />} />
 
           {/* Software Platforms & Catalogs */}
           <Route path="/products" element={<Products />} />
@@ -48,16 +47,12 @@ export const App: React.FC = () => {
 
           {/* Resource Hub & Technology Insights */}
           <Route path="/technology-insights" element={<Insights />} />
-          <Route path="/insights" element={<Navigate to="/technology-insights" replace />} />
           <Route path="/technology-insights/:slug" element={<InsightDetail />} />
-          <Route path="/insights/:slug" element={<InsightDetail />} />
 
           {/* Direct Communication & Conversion Portals */}
           <Route path="/connect-with-us" element={<Connect />} />
-          <Route path="/connect" element={<Navigate to="/connect-with-us" replace />} />
 
           <Route path="/request-for-quote" element={<RequestQuote />} />
-          <Route path="/rfq" element={<Navigate to="/request-for-quote" replace />} />
 
           {/* Legal Pages */}
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />

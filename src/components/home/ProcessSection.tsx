@@ -1,38 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import { Badge } from '../common/Badge';
-
-const steps = [
-  {
-    number: '01',
-    title: 'Discovery & Strategy',
-    description: 'We begin by understanding your business goals, challenges, and requirements through in-depth consultations and research.',
-  },
-  {
-    number: '02',
-    title: 'Design & Planning',
-    description: 'Our team creates detailed wireframes, prototypes, and technical specifications to ensure alignment before development begins.',
-  },
-  {
-    number: '03',
-    title: 'Development & Testing',
-    description: 'We build your solution using industry best practices, with rigorous testing at every stage to ensure quality and performance.',
-  },
-  {
-    number: '04',
-    title: 'Launch & Support',
-    description: 'After deployment, we provide ongoing support, maintenance, and optimization to help your solution evolve with your business.',
-  },
-];
+import { deliveryStages } from '../../data/deliveryData';
 
 export const ProcessSection: React.FC = () => {
   return (
     <section style={{
-      backgroundColor: '#f8fafc',
+      backgroundColor: 'var(--color-surface-muted)',
       padding: '5rem 0',
     }}>
       <div className="container mx-auto px-6 lg:px-8">
-        
+
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -47,7 +27,7 @@ export const ProcessSection: React.FC = () => {
           <h2 style={{
             fontSize: 'clamp(2rem, 4vw, 2.5rem)',
             fontWeight: 800,
-            color: '#1e293b',
+            color: 'var(--color-text-primary)',
             marginBottom: '1rem',
             lineHeight: 1.2,
           }}>
@@ -55,78 +35,104 @@ export const ProcessSection: React.FC = () => {
           </h2>
           <p style={{
             fontSize: '1.0625rem',
-            color: '#64748b',
+            color: 'var(--color-text-secondary)',
             lineHeight: 1.7,
           }}>
-            At Azaroth, we believe that every successful project begins with a deep understanding of your goals and challenges. Here's how we turn your vision into reality.
+            Every engagement moves through the same six-stage delivery framework, from discovery and solution design through testing and deployment to continuous improvement. Here is the short version of each stage.
           </p>
         </motion.div>
 
-        {/* Process Steps */}
+        {/* Delivery Framework Stages */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-          gap: '2rem',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+          gap: '1.25rem',
           position: 'relative',
         }}>
-          {steps.map((step, index) => (
+          {deliveryStages.map((stage, index) => (
             <motion.div
-              key={index}
+              key={stage.stageNumber}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.6, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ y: -4, transition: { duration: 0.2 } }}
               style={{
-                backgroundColor: '#ffffff',
-                padding: '2rem',
+                backgroundColor: 'var(--color-canvas-card)',
+                padding: '1.5rem',
                 borderRadius: '12px',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
-                border: '1px solid #e5e7eb',
+                boxShadow: 'var(--shadow-sm)',
+                border: '1px solid var(--color-border)',
                 position: 'relative',
                 transition: 'all 180ms ease-out',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 12px 24px -8px rgba(0, 0, 0, 0.1)';
-                e.currentTarget.style.borderColor = '#2563eb';
+                e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
+                e.currentTarget.style.borderColor = 'var(--color-brand-violet)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.05)';
-                e.currentTarget.style.borderColor = '#e5e7eb';
+                e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
+                e.currentTarget.style.borderColor = 'var(--color-border)';
               }}
             >
               {/* Step Number */}
               <div style={{
-                fontSize: '3rem',
+                fontSize: '2rem',
                 fontWeight: 800,
-                color: 'rgba(37, 99, 235, 0.15)',
-                marginBottom: '1rem',
+                color: 'var(--color-brand-violet-glow)',
+                marginBottom: '0.75rem',
                 lineHeight: 1,
               }}>
-                {step.number}
+                {`0${stage.stageNumber}`}
               </div>
 
-              {/* Step Title */}
+              {/* Stage Title */}
               <h3 style={{
-                fontSize: '1.25rem',
+                fontSize: '1rem',
                 fontWeight: 700,
-                color: '#1e293b',
-                marginBottom: '0.75rem',
+                color: 'var(--color-text-primary)',
+                marginBottom: '0.5rem',
+                lineHeight: 1.35,
               }}>
-                {step.title}
+                {stage.title}
               </h3>
 
-              {/* Step Description */}
+              {/* Stage Short Summary */}
               <p style={{
-                fontSize: '0.9375rem',
-                color: '#64748b',
+                fontSize: '0.8125rem',
+                color: 'var(--color-text-secondary)',
                 lineHeight: 1.6,
               }}>
-                {step.description}
+                {stage.tagline}
               </p>
             </motion.div>
           ))}
         </div>
+
+        {/* Framework CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          style={{ textAlign: 'center', marginTop: '2.5rem' }}
+        >
+          <Link
+            to="/delivery-framework"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              fontSize: '1rem',
+              fontWeight: 600,
+              color: 'var(--color-brand-violet)',
+              textDecoration: 'none',
+            }}
+          >
+            <span>Explore the delivery framework</span>
+            <ArrowRight size={18} aria-hidden="true" />
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

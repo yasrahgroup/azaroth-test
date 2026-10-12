@@ -5,6 +5,7 @@ import { ourValuesPrinciples } from '../data/companyData';
 import { Card } from '../components/common/Card';
 import { Badge } from '../components/common/Badge';
 import { Button } from '../components/common/Button';
+import { SEOHead } from '../components/common/SEOHead';
 
 export const Values: React.FC = () => {
   const getIcon = (name: string) => {
@@ -21,13 +22,18 @@ export const Values: React.FC = () => {
 
   return (
     <div>
+      <SEOHead
+        title="Our Values — Azaroth Tech-Hive"
+        description="The principles that guide our engineering decisions, client partnerships, and delivery of dependable software solutions for every engagement and long-term relationship."
+        canonicalPath="/values"
+      />
       {/* Page Hero */}
       <section className="section" style={{ backgroundColor: 'var(--color-canvas-bg)', borderBottom: '1px solid var(--color-border-subtle)' }}>
         <div className="container" style={{ textAlign: 'center', maxWidth: '800px' }}>
           <Badge variant="gold" style={{ marginBottom: '1rem' }}>
             Our Principles
           </Badge>
-          <h1 style={{ marginBottom: '1.25rem' }}>
+          <h1 style={{ marginBottom: '1.25rem', fontSize: 'clamp(2.25rem, 4.5vw, 3.5rem)', fontWeight: 800, color: 'var(--color-text-primary)' }}>
             Principles That Shape Every Solution
           </h1>
           <p style={{ fontSize: '1.1875rem', lineHeight: 1.6 }}>
@@ -39,6 +45,9 @@ export const Values: React.FC = () => {
       {/* Values Grid */}
       <section className="section" style={{ backgroundColor: '#ffffff' }}>
         <div className="container">
+          <h2 style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}>
+            Our Core Values
+          </h2>
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
@@ -53,23 +62,22 @@ export const Values: React.FC = () => {
                 transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
               >
                 <Card
-                  variant="solid"
+                  variant="glass"
                   padding="lg"
                   style={{
-                    backgroundColor: 'rgba(250, 250, 247, 0.6)',
-                    border: '1px solid rgba(122, 12, 22, 0.1)',
+                    border: '1px solid var(--color-border)',
                     borderRadius: 'var(--radius-xl)',
                     display: 'flex',
                     flexDirection: 'column',
                     transition: 'all 180ms ease-out',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = '0 8px 20px -6px rgba(122, 12, 22, 0.15)';
-                    e.currentTarget.style.borderColor = 'rgba(122, 12, 22, 0.25)';
+                    e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
+                    e.currentTarget.style.borderColor = 'var(--color-brand-gold)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.boxShadow = '';
-                    e.currentTarget.style.borderColor = 'rgba(122, 12, 22, 0.1)';
+                    e.currentTarget.style.borderColor = 'var(--color-border)';
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
@@ -77,12 +85,12 @@ export const Values: React.FC = () => {
                       width: '3.5rem',
                       height: '3.5rem',
                       borderRadius: '14px',
-                      backgroundColor: 'rgba(122, 12, 22, 0.1)',
-                      color: 'var(--color-primary-maroon)',
+                      backgroundColor: 'var(--color-surface-peach)',
+                      color: 'var(--color-brand-orange)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      border: '1px solid rgba(122, 12, 22, 0.2)',
+                      border: '1px solid var(--color-brand-orange-border)',
                     }}>
                       {getIcon(val.iconName)}
                     </div>
@@ -92,7 +100,7 @@ export const Values: React.FC = () => {
                     </Badge>
                   </div>
 
-                  <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-dark-maroon)', marginBottom: '0.375rem' }}>
+                  <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: '0.375rem' }}>
                     {val.title}
                   </h3>
 

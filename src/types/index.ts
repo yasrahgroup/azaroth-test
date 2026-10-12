@@ -13,14 +13,13 @@ export interface Product {
   shortDescription: string;
   coverImage: string;
   coverAlt: string;
-  stockStatus?: string;
   isEnabled?: boolean;
   keyCapabilities: string[];
   benefits: string[];
   techSpecs: {
     latency: string;
     concurrency: string;
-    compliance: string[];
+    compliancePosture: string;
     protocols: string[];
   };
   features: string[];

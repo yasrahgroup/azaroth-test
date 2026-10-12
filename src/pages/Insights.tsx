@@ -4,6 +4,7 @@ import { Search, Clock, ArrowRight, Inbox } from 'lucide-react';
 import { insightsArticles } from '../data/insightsData';
 import { Card } from '../components/common/Card';
 import { Badge } from '../components/common/Badge';
+import { SEOHead } from '../components/common/SEOHead';
 
 export const Insights: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
@@ -34,13 +35,18 @@ export const Insights: React.FC = () => {
 
   return (
     <div>
+      <SEOHead
+        title="Resource Hub — Engineering Insights | Azaroth Tech-Hive"
+        description="Browse engineering insights on system architecture, enterprise AI, and cloud modernization, with practical technical guidance from the Azaroth Tech-Hive team."
+        canonicalPath="/technology-insights"
+      />
       {/* Page Hero */}
       <section className="section" style={{ backgroundColor: 'var(--color-canvas-bg)', borderBottom: '1px solid var(--color-border-subtle)' }}>
         <div className="container" style={{ textAlign: 'center', maxWidth: '820px' }}>
           <Badge variant="gold" style={{ marginBottom: '1rem' }}>
             Resource Hub
           </Badge>
-          <h1 style={{ marginBottom: '1.25rem' }}>
+          <h1 style={{ marginBottom: '1.25rem', fontSize: 'clamp(2.25rem, 4.5vw, 3.5rem)', fontWeight: 800, color: 'var(--color-text-primary)' }}>
             Engineering Insights That Move Ideas Forward
           </h1>
           <p style={{ fontSize: '1.1875rem', lineHeight: 1.6 }}>
@@ -54,7 +60,7 @@ export const Insights: React.FC = () => {
         <div className="container">
           
           {/* Search & Category Filter Controls */}
-          <div style={{
+          <div role="search" style={{
             display: 'flex',
             flexWrap: 'wrap',
             alignItems: 'center',
@@ -69,6 +75,7 @@ export const Insights: React.FC = () => {
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
+                  aria-pressed={selectedCategory === cat}
                   style={{
                     padding: '0.5rem 1rem',
                     borderRadius: 'var(--radius-full)',
@@ -77,8 +84,8 @@ export const Insights: React.FC = () => {
                     cursor: 'pointer',
                     transition: 'all 180ms ease-out',
                     border: '1px solid',
-                    backgroundColor: selectedCategory === cat ? 'var(--color-primary-maroon)' : 'rgba(250, 250, 247, 0.8)',
-                    borderColor: selectedCategory === cat ? 'var(--color-primary-maroon)' : 'var(--color-border-medium)',
+                    backgroundColor: selectedCategory === cat ? 'var(--color-brand-gold)' : 'rgba(255, 255, 255, 0.8)',
+                    borderColor: selectedCategory === cat ? 'var(--color-brand-gold)' : 'var(--color-border)',
                     color: selectedCategory === cat ? '#ffffff' : 'var(--color-text-primary)',
                   }}
                 >
@@ -92,6 +99,7 @@ export const Insights: React.FC = () => {
               <input
                 type="text"
                 placeholder="Search articles and whitepapers..."
+                aria-label="Search resources"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 style={{
@@ -111,15 +119,15 @@ export const Insights: React.FC = () => {
             <div style={{
               padding: '3rem 1.5rem',
               borderRadius: 'var(--radius-xl)',
-              border: '1px dashed rgba(122, 12, 22, 0.2)',
-              backgroundColor: 'rgba(250, 250, 247, 0.5)',
+              border: '1px dashed var(--color-border)',
+              backgroundColor: 'var(--color-surface-soft)',
               textAlign: 'center',
               color: 'var(--color-text-secondary)',
             }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '3rem', height: '3rem', borderRadius: '50%', backgroundColor: 'rgba(122, 12, 22, 0.08)', marginBottom: '1rem' }}>
-                <Inbox size={20} style={{ color: 'var(--color-primary-maroon)' }} />
+              <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '3rem', height: '3rem', borderRadius: '50%', backgroundColor: 'var(--color-surface-muted)', marginBottom: '1rem' }}>
+                <Inbox size={20} style={{ color: 'var(--color-brand-gold)' }} />
               </div>
-              <h3 style={{ margin: '0 0 0.5rem', color: 'var(--color-dark-maroon)' }}>No resources match your search</h3>
+              <h2 style={{ margin: '0 0 0.5rem', color: 'var(--color-text-primary)' }}>No resources match your search</h2>
               <p style={{ margin: 0 }}>Try a different keyword or switch back to another category.</p>
             </div>
           ) : (
@@ -134,7 +142,7 @@ export const Insights: React.FC = () => {
                   variant="solid"
                   padding="lg"
                   style={{
-                    backgroundColor: 'rgba(250, 250, 247, 0.5)',
+                    backgroundColor: 'var(--color-surface-soft)',
                     border: '1px solid var(--color-border-subtle)',
                     borderRadius: 'var(--radius-xl)',
                     display: 'flex',
@@ -150,7 +158,7 @@ export const Insights: React.FC = () => {
                     </div>
                   </div>
 
-                  <h2 style={{ fontSize: '1.375rem', fontWeight: 800, color: 'var(--color-dark-maroon)', lineHeight: 1.3, marginBottom: '0.75rem' }}>
+                  <h2 style={{ fontSize: '1.375rem', fontWeight: 800, color: 'var(--color-text-primary)', lineHeight: 1.3, marginBottom: '0.75rem' }}>
                     <Link to={`/technology-insights/${article.slug}`} style={{ color: 'inherit', textDecoration: 'none' }} className="article-title-link">
                       {article.title}
                     </Link>
@@ -169,7 +177,7 @@ export const Insights: React.FC = () => {
                     marginTop: 'auto',
                   }}>
                     <div>
-                      <div style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--color-dark-maroon)' }}>
+                      <div style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>
                         {article.author.name}
                       </div>
                       <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
@@ -183,7 +191,7 @@ export const Insights: React.FC = () => {
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '0.25rem',
-                        color: 'var(--color-primary-maroon)',
+                        color: 'var(--color-brand-gold)',
                         fontWeight: 700,
                         fontSize: '0.875rem',
                         textDecoration: 'none',

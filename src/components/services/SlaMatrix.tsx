@@ -19,7 +19,7 @@ export const SlaMatrix: React.FC = () => {
             Enterprise SLA Tier Comparison
           </h2>
           <p style={{ fontSize: '1.0625rem', color: 'var(--color-text-secondary)' }}>
-            Transparent commitments backed by dedicated lead architects, continuous automated telemetry, and 24/7 war room response.
+            Transparent engagement models, clear delivery checkpoints, and architecture support shaped around your operating model and risk profile.
           </p>
         </div>
 
@@ -40,11 +40,12 @@ export const SlaMatrix: React.FC = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 borderRadius: 'var(--radius-xl)',
-                border: tier.highlight ? '2px solid #D4AF37' : '1px solid var(--color-border-subtle)',
-                backgroundColor: tier.highlight ? '#2B0408' : '#ffffff',
-                boxShadow: tier.highlight ? '0 20px 40px -10px rgba(122, 12, 22, 0.3)' : 'var(--shadow-sm)',
-                transform: tier.highlight ? 'scale(1.02)' : 'none',
+                border: tier.highlight ? '2px solid var(--color-brand-gold)' : '1px solid var(--color-border-subtle)',
+                backgroundColor: tier.highlight ? 'linear-gradient(135deg, #FFF9F0 0%, #F5F3FF 100%)' : '#ffffff',
+                boxShadow: tier.highlight ? '0 20px 40px -10px rgba(117, 68, 216, 0.12)' : 'var(--shadow-sm)',
+                transform: tier.highlight ? 'scale(1.01)' : 'none',
                 zIndex: tier.highlight ? 2 : 1,
+                background: tier.highlight ? 'linear-gradient(135deg, #FFF9F0 0%, #F5F3FF 100%)' : '#ffffff',
               }}
             >
               {tier.highlight && (
@@ -200,7 +201,7 @@ export const SlaMatrix: React.FC = () => {
                 className="w-full"
                 icon={<ArrowRight size={16} />}
               >
-                Inquire for {tier.tierName}
+                Discuss this model
               </Button>
             </Card>
           ))}

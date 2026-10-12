@@ -13,13 +13,13 @@ import logoImg from '../../assets/Logo.png';
 export const Footer: React.FC = () => {
   return (
     <footer style={{
-      backgroundColor: 'var(--color-canvas-dark)',
-      color: 'var(--color-text-inverse)',
-      borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+      backgroundColor: '#ffffff',
+      color: 'var(--color-text-primary)',
+      borderTop: '1px solid var(--color-border)',
       position: 'relative',
       overflow: 'hidden',
     }} id="site-footer">
-      {/* Subtle ambient maroon/gold glow inside footer */}
+      {/* Subtle ambient glow inside footer */}
       <div style={{
         position: 'absolute',
         top: '-150px',
@@ -27,7 +27,7 @@ export const Footer: React.FC = () => {
         width: '450px',
         height: '450px',
         borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(122, 12, 22, 0.22) 0%, rgba(122, 12, 22, 0) 70%)',
+        background: 'radial-gradient(circle, rgba(117, 68, 216, 0.15) 0%, rgba(117, 68, 216, 0) 70%)',
         pointerEvents: 'none',
       }} />
 
@@ -38,7 +38,7 @@ export const Footer: React.FC = () => {
         width: '400px',
         height: '400px',
         borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, rgba(212, 175, 55, 0) 70%)',
+        background: 'radial-gradient(circle, rgba(216, 173, 89, 0.12) 0%, rgba(216, 173, 89, 0) 70%)',
         pointerEvents: 'none',
       }} />
 
@@ -52,32 +52,32 @@ export const Footer: React.FC = () => {
           
           {/* Left Column: Location & Contact & Policies */}
           <div>
-            <h4 style={{ color: 'var(--color-gold-from)', fontSize: '1rem', fontWeight: 700, marginBottom: '1.25rem', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+            <h4 style={{ color: 'var(--color-brand-violet)', fontSize: '1rem', fontWeight: 700, marginBottom: '1.25rem', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
               Our Location(s)
             </h4>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem', color: 'var(--color-text-inverse-muted)', fontSize: '0.9375rem', marginBottom: '1.75rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem', color: 'var(--color-text-secondary)', fontSize: '0.9375rem', marginBottom: '1.75rem' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
-                <MapPin size={18} style={{ color: 'var(--color-gold-from)', flexShrink: 0, marginTop: '0.2rem' }} />
+                <MapPin size={18} style={{ color: 'var(--color-brand-violet)', flexShrink: 0, marginTop: '0.2rem' }} />
                 <span>24, Malaviya Avenue, Thiruvanmiyur, Chennai, India</span>
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <Phone size={18} style={{ color: 'var(--color-gold-from)', flexShrink: 0 }} />
+                <Phone size={18} style={{ color: 'var(--color-brand-violet)', flexShrink: 0 }} />
                 <a href="tel:+916379480931" style={{ color: 'inherit', textDecoration: 'none' }} className="footer-link">
                   +91 6379480931
                 </a>
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <Mail size={18} style={{ color: 'var(--color-gold-from)', flexShrink: 0 }} />
+                <Mail size={18} style={{ color: 'var(--color-brand-violet)', flexShrink: 0 }} />
                 <a href="mailto:hello@azaroth-techhive.com" style={{ color: 'inherit', textDecoration: 'none' }} className="footer-link">
                   hello@azaroth-techhive.com
                 </a>
               </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '0.875rem', color: 'var(--color-text-inverse-muted)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
               <Link to="/privacy-policy" style={{ color: 'inherit', textDecoration: 'none' }} className="footer-link">
                 Privacy Policy
               </Link>
@@ -90,25 +90,25 @@ export const Footer: React.FC = () => {
 
           {/* Middle Column: Quick Links */}
           <div>
-            <h4 style={{ color: 'var(--color-gold-from)', fontSize: '1rem', fontWeight: 700, marginBottom: '1.25rem', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+            <h4 style={{ color: 'var(--color-brand-violet)', fontSize: '1rem', fontWeight: 700, marginBottom: '1.25rem', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
               Quick Links
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
               <li>
-                <Link to="/products" style={{ color: 'var(--color-text-inverse-muted)', fontSize: '0.9375rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }} className="footer-link">
-                  <ArrowRight size={14} style={{ color: 'var(--color-gold-from)' }} />
+                <Link to="/products" style={{ color: 'var(--color-text-secondary)', fontSize: '0.9375rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }} className="footer-link">
+                  <ArrowRight size={14} style={{ color: 'var(--color-brand-violet)' }} />
                   Explore Products
                 </Link>
               </li>
               <li>
-                <Link to="/services" style={{ color: 'var(--color-text-inverse-muted)', fontSize: '0.9375rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }} className="footer-link">
-                  <ArrowRight size={14} style={{ color: 'var(--color-gold-from)' }} />
+                <Link to="/services" style={{ color: 'var(--color-text-secondary)', fontSize: '0.9375rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }} className="footer-link">
+                  <ArrowRight size={14} style={{ color: 'var(--color-brand-violet)' }} />
                   Explore Services
                 </Link>
               </li>
               <li>
-                <Link to="/technology-insights" style={{ color: 'var(--color-text-inverse-muted)', fontSize: '0.9375rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }} className="footer-link">
-                  <ArrowRight size={14} style={{ color: 'var(--color-gold-from)' }} />
+                <Link to="/technology-insights" style={{ color: 'var(--color-text-secondary)', fontSize: '0.9375rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }} className="footer-link">
+                  <ArrowRight size={14} style={{ color: 'var(--color-brand-violet)' }} />
                   Resource Hub
                 </Link>
               </li>
@@ -131,47 +131,54 @@ export const Footer: React.FC = () => {
                   height: '3.1rem',
                   objectFit: 'contain',
                   flexShrink: 0,
-                  filter: 'drop-shadow(0 4px 14px rgba(212, 175, 55, 0.4)) drop-shadow(0 2px 6px rgba(122, 12, 22, 0.6))',
+                  filter: 'drop-shadow(0 4px 14px rgba(216, 173, 89, 0.3)) drop-shadow(0 2px 6px rgba(117, 68, 216, 0.2))',
                   transition: 'transform var(--transition-fast)',
                 }}
                 className="brand-logo-img"
               />
               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <span style={{ fontSize: '1.35rem', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.025em', lineHeight: 1.1 }}>
+                <span style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--color-text-primary)', letterSpacing: '-0.025em', lineHeight: 1.1 }}>
                   Azaroth
                 </span>
-                <span style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--color-gold-from)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
+                <span style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--color-brand-violet)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
                   Tech-Hive
                 </span>
               </div>
             </Link>
 
-            <div style={{ marginBottom: '1.5rem' }}>
-              <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--color-text-inverse-muted)', display: 'block', marginBottom: '0.75rem' }}>
-                Follow Us on:
-              </span>
-              <a 
-                href={companyInfo.socialLinks[0].url} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                style={{
-                  width: '2.75rem',
-                  height: '2.75rem',
-                  borderRadius: '10px',
-                  backgroundColor: 'rgba(255, 255, 255, 0.06)',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'var(--color-gold-from)',
-                  border: '1px solid rgba(212, 175, 55, 0.25)',
-                  transition: 'all 200ms ease-out'
-                }}
-                className="social-icon"
-              >
-                <Linkedin size={20} />
-              </a>
-            </div>
+            {companyInfo.socialLinks.length > 0 && (
+              <div style={{ marginBottom: '1.5rem' }}>
+                <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--color-text-secondary)', display: 'block', marginBottom: '0.75rem' }}>
+                  Follow Us on:
+                </span>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  {companyInfo.socialLinks.map((social) => (
+                    <a
+                      key={social.label}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                      style={{
+                        width: '2.75rem',
+                        height: '2.75rem',
+                        borderRadius: '10px',
+                        backgroundColor: 'var(--color-surface-muted)',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'var(--color-brand-violet)',
+                        border: '1px solid var(--color-border)',
+                        transition: 'all 200ms ease-out'
+                      }}
+                      className="social-icon"
+                    >
+                      {social.icon === 'Linkedin' && <Linkedin size={20} />}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
         </div>
@@ -179,10 +186,10 @@ export const Footer: React.FC = () => {
         {/* Bottom Bar: Copyright Only */}
         <div style={{
           paddingTop: '2rem',
-          borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+          borderTop: '1px solid var(--color-border)',
           textAlign: 'center',
           fontSize: '0.875rem',
-          color: 'var(--color-text-inverse-muted)',
+          color: 'var(--color-text-secondary)',
         }}>
           All rights reserved © 2026 Azaroth Tech-Hive Inc
         </div>
@@ -190,14 +197,14 @@ export const Footer: React.FC = () => {
 
       <style>{`
         .footer-link:hover {
-          color: var(--color-gold-from) !important;
+          color: var(--color-brand-violet) !important;
         }
         .social-icon:hover {
-          background-color: var(--color-primary-maroon) !important;
+          background-color: var(--color-brand-violet) !important;
           color: #ffffff !important;
-          border-color: var(--color-primary-maroon) !important;
+          border-color: var(--color-brand-violet) !important;
           transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(122, 12, 22, 0.35);
+          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
         }
       `}</style>
     </footer>

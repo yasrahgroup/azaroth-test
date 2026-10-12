@@ -34,6 +34,7 @@ export const ProcessTimeline: React.FC = () => {
             <button
               key={stage.stageNumber}
               onClick={() => setActiveStage(stage.stageNumber)}
+              aria-pressed={isSelected}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -106,9 +107,9 @@ export const ProcessTimeline: React.FC = () => {
                   </div>
                 </div>
 
-                <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--color-dark-maroon)', marginBottom: '0.375rem' }}>
+                <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--color-dark-maroon)', marginBottom: '0.375rem' }}>
                   {stage.title}
-                </h3>
+                </h2>
                 
                 <p style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--color-primary-maroon)' }}>
                   {stage.tagline}

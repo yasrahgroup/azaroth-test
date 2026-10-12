@@ -1,16 +1,22 @@
 import React from 'react';
 import { Badge } from '../components/common/Badge';
 import { Card } from '../components/common/Card';
+import { SEOHead } from '../components/common/SEOHead';
 
 export const TermsOfService: React.FC = () => {
   return (
     <div>
+      <SEOHead
+        title="Terms of Service — Azaroth Tech-Hive"
+        description="Read the Azaroth Tech-Hive terms of service covering engagement scope, intellectual property ownership, service level commitments, and governing law."
+        canonicalPath="/terms-of-service"
+      />
       <section className="section" style={{ backgroundColor: 'var(--color-canvas-bg)', borderBottom: '1px solid var(--color-border-subtle)', paddingBottom: '3.5rem' }}>
         <div className="container-prose" style={{ textAlign: 'center' }}>
           <Badge variant="emerald" style={{ marginBottom: '1rem' }}>
             Commercial Terms
           </Badge>
-          <h1 style={{ marginBottom: '1rem' }}>Terms of Service</h1>
+          <h1 style={{ marginBottom: '1rem', fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: 'var(--color-text-primary)' }}>Terms of Service</h1>
           <p style={{ color: 'var(--color-text-secondary)' }}>
             Effective Date: October 2026 • Azaroth Tech-Hive Inc.
           </p>

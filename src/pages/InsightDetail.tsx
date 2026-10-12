@@ -5,6 +5,7 @@ import { insightsArticles } from '../data/insightsData';
 import { Badge } from '../components/common/Badge';
 import { Button } from '../components/common/Button';
 import { Card } from '../components/common/Card';
+import { SEOHead } from '../components/common/SEOHead';
 
 export const InsightDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -48,7 +49,13 @@ export const InsightDetail: React.FC = () => {
   if (!article) {
     return (
       <div className="section container" style={{ textAlign: 'center', padding: '6rem 1rem' }}>
-        <h2 style={{ marginBottom: '1rem' }}>Article Not Found</h2>
+        <SEOHead
+          title="Article Not Found — Azaroth Tech-Hive"
+          description="The requested technology insight could not be located. Browse the resource hub for engineering insights on architecture, AI, and cloud modernization."
+          canonicalPath="/technology-insights"
+          robots="noindex, follow"
+        />
+        <h1 style={{ marginBottom: '1rem' }}>Article Not Found</h1>
         <p style={{ marginBottom: '2rem' }}>The requested technology insight could not be located.</p>
         <Button to="/technology-insights" variant="primary" icon={<ArrowLeft size={16} />} iconPosition="left">
           Back to Resource Hub
@@ -59,6 +66,11 @@ export const InsightDetail: React.FC = () => {
 
   return (
     <div>
+      <SEOHead
+        title={`${article.title} — Azaroth Tech-Hive`}
+        description={article.excerpt.length > 160 ? `${article.excerpt.slice(0, 157).trimEnd()}...` : article.excerpt}
+        canonicalPath={`/technology-insights/${article.slug}`}
+      />
       {/* Article Header */}
       <section className="section" style={{ backgroundColor: 'var(--color-canvas-bg)', borderBottom: '1px solid var(--color-border-subtle)', paddingBottom: '3.5rem' }}>
         <div className="container-prose">
@@ -144,6 +156,7 @@ export const InsightDetail: React.FC = () => {
                     <a
                       key={section.id}
                       href={`#${section.id}`}
+                      aria-current={activeSection === section.id ? 'true' : undefined}
                       style={{
                         display: 'block',
                         color: activeSection === section.id ? 'var(--color-primary-maroon)' : 'var(--color-text-secondary)',
@@ -224,7 +237,7 @@ export const InsightDetail: React.FC = () => {
               <strong style={{ color: 'var(--color-dark-forest)' }}>About the Author</strong>
             </div>
             <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', margin: 0 }}>
-              <strong>{article.author.name}</strong> leads enterprise software architecture initiatives at Azaroth Tech-Hive, specializing in distributed systems resilience, zero-trust cloud infrastructure, and private AI automation.
+              <strong>{article.author.name}</strong> — {article.author.role}. Insights by our {article.author.role.toLowerCase()} team at Azaroth Tech-Hive.
             </p>
           </Card>
 

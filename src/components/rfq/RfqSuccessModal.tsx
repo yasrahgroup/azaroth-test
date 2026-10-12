@@ -5,21 +5,31 @@ import { Card } from '../common/Card';
 
 interface RfqSuccessModalProps {
   referenceId: string;
+  issuedByServer: boolean;
   clientName: string;
   onReset: () => void;
 }
 
 export const RfqSuccessModal: React.FC<RfqSuccessModalProps> = ({
   referenceId,
+  issuedByServer,
   clientName,
   onReset,
 }) => {
   const [copied, setCopied] = React.useState(false);
+  const copyResetTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  React.useEffect(() => {
+    return () => {
+      if (copyResetTimer.current) clearTimeout(copyResetTimer.current);
+    };
+  }, []);
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(referenceId);
+    navigator.clipboard.writeText(referenceId).catch(() => {});
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    if (copyResetTimer.current) clearTimeout(copyResetTimer.current);
+    copyResetTimer.current = setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -72,11 +82,16 @@ export const RfqSuccessModal: React.FC<RfqSuccessModalProps> = ({
       }}>
         <div style={{ textAlign: 'left' }}>
           <span style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            Official Tracking Reference ID
+            {issuedByServer ? 'Official Tracking Reference ID' : 'Session reference (quote this when you follow up)'}
           </span>
           <span style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-primary-green)', fontFamily: 'var(--font-mono)' }}>
             {referenceId}
           </span>
+          {!issuedByServer && (
+            <span style={{ display: 'block', fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.25rem' }}>
+              Our server did not issue a tracking ID for this submission; this value was generated in your browser session only.
+            </span>
+          )}
         </div>
 
         <button

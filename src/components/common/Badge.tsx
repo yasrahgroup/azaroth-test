@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface BadgeProps {
-  variant?: 'emerald' | 'gold' | 'dark';
+  variant?: 'emerald' | 'gold' | 'dark' | 'violet' | 'orange' | 'magenta' | 'blue';
   children: React.ReactNode;
   icon?: React.ReactNode;
   className?: string;

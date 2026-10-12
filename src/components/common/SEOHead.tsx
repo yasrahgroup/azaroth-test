@@ -6,6 +6,7 @@ interface SEOHeadProps {
   description?: string;
   canonicalPath?: string;
   jsonLd?: object;
+  robots?: string;
 }
 
 export const SEOHead: React.FC<SEOHeadProps> = ({
@@ -13,6 +14,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
   description = 'Azaroth Tech-Hive engineers, evolves, and sustains intelligent software solutions, delivering end-to-end engineering excellence that empowers businesses to innovate, adapt, and scale with confidence.',
   canonicalPath = '/',
   jsonLd,
+  robots,
 }) => {
   const canonicalUrl = `https://azaroth-techhive.com${canonicalPath}`;
 
@@ -20,6 +22,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
+      {robots && <meta name="robots" content={robots} />}
       <link rel="canonical" href={canonicalUrl} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />

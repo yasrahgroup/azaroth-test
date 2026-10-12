@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Badge } from '../common/Badge';
 import { Card } from '../common/Card';
-import { Cpu, Cloud, Users, Workflow } from 'lucide-react';
+import { Cpu, Cloud, Users, Workflow, Building2 } from 'lucide-react';
 
 const capabilities = [
   {
@@ -27,26 +27,26 @@ const capabilities = [
   },
 ];
 
-const statistics = [
+const principles = [
   {
-    value: '95%',
-    label: 'Client Satisfaction',
-    description: 'Consistently delivering solutions that meet and exceed expectations.',
+    title: 'Discovery-led',
+    label: 'Delivery approach',
+    description: 'Every engagement starts with requirements, constraints, and measurable outcomes.',
   },
   {
-    value: '100%',
-    label: 'Commitment to Quality',
-    description: 'Every project undergoes rigorous testing and quality assurance.',
+    title: 'Architecture-first',
+    label: 'Execution model',
+    description: 'We align technology choices with business context before implementation begins.',
   },
   {
-    value: '90%',
-    label: 'On-Time Delivery',
-    description: 'Reliable project execution with transparent communication and timelines.',
+    title: 'Transparent',
+    label: 'Communication',
+    description: 'Progress, blockers, and decisions are surfaced in a way teams can act on quickly.',
   },
   {
-    value: 'Long-Term',
-    label: 'Client Partnerships',
-    description: 'Building lasting relationships through trust and collaborative success.',
+    title: 'Partnership',
+    label: 'Working style',
+    description: 'We support long-term product evolution rather than one-off feature delivery.',
   },
 ];
 
@@ -73,54 +73,48 @@ export const AboutSection: React.FC = () => {
               viewport={{ once: true, margin: '-100px' }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
-              <Badge variant="gold" style={{ marginBottom: '1rem' }}>
-                Who We Are
+              <Badge variant="blue" style={{ marginBottom: '1rem' }}>
+                Enterprise Technology Partner
               </Badge>
               <h2 style={{
                 fontSize: 'clamp(2rem, 4vw, 2.5rem)',
                 fontWeight: 800,
-                color: 'var(--color-dark-maroon)',
+                color: 'var(--color-text-primary)',
                 marginBottom: '1.5rem',
                 lineHeight: 1.2,
               }}>
-                Engineering Software. Enabling Progress.
+                Engineered solutions for complex enterprise challenges.
               </h2>
               <p style={{
                 fontSize: '1.0625rem',
                 color: 'var(--color-text-secondary)',
                 lineHeight: 1.7,
-                marginBottom: '1.5rem',
               }}>
-                Azaroth Tech-Hive engineers, evolves, and sustains intelligent software solutions that transform ideas into dependable digital products. We combine technical expertise with strategic thinking to help businesses overcome challenges, improve operations, and achieve sustainable growth through technology.
-              </p>
-              <p style={{
-                fontSize: '1.0625rem',
-                color: 'var(--color-text-secondary)',
-                lineHeight: 1.7,
-              }}>
-                From custom applications and enterprise platforms to cloud infrastructure and AI-powered capabilities, we deliver end-to-end engineering excellence that empowers organizations to innovate, adapt, and scale with confidence in an ever-evolving digital landscape.
+                We work with enterprise teams responsible for complex, business-critical systems. Our engineers design, build, and modernize the software those operations run on — platforms, integrations, and automated workflows — and can embed dedicated engineers alongside your own team to deliver them.
               </p>
             </motion.div>
 
-            {/* Right: Image Placeholder */}
+            {/* Right: Decorative panel (no photo) */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: '-100px' }}
               transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div style={{
-                width: '100%',
-                height: '400px',
-                borderRadius: '16px',
-                background: 'linear-gradient(135deg, rgba(122, 12, 22, 0.1) 0%, rgba(212, 175, 55, 0.08) 100%)',
-                border: '2px solid rgba(122, 12, 22, 0.15)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'relative',
-                overflow: 'hidden',
-              }}>
+              <div
+                aria-hidden="true"
+                style={{
+                  width: '100%',
+                  height: '400px',
+                  borderRadius: '16px',
+                  background: 'linear-gradient(135deg, var(--color-surface-lavender) 0%, var(--color-surface-peach) 100%)',
+                  border: '2px solid var(--color-border)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  position: 'relative',
+                  overflow: 'hidden',
+                }}>
                 <div style={{
                   position: 'absolute',
                   top: '20%',
@@ -128,7 +122,7 @@ export const AboutSection: React.FC = () => {
                   width: '150px',
                   height: '150px',
                   borderRadius: '50%',
-                  background: 'radial-gradient(circle, rgba(122, 12, 22, 0.15) 0%, rgba(122, 12, 22, 0) 70%)',
+                  background: 'radial-gradient(circle, rgba(117, 68, 216, 0.15) 0%, rgba(117, 68, 216, 0) 70%)',
                 }} />
                 <div style={{
                   position: 'absolute',
@@ -137,13 +131,30 @@ export const AboutSection: React.FC = () => {
                   width: '120px',
                   height: '120px',
                   borderRadius: '50%',
-                  background: 'radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, rgba(212, 175, 55, 0) 70%)',
+                  background: 'radial-gradient(circle, rgba(216, 173, 89, 0.12) 0%, rgba(216, 173, 89, 0) 70%)',
                 }} />
-                <div style={{
-                  fontSize: '5rem',
-                  opacity: 0.3,
-                }}>
-                  🚀
+                <div
+                  aria-hidden="true"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <div style={{
+                    width: '140px',
+                    height: '140px',
+                    borderRadius: '24px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.75)',
+                    border: '2px solid var(--color-border)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'var(--color-brand-violet)',
+                    boxShadow: 'var(--shadow-lg)',
+                  }}>
+                    <Building2 size={64} strokeWidth={1.5} aria-hidden="true" />
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -165,15 +176,15 @@ export const AboutSection: React.FC = () => {
             style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 4rem' }}
           >
             <Badge variant="gold" style={{ marginBottom: '1rem' }}>
-              Our Engineering Capabilities
+              Technical Expertise
             </Badge>
             <h2 style={{
               fontSize: 'clamp(2rem, 3.5vw, 2.5rem)',
               fontWeight: 800,
-              color: 'var(--color-dark-maroon)',
+              color: 'var(--color-text-primary)',
               marginBottom: '1rem',
             }}>
-              Comprehensive Solutions for Every Challenge
+              Enterprise engineering capabilities for modern businesses
             </h2>
           </motion.div>
 
@@ -197,24 +208,24 @@ export const AboutSection: React.FC = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     height: '100%',
-                    border: '1px solid rgba(122, 12, 22, 0.1)',
+                    border: '1px solid var(--color-border)',
                     transition: 'all 180ms ease-out',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = '0 8px 20px -6px rgba(122, 12, 22, 0.15)';
-                    e.currentTarget.style.borderColor = 'rgba(122, 12, 22, 0.25)';
+                    e.currentTarget.style.boxShadow = 'var(--shadow-lg)'
+                    e.currentTarget.style.borderColor = 'var(--color-brand-violet)'
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.boxShadow = '';
-                    e.currentTarget.style.borderColor = '';
+                    e.currentTarget.style.boxShadow = ''
+                    e.currentTarget.style.borderColor = ''
                   }}
                 >
                   <div style={{
                     width: '3rem',
                     height: '3rem',
                     borderRadius: '12px',
-                    backgroundColor: 'rgba(122, 12, 22, 0.08)',
-                    color: 'var(--color-primary-maroon)',
+                    backgroundColor: 'var(--color-surface-lavender)',
+                    color: 'var(--color-brand-violet)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -225,7 +236,7 @@ export const AboutSection: React.FC = () => {
                   <h3 style={{
                     fontSize: '1.25rem',
                     fontWeight: 800,
-                    color: 'var(--color-dark-maroon)',
+                    color: 'var(--color-text-primary)',
                     marginBottom: '0.75rem',
                   }}>
                     {capability.title}
@@ -244,9 +255,9 @@ export const AboutSection: React.FC = () => {
         </div>
       </section>
 
-      {/* Statistics Section */}
+      {/* How We Work Section */}
       <section style={{
-        backgroundColor: 'var(--color-dark-maroon)',
+        backgroundColor: 'var(--color-surface-muted)',
         padding: '5rem 0',
       }}>
         <div className="container">
@@ -257,17 +268,24 @@ export const AboutSection: React.FC = () => {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 4rem' }}
           >
-            <Badge variant="dark" style={{ marginBottom: '1rem' }}>
-              Our Impact
+            <Badge variant="gold" style={{ marginBottom: '1rem' }}>
+              Founded 2024
             </Badge>
             <h2 style={{
               fontSize: 'clamp(2rem, 3.5vw, 2.5rem)',
               fontWeight: 800,
-              color: '#ffffff',
+              color: 'var(--color-text-primary)',
               marginBottom: '1rem',
             }}>
-              Delivering Excellence at Scale
+              How we work
             </h2>
+            <p style={{
+              fontSize: '1.0625rem',
+              color: 'var(--color-text-secondary)',
+              lineHeight: 1.7,
+            }}>
+              Azaroth Tech-Hive was founded in 2024. These are the working principles we apply on every engagement today.
+            </p>
           </motion.div>
 
           <div style={{
@@ -275,7 +293,7 @@ export const AboutSection: React.FC = () => {
             gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
             gap: '2rem',
           }}>
-            {statistics.map((stat, index) => (
+            {principles.map((principle, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
@@ -284,38 +302,38 @@ export const AboutSection: React.FC = () => {
                 transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
               >
                 <Card
-                  variant="glass-dark"
+                  variant="glass"
                   padding="lg"
                   style={{
                     textAlign: 'center',
-                    border: '1px solid rgba(212, 175, 55, 0.25)',
+                    border: '1px solid var(--color-border)',
                   }}
                 >
-                  <div style={{
-                    fontSize: '3rem',
+                  <h3 style={{
+                    fontSize: '1.25rem',
                     fontWeight: 800,
-                    color: 'var(--color-gold-from)',
+                    color: 'var(--color-text-primary)',
                     marginBottom: '0.5rem',
-                    lineHeight: 1,
+                    lineHeight: 1.3,
                   }}>
-                    {stat.value}
-                  </div>
+                    {principle.title}
+                  </h3>
                   <div style={{
-                    fontSize: '1rem',
+                    fontSize: '0.75rem',
                     fontWeight: 700,
-                    color: '#ffffff',
+                    color: 'var(--color-brand-violet)',
                     marginBottom: '0.75rem',
                     textTransform: 'uppercase',
                     letterSpacing: '0.04em',
                   }}>
-                    {stat.label}
+                    {principle.label}
                   </div>
                   <p style={{
                     fontSize: '0.875rem',
-                    color: 'var(--color-text-inverse-muted)',
+                    color: 'var(--color-text-secondary)',
                     lineHeight: 1.5,
                   }}>
-                    {stat.description}
+                    {principle.description}
                   </p>
                 </Card>
               </motion.div>

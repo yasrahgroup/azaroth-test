@@ -32,13 +32,13 @@ export const StrategicSolutions: React.FC = () => {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 4rem' }}
         >
-          <Badge variant="gold" style={{ marginBottom: '1rem' }}>
+          <Badge variant="emerald" style={{ marginBottom: '1rem' }}>
             Our Services
           </Badge>
           <h2 style={{
             fontSize: 'clamp(2rem, 3.5vw, 2.5rem)',
             fontWeight: 800,
-            color: 'var(--color-dark-maroon)',
+            color: 'var(--color-text-primary)',
             marginBottom: '1rem',
             lineHeight: 1.2,
           }}>
@@ -48,8 +48,9 @@ export const StrategicSolutions: React.FC = () => {
             fontSize: '1.0625rem',
             color: 'var(--color-text-secondary)',
             lineHeight: 1.7,
+            marginBottom: '1.5rem',
           }}>
-            From strategic consulting and modernization to dedicated engineering teams and process automation, we deliver comprehensive solutions that help businesses innovate, operate efficiently, and scale sustainably.
+            A quick look at the engineering services behind our work — advisory, modernization, dedicated teams, and process automation. Open any service for full capabilities and deliverables.
           </p>
         </motion.div>
 
@@ -68,18 +69,18 @@ export const StrategicSolutions: React.FC = () => {
               transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
               <Card
-                variant="solid"
+                variant="glass"
                 padding="lg"
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
                   height: '100%',
-                  border: '1px solid rgba(122, 12, 22, 0.1)',
+                  border: '1px solid var(--color-border)',
                   transition: 'all 180ms ease-out',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = '0 8px 20px -6px rgba(122, 12, 22, 0.15)';
-                  e.currentTarget.style.borderColor = 'rgba(122, 12, 22, 0.25)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
+                  e.currentTarget.style.borderColor = 'var(--color-brand-emerald)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.boxShadow = '';
@@ -96,8 +97,8 @@ export const StrategicSolutions: React.FC = () => {
                     width: '3rem',
                     height: '3rem',
                     borderRadius: '12px',
-                    backgroundColor: 'rgba(122, 12, 22, 0.08)',
-                    color: 'var(--color-primary-maroon)',
+                    backgroundColor: 'var(--color-surface-mint)',
+                    color: 'var(--color-brand-emerald)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -105,7 +106,7 @@ export const StrategicSolutions: React.FC = () => {
                     {getIcon(service.iconName)}
                   </div>
                   {service.badge && (
-                    <Badge variant="gold" style={{ fontSize: '0.7rem' }}>
+                    <Badge variant="emerald" style={{ fontSize: '0.7rem' }}>
                       {service.badge}
                     </Badge>
                   )}
@@ -114,7 +115,7 @@ export const StrategicSolutions: React.FC = () => {
                 <h3 style={{
                   fontSize: '1.25rem',
                   fontWeight: 800,
-                  color: 'var(--color-dark-maroon)',
+                  color: 'var(--color-text-primary)',
                   marginBottom: '0.75rem',
                   lineHeight: 1.3,
                 }}>
@@ -135,14 +136,14 @@ export const StrategicSolutions: React.FC = () => {
                 <div style={{
                   marginBottom: '1.5rem',
                   padding: '1rem',
-                  backgroundColor: 'rgba(122, 12, 22, 0.04)',
+                  backgroundColor: 'var(--color-surface-muted)',
                   borderRadius: 'var(--radius-md)',
-                  border: '1px solid rgba(122, 12, 22, 0.08)',
+                  border: '1px solid var(--color-border)',
                 }}>
                   <div style={{
                     fontSize: '0.75rem',
                     fontWeight: 700,
-                    color: 'var(--color-primary-maroon)',
+                    color: 'var(--color-brand-emerald)',
                     textTransform: 'uppercase',
                     letterSpacing: '0.04em',
                     marginBottom: '0.75rem',
@@ -165,7 +166,7 @@ export const StrategicSolutions: React.FC = () => {
                         alignItems: 'flex-start',
                         gap: '0.5rem',
                       }}>
-                        <span style={{ color: 'var(--color-primary-maroon)', fontWeight: 700 }}>•</span>
+                        <span style={{ color: 'var(--color-brand-emerald)', fontWeight: 700 }}>•</span>
                         {cap}
                       </li>
                     ))}
@@ -182,15 +183,15 @@ export const StrategicSolutions: React.FC = () => {
                   }}>
                     {service.metrics.slice(0, 2).map((metric, i) => (
                       <div key={i} style={{
-                        backgroundColor: 'rgba(212, 175, 55, 0.08)',
+                        backgroundColor: 'var(--color-brand-gold-light)',
                         padding: '0.75rem',
                         borderRadius: 'var(--radius-sm)',
-                        border: '1px solid rgba(212, 175, 55, 0.2)',
+                        border: '1px solid var(--color-brand-gold-border)',
                       }}>
                         <div style={{
                           fontSize: '1.25rem',
                           fontWeight: 800,
-                          color: 'var(--color-primary-maroon)',
+                          color: 'var(--color-brand-gold-text)',
                           marginBottom: '0.25rem',
                         }}>
                           {metric.value}
@@ -210,13 +211,13 @@ export const StrategicSolutions: React.FC = () => {
                 )}
 
                 <Button
-                  to={`/services/${service.slug}`}
+                  to={`/services#${service.slug}`}
                   variant="outline"
                   size="sm"
                   icon={<ArrowRight size={15} />}
                   style={{ marginTop: 'auto' }}
                 >
-                  Learn More
+                  View service details
                 </Button>
               </Card>
             </motion.div>
@@ -231,7 +232,7 @@ export const StrategicSolutions: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
           style={{ textAlign: 'center', marginTop: '4rem' }}
         >
-          <Button to="/services" variant="gold" size="lg" icon={<ArrowRight size={18} />}>
+          <Button to="/services" variant="violet" size="lg" icon={<ArrowRight size={18} />}>
             Explore All Services
           </Button>
         </motion.div>

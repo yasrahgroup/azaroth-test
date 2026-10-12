@@ -7,10 +7,10 @@ export interface ValuePrinciple {
 
 export const companyInfo = {
   name: 'Azaroth Tech-Hive',
-  tagline: 'Engineering Software. Enabling Progress.',
+  tagline: 'Enterprise software engineering for complex systems.',
   logoUrl: '/Logo.png',
   faviconUrl: '/Favicon.png',
-  description: 'Azaroth Tech-Hive delivers practical software engineering solutions that help businesses overcome technical challenges, improve operations, and turn ideas into dependable digital products.',
+  description: 'Azaroth Tech-Hive delivers practical software engineering solutions that help enterprises overcome technical challenges, improve operations, and turn ideas into dependable digital products. We partner with organizations to build systems that scale, evolve, and drive meaningful business outcomes.',
   establishedYear: '2024',
   headquarters: {
     title: 'Chennai — Head Office',
@@ -20,9 +20,7 @@ export const companyInfo = {
     email: 'hello@azaroth-techhive.com',
     mapsUrl: 'https://www.google.com/maps/search/?api=1&query=24+Malaviya+Avenue+Thiruvanmiyur+Chennai+India',
   },
-  socialLinks: [
-    { label: 'LinkedIn', url: 'https://linkedin.com/company/azaroth-tech-hive', icon: 'Linkedin' },
-  ],
+  socialLinks: [] as { label: string; url: string; icon: string }[],
 };
 
 // Metrics removed per client requirement - unverified percentages not to be published
@@ -43,7 +41,7 @@ export const ourValuesPrinciples: ValuePrinciple[] = [
   {
     number: '01',
     title: 'Purpose-Driven Innovation',
-    description: 'We embrace innovation with intention, creating solutions that address real challenges, deliver practical value, and make technology more useful.',
+    description: 'We embrace innovation with intention, creating solutions that address real business challenges, deliver practical value, and make technology more useful.',
     iconName: 'Lightbulb',
   },
   {

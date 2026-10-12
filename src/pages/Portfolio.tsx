@@ -5,6 +5,7 @@ import { serviceOfferings } from '../data/servicesData';
 import { Card } from '../components/common/Card';
 import { Badge } from '../components/common/Badge';
 import { Button } from '../components/common/Button';
+import { SEOHead } from '../components/common/SEOHead';
 import { ArrowRight, Activity, ShoppingBag, GraduationCap, Cpu, Compass, Users, Workflow, Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -30,13 +31,18 @@ export const Portfolio: React.FC = () => {
 
   return (
     <div>
+      <SEOHead
+        title="Our Portfolio — Software Solutions & Engineering Services | Azaroth Tech-Hive"
+        description="Explore the Azaroth Tech-Hive portfolio of enterprise software platforms and engineering services, from platforms in active development to modernization and advisory support."
+        canonicalPath="/portfolio"
+      />
       {/* Page Hero */}
       <section className="section" style={{ backgroundColor: 'var(--color-canvas-bg)', borderBottom: '1px solid var(--color-border-subtle)' }}>
         <div className="container" style={{ textAlign: 'center', maxWidth: '820px' }}>
           <Badge variant="gold" style={{ marginBottom: '1rem' }}>
             Our Portfolio
           </Badge>
-          <h1 style={{ marginBottom: '1.25rem' }}>
+          <h1 style={{ marginBottom: '1.25rem', fontSize: 'clamp(2.25rem, 4.5vw, 3.5rem)', fontWeight: 800, color: 'var(--color-text-primary)' }}>
             Software Solutions & Engineering Services Built for Growth
           </h1>
           <p style={{ fontSize: '1.1875rem', lineHeight: 1.6 }}>
@@ -58,11 +64,11 @@ export const Portfolio: React.FC = () => {
             <Badge variant="gold" style={{ marginBottom: '1rem' }}>
               Explore Products
             </Badge>
-            <h2 style={{ fontSize: 'clamp(2rem, 3.5vw, 2.75rem)', fontWeight: 800, color: 'var(--color-dark-maroon)', marginBottom: '1rem' }}>
-              Enterprise Software Solutions
+            <h2 style={{ fontSize: 'clamp(2rem, 3.5vw, 2.75rem)', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: '1rem' }}>
+              Software Solutions & Engineering Services Built for Growth
             </h2>
             <p style={{ fontSize: '1.0625rem', color: 'var(--color-text-secondary)', lineHeight: 1.6, maxWidth: '650px' }}>
-              Scalable platforms designed to grow with your business, providing the foundation for operational efficiency and competitive advantage.
+              Platform foundations designed to grow with your business, providing a practical starting point for operational efficiency and long-term roadmaps.
             </p>
           </motion.div>
 
@@ -86,16 +92,16 @@ export const Portfolio: React.FC = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     height: '100%',
-                    border: '1px solid rgba(122, 12, 22, 0.1)',
+                    border: '1px solid var(--color-border)',
                     transition: 'all 180ms ease-out',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = '0 8px 20px -6px rgba(122, 12, 22, 0.15)';
-                    e.currentTarget.style.borderColor = 'rgba(122, 12, 22, 0.25)';
+                    e.currentTarget.style.boxShadow = '0 8px 20px -6px rgba(38, 48, 59, 0.12)';
+                    e.currentTarget.style.borderColor = 'var(--color-border-strong)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.boxShadow = '';
-                    e.currentTarget.style.borderColor = 'rgba(122, 12, 22, 0.1)';
+                    e.currentTarget.style.borderColor = 'var(--color-border)';
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
@@ -103,8 +109,8 @@ export const Portfolio: React.FC = () => {
                       width: '3rem',
                       height: '3rem',
                       borderRadius: '12px',
-                      backgroundColor: 'rgba(122, 12, 22, 0.08)',
-                      color: 'var(--color-primary-maroon)',
+                      backgroundColor: 'var(--color-surface-soft)',
+                      color: 'var(--color-brand-gold)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -152,7 +158,7 @@ export const Portfolio: React.FC = () => {
                         textDecoration: 'none'
                       }}
                     >
-                      <span>Explore More</span>
+                      <span>Browse all products</span>
                       <ArrowRight size={15} />
                     </Link>
 
@@ -180,11 +186,11 @@ export const Portfolio: React.FC = () => {
             <Badge variant="gold" style={{ marginBottom: '1rem' }}>
               Explore Services
             </Badge>
-            <h2 style={{ fontSize: 'clamp(2rem, 3.5vw, 2.75rem)', fontWeight: 800, color: 'var(--color-dark-maroon)', marginBottom: '1rem' }}>
-              Software Engineering for Ideas, Products & Growth
+            <h2 style={{ fontSize: 'clamp(2rem, 3.5vw, 2.75rem)', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: '1rem' }}>
+              Engineering Services
             </h2>
             <p style={{ fontSize: '1.0625rem', color: 'var(--color-text-secondary)', lineHeight: 1.6, maxWidth: '650px' }}>
-              From strategic consulting and modernization to dedicated engineering teams and process automation, we deliver comprehensive solutions.
+              Advisory, modernization, dedicated engineering teams, and process automation — each service lists its capabilities and deliverables in full.
             </p>
           </motion.div>
 
@@ -208,16 +214,16 @@ export const Portfolio: React.FC = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     height: '100%',
-                    border: '1px solid rgba(122, 12, 22, 0.1)',
+                    border: '1px solid var(--color-border)',
                     transition: 'all 180ms ease-out',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = '0 8px 20px -6px rgba(122, 12, 22, 0.15)';
-                    e.currentTarget.style.borderColor = 'rgba(122, 12, 22, 0.25)';
+                    e.currentTarget.style.boxShadow = '0 8px 20px -6px rgba(38, 48, 59, 0.12)';
+                    e.currentTarget.style.borderColor = 'var(--color-border-strong)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.boxShadow = '';
-                    e.currentTarget.style.borderColor = 'rgba(122, 12, 22, 0.1)';
+                    e.currentTarget.style.borderColor = 'var(--color-border)';
                   }}
                 >
                   <div style={{
@@ -230,8 +236,8 @@ export const Portfolio: React.FC = () => {
                       width: '3rem',
                       height: '3rem',
                       borderRadius: '12px',
-                      backgroundColor: 'rgba(122, 12, 22, 0.08)',
-                      color: 'var(--color-primary-maroon)',
+                      backgroundColor: 'var(--color-surface-soft)',
+                      color: 'var(--color-brand-gold)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -306,13 +312,13 @@ export const Portfolio: React.FC = () => {
                   </div>
 
                   <Button
-                    to={`/services/${service.slug}`}
+                    to={`/services#${service.slug}`}
                     variant="outline"
                     size="sm"
                     icon={<ArrowRight size={15} />}
                     style={{ marginTop: 'auto' }}
                   >
-                    Learn More
+                    View service details
                   </Button>
                 </Card>
               </motion.div>

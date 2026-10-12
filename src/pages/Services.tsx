@@ -1,36 +1,41 @@
 import React from 'react';
-import { Users, Cloud, Sparkles, FileCheck, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Cpu, Compass, Users, Workflow, CheckCircle2, ArrowRight } from 'lucide-react';
 import { serviceOfferings } from '../data/servicesData';
 import { SlaMatrix } from '../components/services/SlaMatrix';
 import { Card } from '../components/common/Card';
 import { Badge } from '../components/common/Badge';
 import { Button } from '../components/common/Button';
+import { SEOHead } from '../components/common/SEOHead';
 
 export const Services: React.FC = () => {
   const getIcon = (name: string) => {
     switch (name) {
+      case 'Cpu': return <Cpu size={26} />;
+      case 'Compass': return <Compass size={26} />;
       case 'Users': return <Users size={26} />;
-      case 'Cloud': return <Cloud size={26} />;
-      case 'Sparkles': return <Sparkles size={26} />;
-      case 'FileCheck': return <FileCheck size={26} />;
-      default: return <Users size={26} />;
+      case 'Workflow': return <Workflow size={26} />;
+      default: return <Cpu size={26} />;
     }
   };
 
   return (
     <div>
+      <SEOHead
+        title="Engineering Services — Azaroth Tech-Hive"
+        description="Engineering services spanning digital transformation, strategic consulting, dedicated workforce teams, and business process automation with clear deliverables."
+        canonicalPath="/services"
+      />
       {/* Page Hero */}
       <section className="section" style={{ backgroundColor: 'var(--color-canvas-bg)', borderBottom: '1px solid var(--color-border-subtle)' }}>
         <div className="container" style={{ textAlign: 'center', maxWidth: '820px' }}>
           <Badge variant="emerald" style={{ marginBottom: '1rem' }}>
             Enterprise Capabilities
           </Badge>
-          <h1 style={{ marginBottom: '1.25rem' }}>
+          <h1 style={{ marginBottom: '1.25rem', fontSize: 'clamp(2.25rem, 4.5vw, 3.5rem)', fontWeight: 800, color: 'var(--color-text-primary)' }}>
             Mission-Critical Software Services
           </h1>
           <p style={{ fontSize: '1.1875rem', lineHeight: 1.6 }}>
-            Dedicated engineering pods, cloud modernization, and autonomous AI systems built for 
-            global scalability, zero-debt architecture, and continuous operational SLA adherence.
+            Dedicated engineering pods, architecture guidance, and modernization support built to help teams clarify scope, reduce delivery risk, and evolve software with confidence.
           </p>
         </div>
       </section>
@@ -42,6 +47,7 @@ export const Services: React.FC = () => {
             {serviceOfferings.map((service) => (
               <Card
                 key={service.id}
+                id={service.slug}
                 variant="solid"
                 padding="lg"
                 style={{
@@ -62,12 +68,12 @@ export const Services: React.FC = () => {
                         width: '3.5rem',
                         height: '3.5rem',
                         borderRadius: '12px',
-                        backgroundColor: 'rgba(0, 108, 53, 0.1)',
-                        color: 'var(--color-primary-green)',
+                        backgroundColor: 'var(--color-surface-mint)',
+                        color: 'var(--color-brand-emerald)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        border: '1px solid rgba(0, 108, 53, 0.2)',
+                        border: '1px solid var(--color-brand-emerald-border)',
                       }}>
                         {getIcon(service.iconName)}
                       </div>
@@ -79,11 +85,11 @@ export const Services: React.FC = () => {
                       )}
                     </div>
 
-                    <h2 style={{ fontSize: '1.875rem', fontWeight: 800, color: 'var(--color-dark-forest)', marginBottom: '0.5rem' }}>
+                    <h2 style={{ fontSize: '1.875rem', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: '0.5rem' }}>
                       {service.title}
                     </h2>
 
-                    <div style={{ fontSize: '0.9375rem', fontWeight: 700, color: 'var(--color-primary-green)', marginBottom: '1.25rem' }}>
+                    <div style={{ fontSize: '0.9375rem', fontWeight: 700, color: 'var(--color-brand-emerald)', marginBottom: '1.25rem' }}>
                       {service.category}
                     </div>
 
@@ -91,7 +97,7 @@ export const Services: React.FC = () => {
                       {service.description}
                     </p>
 
-                    <Button to="/request-for-quote" variant="gold" size="md" icon={<ArrowRight size={16} />}>
+                    <Button to="/request-for-quote" variant="violet" size="md" icon={<ArrowRight size={16} />}>
                       Deploy This Capability
                     </Button>
                   </div>
@@ -104,14 +110,14 @@ export const Services: React.FC = () => {
                     border: '1px solid var(--color-border-subtle)',
                     boxShadow: 'var(--shadow-xs)',
                   }}>
-                    <h3 style={{ fontSize: '1.125rem', fontWeight: 800, color: 'var(--color-dark-forest)', marginBottom: '1.25rem' }}>
+                    <h3 style={{ fontSize: '1.125rem', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: '1.25rem' }}>
                       Verifiable Outcomes & Deliverables
                     </h3>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
                       {service.outcomes.map((outcome, i) => (
                         <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.625rem', fontSize: '0.875rem' }}>
-                          <CheckCircle2 size={16} style={{ color: 'var(--color-primary-green)', flexShrink: 0, marginTop: '0.15rem' }} />
+                          <CheckCircle2 size={16} style={{ color: 'var(--color-brand-emerald)', flexShrink: 0, marginTop: '0.15rem' }} />
                           <span style={{ color: 'var(--color-text-primary)', lineHeight: 1.5 }}>{outcome}</span>
                         </div>
                       ))}

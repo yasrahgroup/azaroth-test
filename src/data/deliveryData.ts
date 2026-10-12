@@ -91,8 +91,8 @@ export const deliveryStages: DeliveryStage[] = [
       'Security Compliance & Access Validation Audit',
     ],
     qualityGates: [
-      'Zero high or critical severity defects',
-      'Performance benchmarks fulfilled under simulated operational load',
+      'Exit criteria include no open high or critical severity defects',
+      'Performance targets exercised under simulated operational load',
     ],
   },
   {
@@ -102,7 +102,7 @@ export const deliveryStages: DeliveryStage[] = [
     duration: 'Phase 05',
     description: 'We implement solutions through structured deployment, system integration, data validation, and release management to ensure a smooth transition into operation.',
     keyActivities: [
-      'Staged production rollout with zero-downtime blue/green deployment',
+      'Staged production rollout with blue/green deployment targeting zero-downtime cutovers where the platform allows',
       'Production database migrations, data consistency, and validation checks',
       'Live external systems integration and API verification',
       'Operational monitoring, rollback safeguards, and launch support',
@@ -114,7 +114,7 @@ export const deliveryStages: DeliveryStage[] = [
     ],
     qualityGates: [
       'Data integrity validation complete',
-      'Production health checks and SLA verification passed',
+      'Production health checks completed against agreed targets',
     ],
   },
   {
@@ -132,11 +132,11 @@ export const deliveryStages: DeliveryStage[] = [
     deliverables: [
       'Scheduled Health & Maintenance Reports',
       'Ongoing Iterative Feature Updates',
-      'Guaranteed SLA Support & Dedicated Assistance',
+      'Support coverage aligned to the agreed operating model',
     ],
     qualityGates: [
-      'Continuous SLA uptime compliance (99.9%+)',
-      'Prompt issue resolution within defined target timeframes',
+      'Operational health checks completed against agreed criteria',
+      'Issue resolution tracked within defined delivery windows',
     ],
   },
 ];

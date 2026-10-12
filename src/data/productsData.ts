@@ -12,7 +12,6 @@ export const productsCatalog: Product[] = [
     shortDescription: 'End-to-end fitness operations management for multi-location gyms and national fitness chains.',
     coverImage: '/images/products/fms-cover.jpg',
     coverAlt: 'Modern gym floor with strength and cardio equipment',
-    stockStatus: 'Under Development',
     isEnabled: true,
     keyCapabilities: [
       'Centralized multi-location branch and franchise administration',
@@ -27,9 +26,9 @@ export const productsCatalog: Product[] = [
       'Centralized administration across all franchise locations',
     ],
     techSpecs: {
-      latency: '< 80ms Multi-Branch Sync',
-      concurrency: '25,000+ Concurrent Member Check-ins',
-      compliance: ['PCI-DSS Level 1', 'GDPR Compliant', 'SOC 2 Ready'],
+      latency: 'Sub-second interactive responses',
+      concurrency: 'Horizontally scalable across branches',
+      compliancePosture: 'Controls mapped to PCI-DSS, GDPR, and SOC 2 practices; certification pending audit',
       protocols: ['REST OpenAPI 3.1', 'WebSocket', 'GraphQL', 'Webhook'],
     },
     features: [
@@ -51,7 +50,6 @@ export const productsCatalog: Product[] = [
     shortDescription: 'Multi-brand and international online retail management with centralized inventory.',
     coverImage: '/images/products/commerce-cover.jpg',
     coverAlt: 'Retail customer completing a payment at a checkout counter',
-    stockStatus: 'Under Development',
     isEnabled: true,
     keyCapabilities: [
       'Unified multi-brand and multi-store catalog administration',
@@ -66,9 +64,9 @@ export const productsCatalog: Product[] = [
       'Support for multiple currencies and localized checkout experiences',
     ],
     techSpecs: {
-      latency: '< 25ms Catalog Query Response',
-      concurrency: '100,000+ Concurrent Shopping Sessions',
-      compliance: ['PCI-DSS Level 1', 'ISO 27001', 'SOC 2 Type II'],
+      latency: 'Sub-second catalog and checkout interactions',
+      concurrency: 'Horizontally scalable across stores',
+      compliancePosture: 'Controls mapped to PCI-DSS, ISO 27001, and SOC 2 practices; certification pending audit',
       protocols: ['GraphQL', 'REST API', 'Webhooks', 'gRPC'],
     },
     features: [
@@ -90,7 +88,6 @@ export const productsCatalog: Product[] = [
     shortDescription: 'Corporate training and enterprise academy management with structured learning pathways.',
     coverImage: '/images/products/lmp-cover.jpg',
     coverAlt: 'Learners collaborating around a laptop in a classroom',
-    stockStatus: 'Under Development',
     isEnabled: true,
     keyCapabilities: [
       'Modular curriculum authoring with rich multimedia content',
@@ -105,9 +102,9 @@ export const productsCatalog: Product[] = [
       'Comprehensive learning analytics and compliance reporting',
     ],
     techSpecs: {
-      latency: '< 40ms Video Asset Streaming Start',
-      concurrency: '50,000+ Concurrent Active Learners',
-      compliance: ['SCORM 2004', 'xAPI (Tin Can)', 'WCAG 2.1 AA', 'GDPR'],
+      latency: 'Fast media start for lessons and assessments',
+      concurrency: 'Horizontally scalable across learner cohorts',
+      compliancePosture: 'Standards-aligned design for SCORM 2004, xAPI, WCAG 2.1 AA, and GDPR; certification pending audit',
       protocols: ['HLS Video', 'REST OpenAPI', 'LTI 1.3', 'WebSocket'],
     },
     features: [
@@ -129,7 +126,6 @@ export const productsCatalog: Product[] = [
     shortDescription: 'End-to-end healthcare operations management for hospitals and multi-clinic networks.',
     coverImage: '/images/products/hms-cover.jpg',
     coverAlt: 'Healthcare professional reviewing patient information in a clinic',
-    stockStatus: 'Under Development',
     isEnabled: true,
     keyCapabilities: [
       'Centralized patient record management across all clinic locations',
@@ -141,12 +137,12 @@ export const productsCatalog: Product[] = [
       'Complete patient lifecycle management from registration to discharge',
       'Real-time access to patient records across all network locations',
       'Automated lab result integration and notification workflows',
-      'HIPAA-compliant data security and patient privacy protection',
+      'Strong data security and patient privacy protection controls',
     ],
     techSpecs: {
-      latency: '< 50ms Patient Record Access',
-      concurrency: '10,000+ Concurrent Patient Records',
-      compliance: ['HIPAA', 'HL7 FHIR', 'GDPR', 'SOC 2 Type II'],
+      latency: 'Sub-second patient record lookups',
+      concurrency: 'Horizontally scalable across clinics',
+      compliancePosture: 'Controls mapped to HIPAA, HL7 FHIR, GDPR, and SOC 2 practices; certification pending audit',
       protocols: ['HL7 FHIR API', 'REST OpenAPI', 'DICOM', 'WebRTC'],
     },
     features: [

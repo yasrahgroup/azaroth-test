@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'gold' | 'primary' | 'outline' | 'outline-dark' | 'ghost';
+  variant?: 'gold' | 'primary' | 'secondary' | 'violet' | 'outline' | 'outline-dark' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   to?: string;
   href?: string;
@@ -22,7 +22,7 @@ export const Button: React.FC<ButtonProps> = ({
   className = '',
   ...props
 }) => {
-  const variantClass = `btn-${variant}`;
+  const variantClass = variant === 'secondary' ? 'btn-secondary' : variant === 'violet' ? 'btn-violet' : `btn-${variant}`;
   const sizeClass = size === 'sm' ? 'btn-sm' : size === 'lg' ? 'btn-lg' : '';
   const combinedClasses = `btn ${variantClass} ${sizeClass} ${className}`.trim();
 

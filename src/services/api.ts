@@ -2,6 +2,10 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://api.azaroth-techhive.com';
 const API_TIMEOUT = parseInt(import.meta.env.VITE_API_TIMEOUT || '30000');
 
+if (import.meta.env.DEV && !import.meta.env.VITE_API_BASE_URL) {
+  console.warn(`VITE_API_BASE_URL is not set; using fallback base URL: ${API_BASE_URL}`);
+}
+
 export interface ApiResponse<T> {
   success: boolean;
   data?: T;
@@ -46,29 +50,49 @@ class ApiService {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), API_TIMEOUT);
 
+    // FormData must not get a JSON Content-Type: the browser has to set
+    // multipart/form-data itself so the boundary is included.
+    const isFormData = options.body instanceof FormData;
+    const headers: Record<string, string> = isFormData
+      ? {}
+      : { 'Content-Type': 'application/json' };
+
+    if (options.headers) {
+      const incoming = options.headers;
+      if (incoming instanceof Headers) {
+        incoming.forEach((value, key) => {
+          headers[key] = value;
+        });
+      } else if (Array.isArray(incoming)) {
+        incoming.forEach(([key, value]) => {
+          headers[key] = value;
+        });
+      } else {
+        Object.assign(headers, incoming);
+      }
+    }
+
     try {
       const response = await fetch(url, {
         ...options,
         signal: controller.signal,
-        headers: {
-          'Content-Type': 'application/json',
-          ...options.headers,
-        },
+        headers,
       });
-
-      clearTimeout(timeoutId);
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
+      // Keep the timer running while the body is read: the abort signal stays
+      // attached to the stream, so a timeout also cancels response.json().
       const data = await response.json();
+      clearTimeout(timeoutId);
       return data;
     } catch (error) {
       clearTimeout(timeoutId);
       
       if (error instanceof Error) {
-        if (error.name === 'AbortError') {
+        if (error.name === 'AbortError' || controller.signal.aborted) {
           return { success: false, error: 'Request timeout' };
         }
         return { success: false, error: error.message };
@@ -111,7 +135,6 @@ class ApiService {
     return this.request<{ referenceId: string }>('/rfq', {
       method: 'POST',
       body: formDataToSend,
-      headers: {}, // Let browser set Content-Type for FormData
     });
   }
 }

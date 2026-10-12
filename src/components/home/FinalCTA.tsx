@@ -6,7 +6,7 @@ import { ArrowRight } from 'lucide-react';
 export const FinalCTA: React.FC = () => {
   return (
     <section style={{
-      backgroundColor: 'var(--color-dark-maroon)',
+      backgroundColor: 'var(--color-surface-muted)',
       padding: '5rem 0',
       position: 'relative',
       overflow: 'hidden',
@@ -19,7 +19,7 @@ export const FinalCTA: React.FC = () => {
         width: '450px',
         height: '450px',
         borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0) 70%)',
+        background: 'radial-gradient(circle, rgba(216, 173, 89, 0.15) 0%, rgba(216, 173, 89, 0) 70%)',
         pointerEvents: 'none',
       }} />
 
@@ -34,23 +34,34 @@ export const FinalCTA: React.FC = () => {
           <h2 style={{
             fontSize: 'clamp(2rem, 4vw, 2.75rem)',
             fontWeight: 800,
-            color: '#ffffff',
+            color: 'var(--color-text-primary)',
             marginBottom: '1.5rem',
             lineHeight: 1.2,
           }}>
-            Let's Build the Right Digital Solution
+            Discuss the delivery challenge behind your roadmap.
           </h2>
           <p style={{
             fontSize: '1.25rem',
-            color: 'var(--color-text-inverse-muted)',
+            color: 'var(--color-text-secondary)',
             lineHeight: 1.7,
             marginBottom: '2.5rem',
           }}>
-            Whether you're exploring new ideas, modernizing existing systems, or scaling your operations — we're here to help you discuss requirements, explore technical possibilities, and find the right path forward.
+            Whether the issue is legacy complexity, delivery risk, or a platform that needs to support growth, we can help you assess the constraints and the right next step.
           </p>
-          <Button to="/connect-with-us" variant="gold" size="lg" icon={<ArrowRight size={18} />}>
-            Connect With Us
-          </Button>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '1rem',
+          }}>
+            <Button to="/request-for-quote" variant="violet" size="lg" icon={<ArrowRight size={18} aria-hidden="true" />}>
+              Request a quote
+            </Button>
+            <Button to="/connect-with-us" variant="outline" size="lg">
+              Talk to our team
+            </Button>
+          </div>
         </motion.div>
       </div>
     </section>

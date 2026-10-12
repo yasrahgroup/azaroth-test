@@ -3,6 +3,11 @@ import { Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { ContactFormData } from '../../types';
 import { Button } from '../common/Button';
 import { apiService, ContactSubmission } from '../../services/api';
+import { companyInfo } from '../../data/companyData';
+
+const WHATSAPP_URL = `https://wa.me/${companyInfo.headquarters.whatsapp.replace(/[^0-9]/g, '')}`;
+const FALLBACK_EMAIL = 'hello@azaroth-techhive.com';
+const FALLBACK_PHONE = '+916379480931';
 
 export const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState<ContactFormData>({
@@ -32,6 +37,9 @@ export const ContactForm: React.FC = () => {
     if (!formData.companyName.trim()) errs.companyName = 'Company name is required.';
     if (!formData.message.trim() || formData.message.length < 10) {
       errs.message = 'Please provide at least a brief summary of your requirements (min 10 characters).';
+    }
+    if (!formData.consent) {
+      errs.consent = 'Please confirm you agree to be contacted about your enquiry.';
     }
     setErrors(errs);
     return Object.keys(errs).length === 0;
@@ -77,7 +85,7 @@ export const ContactForm: React.FC = () => {
 
   if (submitted) {
     return (
-      <div style={{
+      <div aria-live="polite" style={{
         padding: '3rem 2rem',
         borderRadius: 'var(--radius-xl)',
         backgroundColor: '#ffffff',
@@ -128,7 +136,7 @@ export const ContactForm: React.FC = () => {
           </Button>
 
           <Button
-            href="https://wa.me/916379480931"
+            href={WHATSAPP_URL}
             variant="gold"
             size="sm"
           >
@@ -174,8 +182,10 @@ export const ContactForm: React.FC = () => {
             placeholder="Enter your full name"
             value={formData.fullName}
             onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+            aria-invalid={Boolean(errors.fullName)}
+            aria-describedby={errors.fullName ? 'contact-fullName-error' : undefined}
           />
-          {errors.fullName && <span className="form-error"><AlertCircle size={13} /> {errors.fullName}</span>}
+          {errors.fullName && <span id="contact-fullName-error" role="alert" className="form-error"><AlertCircle size={13} /> {errors.fullName}</span>}
         </div>
 
         {/* Work Email */}
@@ -188,8 +198,10 @@ export const ContactForm: React.FC = () => {
             placeholder="Enter your business email"
             value={formData.workEmail}
             onChange={(e) => setFormData({ ...formData, workEmail: e.target.value })}
+            aria-invalid={Boolean(errors.workEmail)}
+            aria-describedby={errors.workEmail ? 'contact-workEmail-error' : undefined}
           />
-          {errors.workEmail && <span className="form-error"><AlertCircle size={13} /> {errors.workEmail}</span>}
+          {errors.workEmail && <span id="contact-workEmail-error" role="alert" className="form-error"><AlertCircle size={13} /> {errors.workEmail}</span>}
         </div>
 
         {/* Company Name */}
@@ -202,8 +214,10 @@ export const ContactForm: React.FC = () => {
             placeholder="Enter your company name"
             value={formData.companyName}
             onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+            aria-invalid={Boolean(errors.companyName)}
+            aria-describedby={errors.companyName ? 'contact-companyName-error' : undefined}
           />
-          {errors.companyName && <span className="form-error"><AlertCircle size={13} /> {errors.companyName}</span>}
+          {errors.companyName && <span id="contact-companyName-error" role="alert" className="form-error"><AlertCircle size={13} /> {errors.companyName}</span>}
         </div>
 
         {/* Phone */}
@@ -216,8 +230,10 @@ export const ContactForm: React.FC = () => {
             placeholder="Enter your phone number"
             value={formData.phone}
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            aria-invalid={Boolean(errors.phone)}
+            aria-describedby={errors.phone ? 'contact-phone-error' : undefined}
           />
-          {errors.phone && <span className="form-error"><AlertCircle size={13} /> {errors.phone}</span>}
+          {errors.phone && <span id="contact-phone-error" role="alert" className="form-error"><AlertCircle size={13} /> {errors.phone}</span>}
         </div>
 
       </div>
@@ -230,12 +246,15 @@ export const ContactForm: React.FC = () => {
             className="form-select"
             value={formData.enquiryAbout}
             onChange={(e) => setFormData({ ...formData, enquiryAbout: e.target.value })}
+            aria-invalid={Boolean(errors.enquiryAbout)}
+            aria-describedby={errors.enquiryAbout ? 'contact-enquiryAbout-error' : undefined}
           >
             <option value="" disabled>Select an option</option>
             <option value="General">General</option>
             <option value="Products">Products</option>
             <option value="Enquiries">Enquiries</option>
           </select>
+          {errors.enquiryAbout && <span id="contact-enquiryAbout-error" role="alert" className="form-error"><AlertCircle size={13} /> {errors.enquiryAbout}</span>}
         </div>
 
       {/* How Can We Help */}
@@ -248,8 +267,10 @@ export const ContactForm: React.FC = () => {
           placeholder="Describe your requirements or questions in detail..."
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+          aria-invalid={Boolean(errors.message)}
+          aria-describedby={errors.message ? 'contact-message-error' : undefined}
         />
-        {errors.message && <span className="form-error"><AlertCircle size={13} /> {errors.message}</span>}
+        {errors.message && <span id="contact-message-error" role="alert" className="form-error"><AlertCircle size={13} /> {errors.message}</span>}
       </div>
 
       {/* Consent Checkbox */}
@@ -260,15 +281,17 @@ export const ContactForm: React.FC = () => {
             checked={formData.consent}
             onChange={(e) => setFormData({ ...formData, consent: e.target.checked })}
             style={{ marginTop: '0.2rem' }}
+            aria-invalid={Boolean(errors.consent)}
+            aria-describedby={errors.consent ? 'contact-consent-error' : undefined}
           />
           <span>I agree that Azaroth Tech-Hive may contact me about this enquiry.</span>
         </label>
-        {errors.consent && <span className="form-error"><AlertCircle size={13} /> {errors.consent}</span>}
+        {errors.consent && <span id="contact-consent-error" role="alert" className="form-error"><AlertCircle size={13} /> {errors.consent}</span>}
       </div>
 
       {/* Submission Error */}
       {submissionError && (
-        <div style={{
+        <div role="alert" style={{
           marginTop: '1rem',
           padding: '0.75rem',
           backgroundColor: 'rgba(239, 68, 68, 0.1)',
@@ -277,8 +300,18 @@ export const ContactForm: React.FC = () => {
           color: '#ef4444',
           fontSize: '0.875rem',
         }}>
-          <AlertCircle size={14} style={{ display: 'inline', marginRight: '0.5rem' }} />
-          {submissionError}
+          <div>
+            <AlertCircle size={14} style={{ display: 'inline', marginRight: '0.5rem' }} />
+            {submissionError}
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginTop: '0.5rem' }}>
+            <a href={`mailto:${FALLBACK_EMAIL}`} style={{ color: '#ef4444', fontWeight: 600 }}>
+              Email us directly
+            </a>
+            <a href={`tel:${FALLBACK_PHONE}`} style={{ color: '#ef4444', fontWeight: 600 }}>
+              Call +91 6379480931
+            </a>
+          </div>
         </div>
       )}
 

@@ -16,6 +16,7 @@ import { productsCatalog } from '../data/productsData';
 import { Card } from '../components/common/Card';
 import { Badge } from '../components/common/Badge';
 import { Button } from '../components/common/Button';
+import { SEOHead } from '../components/common/SEOHead';
 
 export const ProductDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -43,10 +44,25 @@ export const ProductDetail: React.FC = () => {
     }
   };
 
+  const getProductColors = (productId: string) => {
+    const colors: Record<string, { bg: string; color: string; border: string }> = {
+      'prod-fms': { bg: 'var(--color-surface-lavender)', color: 'var(--color-brand-violet)', border: 'var(--color-brand-violet-border)' },
+      'prod-commerce': { bg: 'var(--color-surface-mint)', color: 'var(--color-brand-emerald)', border: 'var(--color-brand-emerald-border)' },
+      'prod-lmp': { bg: 'var(--color-surface-peach)', color: 'var(--color-brand-orange)', border: 'var(--color-brand-orange-border)' },
+      'prod-hms': { bg: 'var(--color-surface-rose)', color: 'var(--color-brand-magenta)', border: 'var(--color-brand-magenta-border)' },
+    };
+    return colors[productId] || colors['prod-fms'];
+  };
+
   return (
     <div>
+      <SEOHead
+        title={`${product.name} — Azaroth Tech-Hive`}
+        description={product.description.length > 160 ? `${product.description.slice(0, 157).trimEnd()}...` : product.description}
+        canonicalPath={`/products/${product.slug}`}
+      />
       {/* Product Hero */}
-      <section className="section theme-dark-obsidian bg-grid-pattern">
+      <section className="section" style={{ backgroundColor: 'var(--color-background)', borderBottom: '1px solid var(--color-border)' }}>
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <Link
             to="/products"
@@ -54,7 +70,7 @@ export const ProductDetail: React.FC = () => {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.375rem',
-              color: 'var(--color-gold-from)',
+              color: 'var(--color-text-secondary)',
               fontSize: '0.875rem',
               fontWeight: 600,
               textDecoration: 'none',
@@ -70,12 +86,12 @@ export const ProductDetail: React.FC = () => {
               width: '4rem',
               height: '4rem',
               borderRadius: '16px',
-              backgroundColor: 'rgba(122, 12, 22, 0.25)',
-              color: '#D4AF37',
+              backgroundColor: getProductColors(product.id).bg,
+              color: getProductColors(product.id).color,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              border: '1px solid rgba(212, 175, 55, 0.3)',
+              border: `1px solid ${getProductColors(product.id).border}`,
             }}>
               {getIcon(product.iconName)}
             </div>
@@ -85,7 +101,7 @@ export const ProductDetail: React.FC = () => {
                 <Badge variant="gold">{product.category}</Badge>
                 {product.badge && <Badge variant="gold">{product.badge}</Badge>}
               </div>
-              <h1 style={{ fontSize: 'clamp(2.25rem, 4vw, 3.25rem)', color: '#ffffff', margin: 0 }}>
+              <h1 style={{ fontSize: 'clamp(2.25rem, 4vw, 3.25rem)', color: 'var(--color-text-primary)', margin: 0 }}>
                 {product.name}
               </h1>
             </div>
@@ -94,7 +110,7 @@ export const ProductDetail: React.FC = () => {
           <p style={{
             fontSize: '1.25rem',
             fontWeight: 600,
-            color: '#D4AF37',
+            color: getProductColors(product.id).color,
             marginBottom: '1rem',
             maxWidth: '800px',
           }}>
@@ -103,7 +119,7 @@ export const ProductDetail: React.FC = () => {
 
           <p style={{
             fontSize: '1.0625rem',
-            color: 'var(--color-text-inverse-muted)',
+            color: 'var(--color-text-secondary)',
             lineHeight: 1.7,
             maxWidth: '820px',
             marginBottom: '2.5rem',
@@ -115,7 +131,7 @@ export const ProductDetail: React.FC = () => {
             <Button to="/request-for-quote" variant="gold" size="lg" icon={<ArrowRight size={18} />}>
               Request Technical Deployment
             </Button>
-            <Button to="/connect-with-us" variant="outline-dark" size="lg">
+            <Button to="/connect-with-us" variant="outline" size="lg">
               Speak with Solution Architect
             </Button>
           </div>
@@ -126,9 +142,12 @@ export const ProductDetail: React.FC = () => {
       <section className="section" style={{ backgroundColor: '#ffffff' }}>
         <div className="container">
           
-          <h2 style={{ fontSize: '2rem', marginBottom: '2rem', color: 'var(--color-dark-maroon)' }}>
-            System Architecture & Benchmarks
+          <h2 style={{ fontSize: '2rem', marginBottom: '0.75rem', color: 'var(--color-text-primary)' }}>
+            Architecture design goals
           </h2>
+          <p style={{ fontSize: '0.9375rem', color: 'var(--color-text-secondary)', marginBottom: '2rem' }}>
+            Targets set during design; measured benchmarks will be published after launch.
+          </p>
 
           <div style={{
             display: 'grid',
@@ -136,42 +155,42 @@ export const ProductDetail: React.FC = () => {
             gap: '1.5rem',
             marginBottom: '3.5rem',
           }}>
-            <Card variant="solid" padding="md" style={{ backgroundColor: 'var(--color-canvas-bg)', border: '1px solid var(--color-border-subtle)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-primary-maroon)', marginBottom: '0.5rem' }}>
+            <Card variant="solid" padding="md" style={{ backgroundColor: 'var(--color-surface-soft)', border: '1px solid var(--color-border-subtle)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: getProductColors(product.id).color, marginBottom: '0.5rem' }}>
                 <Zap size={18} />
-                <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Latency Benchmark</span>
+                <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Latency Design Target</span>
               </div>
-              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-dark-maroon)' }}>
+              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-text-primary)' }}>
                 {product.techSpecs.latency}
               </div>
             </Card>
 
-            <Card variant="solid" padding="md" style={{ backgroundColor: 'var(--color-canvas-bg)', border: '1px solid var(--color-border-subtle)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-primary-maroon)', marginBottom: '0.5rem' }}>
+            <Card variant="solid" padding="md" style={{ backgroundColor: 'var(--color-surface-soft)', border: '1px solid var(--color-border-subtle)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: getProductColors(product.id).color, marginBottom: '0.5rem' }}>
                 <Zap size={18} />
-                <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Concurrency Benchmark</span>
+                <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Concurrency Design Target</span>
               </div>
-              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-dark-maroon)' }}>
+              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-text-primary)' }}>
                 {product.techSpecs.concurrency}
               </div>
             </Card>
 
-            <Card variant="solid" padding="md" style={{ backgroundColor: 'var(--color-canvas-bg)', border: '1px solid var(--color-border-subtle)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-primary-maroon)', marginBottom: '0.5rem' }}>
+            <Card variant="solid" padding="md" style={{ backgroundColor: 'var(--color-surface-soft)', border: '1px solid var(--color-border-subtle)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: getProductColors(product.id).color, marginBottom: '0.5rem' }}>
                 <FileCheck size={18} />
-                <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Compliance Guardrails</span>
+                <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Compliance Posture</span>
               </div>
-              <div style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--color-dark-maroon)', lineHeight: 1.4 }}>
-                {product.techSpecs.compliance.join(', ')}
+              <div style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--color-text-primary)', lineHeight: 1.4 }}>
+                {product.techSpecs.compliancePosture}
               </div>
             </Card>
 
-            <Card variant="solid" padding="md" style={{ backgroundColor: 'var(--color-canvas-bg)', border: '1px solid var(--color-border-subtle)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-primary-maroon)', marginBottom: '0.5rem' }}>
+            <Card variant="solid" padding="md" style={{ backgroundColor: 'var(--color-surface-soft)', border: '1px solid var(--color-border-subtle)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: getProductColors(product.id).color, marginBottom: '0.5rem' }}>
                 <Globe size={18} />
                 <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Supported Protocols</span>
               </div>
-              <div style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--color-dark-maroon)', lineHeight: 1.4 }}>
+              <div style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--color-text-primary)', lineHeight: 1.4 }}>
                 {product.techSpecs.protocols.join(', ')}
               </div>
             </Card>

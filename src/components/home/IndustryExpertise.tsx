@@ -8,13 +8,13 @@ import { ShoppingBag, GraduationCap, HeartPulse, Truck, Layers } from 'lucide-re
 export const IndustryExpertise: React.FC = () => {
   const getIcon = (iconName: string) => {
     const icons: Record<string, React.ReactNode> = {
-      ShoppingBag: <ShoppingBag size={28} />,
-      GraduationCap: <GraduationCap size={28} />,
-      HeartPulse: <HeartPulse size={28} />,
-      Truck: <Truck size={28} />,
-      Layers: <Layers size={28} />,
+      ShoppingBag: <ShoppingBag size={28} aria-hidden="true" />,
+      GraduationCap: <GraduationCap size={28} aria-hidden="true" />,
+      HeartPulse: <HeartPulse size={28} aria-hidden="true" />,
+      Truck: <Truck size={28} aria-hidden="true" />,
+      Layers: <Layers size={28} aria-hidden="true" />,
     };
-    return icons[iconName] || <Layers size={28} />;
+    return icons[iconName] || <Layers size={28} aria-hidden="true" />;
   };
 
   return (
@@ -30,11 +30,11 @@ export const IndustryExpertise: React.FC = () => {
           <Badge variant="gold" style={{ marginBottom: '1rem' }}>
             Industry Expertise
           </Badge>
-          <h2 style={{ fontSize: 'clamp(2rem, 3.5vw, 2.75rem)', fontWeight: 800, marginBottom: '1rem', color: 'var(--color-dark-maroon)' }}>
+          <h2 style={{ fontSize: 'clamp(2rem, 3.5vw, 2.75rem)', fontWeight: 800, marginBottom: '1rem', color: 'var(--color-text-primary)' }}>
             Our Specialised Engineering Across Diverse Industries
           </h2>
           <p style={{ fontSize: '1.0625rem', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
-            We bring deep domain expertise and technical excellence to deliver tailored solutions across multiple industries, addressing unique challenges with proven engineering approaches.
+            We engineer for the operating realities of each industry: we learn the business and operational challenge first, then shape architecture, integrations, and automation around it.
           </p>
         </motion.div>
 
@@ -52,18 +52,18 @@ export const IndustryExpertise: React.FC = () => {
               transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
             >
               <Card
-                variant="solid"
+                variant="glass"
                 padding="lg"
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
                   height: '100%',
-                  border: '1px solid rgba(122, 12, 22, 0.1)',
+                  border: '1px solid var(--color-border)',
                   transition: 'all 180ms ease-out',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = '0 8px 20px -6px rgba(122, 12, 22, 0.15)';
-                  e.currentTarget.style.borderColor = 'rgba(122, 12, 22, 0.25)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
+                  e.currentTarget.style.borderColor = 'var(--color-brand-violet)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.boxShadow = '';
@@ -74,8 +74,8 @@ export const IndustryExpertise: React.FC = () => {
                   width: '3.5rem',
                   height: '3.5rem',
                   borderRadius: '12px',
-                  backgroundColor: 'rgba(122, 12, 22, 0.08)',
-                  color: 'var(--color-primary-maroon)',
+                  backgroundColor: 'var(--color-surface-rose)',
+                  color: 'var(--color-brand-magenta)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -84,25 +84,25 @@ export const IndustryExpertise: React.FC = () => {
                   {getIcon(industry.iconName)}
                 </div>
 
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-dark-maroon)', marginBottom: '0.5rem' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: '0.5rem' }}>
                   {industry.industry}
                 </h3>
 
-                <p style={{ fontSize: '0.875rem', color: 'var(--color-primary-maroon)', fontWeight: 600, marginBottom: '1.25rem' }}>
+                <p style={{ fontSize: '0.875rem', color: 'var(--color-brand-magenta)', fontWeight: 600, marginBottom: '1.25rem' }}>
                   {industry.subtitle}
                 </p>
 
                 <div style={{
-                  backgroundColor: 'rgba(122, 12, 22, 0.04)',
+                  backgroundColor: 'var(--color-surface-muted)',
                   padding: '1rem',
                   borderRadius: 'var(--radius-md)',
-                  border: '1px solid rgba(122, 12, 22, 0.08)',
+                  border: '1px solid var(--color-border)',
                   marginBottom: '0.75rem',
                 }}>
                   <div style={{
                     fontSize: '0.75rem',
                     fontWeight: 700,
-                    color: 'var(--color-primary-maroon)',
+                    color: 'var(--color-brand-violet)',
                     textTransform: 'uppercase',
                     letterSpacing: '0.04em',
                     marginBottom: '0.5rem',
@@ -115,16 +115,16 @@ export const IndustryExpertise: React.FC = () => {
                 </div>
 
                 <div style={{
-                  backgroundColor: 'rgba(212, 175, 55, 0.06)',
+                  backgroundColor: 'var(--color-brand-gold-light)',
                   padding: '1rem',
                   borderRadius: 'var(--radius-md)',
-                  border: '1px solid rgba(212, 175, 55, 0.15)',
+                  border: '1px solid var(--color-brand-gold-border)',
                   marginBottom: '0.75rem',
                 }}>
                   <div style={{
                     fontSize: '0.75rem',
                     fontWeight: 700,
-                    color: '#996e00',
+                    color: 'var(--color-brand-gold-text)',
                     textTransform: 'uppercase',
                     letterSpacing: '0.04em',
                     marginBottom: '0.5rem',
@@ -137,16 +137,16 @@ export const IndustryExpertise: React.FC = () => {
                 </div>
 
                 <div style={{
-                  backgroundColor: 'rgba(122, 12, 22, 0.04)',
+                  backgroundColor: 'var(--color-surface-muted)',
                   padding: '1rem',
                   borderRadius: 'var(--radius-md)',
-                  border: '1px solid rgba(122, 12, 22, 0.08)',
+                  border: '1px solid var(--color-border)',
                   marginTop: 'auto',
                 }}>
                   <div style={{
                     fontSize: '0.75rem',
                     fontWeight: 700,
-                    color: 'var(--color-primary-maroon)',
+                    color: 'var(--color-brand-emerald)',
                     textTransform: 'uppercase',
                     letterSpacing: '0.04em',
                     marginBottom: '0.5rem',

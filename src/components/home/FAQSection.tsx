@@ -1,29 +1,45 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Badge } from '../common/Badge';
 import { Button } from '../common/Button';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
 const faqs = [
   {
-    question: 'What should I look for when hiring a software development company?',
-    answer: 'Look for a company that asks about your business before talking technology, communicates clearly without jargon, gives transparent pricing, and has a track record of delivering on time. That is exactly how we work at Azaroth.',
+    question: 'What industries do you build for?',
+    answer: 'We build for retail and digital commerce, education and digital learning, healthcare and health technology, supply chain and logistics, and ERP and business management systems. Industry context shapes the architecture, so we begin by learning which constraints apply to your environment before proposing a solution.',
   },
   {
-    question: 'How much does custom software development cost?',
-    answer: 'It depends on scope and complexity. A business website sits at a very different price point from a custom app or AI integration. We provide a clear, itemised quote after our first conversation — no hidden costs.',
+    question: 'How do engagements start?',
+    answer: 'Every engagement starts with discovery: your goals, user needs, existing systems, and technical challenges. That stage produces a written requirements and scope specification, an architecture feasibility assessment, and an agreed delivery horizon, so the build begins against a shared definition of the work.',
   },
   {
-    question: 'How long does it take to build a website or app?',
-    answer: 'A business website typically takes 2–4 weeks. A mobile or web app takes 8–12 weeks. AI and automation projects vary by complexity. We give you a realistic timeline before we start — and stick to it.',
+    question: 'Can you work with our existing systems and vendors?',
+    answer: 'Yes. Discovery includes a review of legacy systems, integrations, and API constraints, and we plan around the third-party platforms and vendors you already depend on. Integration mapping and interface contracts are defined during solution design so the new work fits the landscape you have.',
   },
   {
-    question: 'How can AI help my business practically?',
-    answer: 'AI can automate repetitive tasks, handle customer enquiries around the clock, analyse your data for better decisions, and reduce operational costs. We help you identify where AI makes a genuine difference — then implement it without the overwhelm.',
+    question: 'How do you keep scope and communication under control?',
+    answer: 'Scope is documented at discovery with explicit boundaries, and changes are assessed against that specification rather than absorbed silently. Communication runs through sprint reviews and iterative builds, with progress, blockers, and decisions surfaced as they happen instead of at the end of a phase.',
   },
   {
-    question: 'Do I need to be technical to work with a software company?',
-    answer: 'Not at all. We work with non-technical business owners every day. We explain everything in plain language and handle all the complexity on our end.',
+    question: 'What happens after launch?',
+    answer: 'Deployment is followed by a support stage: monitoring and health checks, issue resolution within the agreed operating model, dependency and framework maintenance, performance tuning, and feature iterations prioritized with you. Coverage is defined in the operating model agreed for your engagement.',
+  },
+  {
+    question: 'How is pricing structured?',
+    answer: (
+      <>
+        Pricing is scoped per engagement after discovery, once the scope, constraints, and delivery approach are clear. Submit your requirements through the{' '}
+        <Link
+          to="/request-for-quote"
+          style={{ color: 'var(--color-brand-violet)', fontWeight: 600 }}
+        >
+          request-for-quote form
+        </Link>{' '}
+        and we will return a scoped quote.
+      </>
+    ),
   },
 ];
 
@@ -36,11 +52,11 @@ export const FAQSection: React.FC = () => {
 
   return (
     <section style={{
-      backgroundColor: '#ffffff',
+      backgroundColor: 'var(--color-canvas-bg)',
       padding: '5rem 0',
     }}>
       <div className="container mx-auto px-6 lg:px-8">
-        
+
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -55,18 +71,18 @@ export const FAQSection: React.FC = () => {
           <h2 style={{
             fontSize: 'clamp(2rem, 4vw, 2.5rem)',
             fontWeight: 800,
-            color: '#1e293b',
+            color: 'var(--color-text-primary)',
             marginBottom: '1rem',
             lineHeight: 1.2,
           }}>
-            Frequently Asked Questions
+            Questions teams ask before starting
           </h2>
           <p style={{
             fontSize: '1.0625rem',
-            color: '#64748b',
+            color: 'var(--color-text-secondary)',
             lineHeight: 1.7,
           }}>
-            Still have questions? Can't find the answer you're looking for? Please chat to our friendly team!
+            Direct answers on how we scope, run, and support enterprise engagements — and where to go when your question is not listed here.
           </p>
         </motion.div>
 
@@ -75,90 +91,103 @@ export const FAQSection: React.FC = () => {
           maxWidth: '800px',
           margin: '0 auto 3rem',
         }}>
-          {faqs.map((faq, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.4, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
-              style={{
-                marginBottom: '1rem',
-                borderRadius: '8px',
-                border: '1px solid #e5e7eb',
-                overflow: 'hidden',
-                backgroundColor: '#ffffff',
-              }}
-            >
-              <button
-                onClick={() => toggleFAQ(index)}
+          {faqs.map((faq, index) => {
+            const buttonId = `faq-question-${index}`;
+            const panelId = `faq-answer-${index}`;
+            const isOpen = openIndex === index;
+
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-100px' }}
+                transition={{ duration: 0.4, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
                 style={{
-                  width: '100%',
-                  padding: '1.25rem 1.5rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  backgroundColor: openIndex === index ? '#f8fafc' : '#ffffff',
-                  border: 'none',
-                  cursor: 'pointer',
-                  transition: 'background-color 180ms ease-out',
-                }}
-                onMouseEnter={(e) => {
-                  if (openIndex !== index) {
-                    e.currentTarget.style.backgroundColor = '#f8fafc';
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (openIndex !== index) {
-                    e.currentTarget.style.backgroundColor = '#ffffff';
-                  }
+                  marginBottom: '1rem',
+                  borderRadius: '8px',
+                  border: '1px solid var(--color-border)',
+                  overflow: 'hidden',
+                  backgroundColor: 'var(--color-canvas-card)',
                 }}
               >
-                <span style={{
-                  fontSize: '1rem',
-                  fontWeight: 600,
-                  color: '#1e293b',
-                  textAlign: 'left',
-                  flex: 1,
-                }}>
-                  {faq.question}
-                </span>
-                {openIndex === index ? (
-                  <ChevronUp size={20} color="#2563eb" />
-                ) : (
-                  <ChevronDown size={20} color="#64748b" />
-                )}
-              </button>
+                <button
+                  id={buttonId}
+                  type="button"
+                  aria-expanded={isOpen}
+                  aria-controls={panelId}
+                  onClick={() => toggleFAQ(index)}
+                  style={{
+                    width: '100%',
+                    padding: '1.25rem 1.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    backgroundColor: isOpen ? 'var(--color-surface-muted)' : 'var(--color-canvas-card)',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'background-color 180ms ease-out',
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isOpen) {
+                      e.currentTarget.style.backgroundColor = 'var(--color-surface-muted)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isOpen) {
+                      e.currentTarget.style.backgroundColor = 'var(--color-canvas-card)';
+                    }
+                  }}
+                >
+                  <span style={{
+                    fontSize: '1rem',
+                    fontWeight: 600,
+                    color: 'var(--color-text-primary)',
+                    textAlign: 'left',
+                    flex: 1,
+                  }}>
+                    {faq.question}
+                  </span>
+                  {isOpen ? (
+                    <ChevronUp size={20} aria-hidden="true" style={{ color: 'var(--color-brand-violet)' }} />
+                  ) : (
+                    <ChevronDown size={20} aria-hidden="true" style={{ color: 'var(--color-text-secondary)' }} />
+                  )}
+                </button>
 
-              <AnimatePresence>
-                {openIndex === index && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                    style={{
-                      overflow: 'hidden',
-                    }}
-                  >
-                    <div style={{
-                      padding: '1.25rem 1.5rem',
-                      borderTop: '1px solid #e5e7eb',
-                      backgroundColor: '#f8fafc',
-                    }}>
-                      <p style={{
-                        fontSize: '0.9375rem',
-                        color: '#64748b',
-                        lineHeight: 1.7,
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      id={panelId}
+                      role="region"
+                      aria-labelledby={buttonId}
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                      style={{
+                        overflow: 'hidden',
+                      }}
+                    >
+                      <div style={{
+                        padding: '1.25rem 1.5rem',
+                        borderTop: '1px solid var(--color-border)',
+                        backgroundColor: 'var(--color-surface-muted)',
                       }}>
-                        {faq.answer}
-                      </p>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
+                        <p style={{
+                          fontSize: '0.9375rem',
+                          color: 'var(--color-text-secondary)',
+                          lineHeight: 1.7,
+                        }}>
+                          {faq.answer}
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* CTA */}
@@ -170,7 +199,7 @@ export const FAQSection: React.FC = () => {
           style={{ textAlign: 'center' }}
         >
           <Button to="/connect-with-us" variant="gold" size="lg">
-            Get In Touch
+            Connect with our team
           </Button>
         </motion.div>
       </div>

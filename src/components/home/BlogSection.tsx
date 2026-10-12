@@ -2,29 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Badge } from '../common/Badge';
 import { Button } from '../common/Button';
-import { ArrowRight, Calendar } from 'lucide-react';
+import { ArrowRight, Calendar, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { insightsArticles } from '../../data/insightsData';
 
-const insightsData = [
-  {
-    title: 'Building Scalable Software Architecture: Key Principles',
-    category: 'Architecture',
-    date: 'Jan 15, 2026',
-    excerpt: 'Discover the fundamental principles of scalable software architecture and how to design systems that grow with your business.',
-  },
-  {
-    title: 'Application Modernization Strategies for Legacy Systems',
-    category: 'Modernization',
-    date: 'Jan 10, 2026',
-    excerpt: 'Learn proven strategies for modernizing legacy applications without disrupting business operations.',
-  },
-  {
-    title: 'Technology Decision Frameworks for Business Leaders',
-    category: 'Strategy',
-    date: 'Jan 5, 2026',
-    excerpt: 'A practical guide to making informed technology decisions that align with business goals and ROI.',
-  },
-];
+const articles = insightsArticles.slice(0, 3);
 
 export const BlogSection: React.FC = () => {
   return (
@@ -33,7 +15,7 @@ export const BlogSection: React.FC = () => {
       padding: '5rem 0',
     }}>
       <div className="container">
-        
+
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -43,23 +25,23 @@ export const BlogSection: React.FC = () => {
           style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 4rem' }}
         >
           <Badge variant="gold" style={{ marginBottom: '1rem' }}>
-            Insights & Resources
+            Resource Hub
           </Badge>
           <h2 style={{
             fontSize: 'clamp(2rem, 3.5vw, 2.5rem)',
             fontWeight: 800,
-            color: 'var(--color-dark-maroon)',
+            color: 'var(--color-text-primary)',
             marginBottom: '1rem',
             lineHeight: 1.2,
           }}>
-            Engineering Insights That Move Ideas Forward
+            Practical engineering insight for enterprise teams
           </h2>
           <p style={{
             fontSize: '1.0625rem',
             color: 'var(--color-text-secondary)',
             lineHeight: 1.7,
           }}>
-            Explore software engineering insights, architecture principles, implementation strategies, and technical guidance to help you make informed technology decisions.
+            The Resource Hub collects what our engineers publish on system architecture, enterprise AI, and cloud modernization — the same material we work through when a technical decision needs grounding.
           </p>
         </motion.div>
 
@@ -70,9 +52,9 @@ export const BlogSection: React.FC = () => {
           gap: '2rem',
           marginBottom: '3rem',
         }}>
-          {insightsData.map((post, index) => (
+          {articles.map((article, index) => (
             <motion.div
-              key={index}
+              key={article.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-100px' }}
@@ -82,96 +64,123 @@ export const BlogSection: React.FC = () => {
                 backgroundColor: '#ffffff',
                 borderRadius: '12px',
                 overflow: 'hidden',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)',
-                border: '1px solid rgba(122, 12, 22, 0.1)',
+                boxShadow: 'var(--shadow-sm)',
+                border: '1px solid var(--color-border)',
                 transition: 'all 180ms ease-out',
-                cursor: 'pointer',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 12px 24px -8px rgba(122, 12, 22, 0.15)';
-                e.currentTarget.style.borderColor = 'rgba(122, 12, 22, 0.25)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
+                e.currentTarget.style.borderColor = 'var(--color-brand-violet)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.05)';
-                e.currentTarget.style.borderColor = 'rgba(122, 12, 22, 0.1)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
+                e.currentTarget.style.borderColor = 'var(--color-border)';
               }}
             >
-              {/* Image Placeholder */}
-              <div style={{
-                height: '180px',
-                backgroundColor: index % 2 === 0 ? 'rgba(122, 12, 22, 0.08)' : 'rgba(212, 175, 55, 0.08)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '3rem',
-              }}>
-                �
-              </div>
-
-              {/* Content */}
-              <div style={{ padding: '1.5rem' }}>
-                {/* Category & Date */}
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.75rem',
-                  marginBottom: '1rem',
-                  fontSize: '0.8125rem',
-                  color: 'var(--color-text-muted)',
-                }}>
+              <Link
+                to={`/technology-insights/${article.slug}`}
+                style={{
+                  display: 'block',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                }}
+              >
+                {/* Decorative category panel (no image available) */}
+                <div
+                  aria-hidden="true"
+                  style={{
+                    height: '180px',
+                    backgroundImage: index % 2 === 0
+                      ? 'repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0 14px, rgba(255, 255, 255, 0) 14px 28px), linear-gradient(135deg, var(--color-surface-lavender) 0%, var(--color-brand-violet-light) 100%)'
+                      : 'repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0 14px, rgba(255, 255, 255, 0) 14px 28px), linear-gradient(135deg, var(--color-surface-peach) 0%, var(--color-brand-gold-light) 100%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
                   <span style={{
-                    backgroundColor: 'rgba(122, 12, 22, 0.08)',
-                    color: 'var(--color-primary-maroon)',
-                    padding: '0.25rem 0.75rem',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.08em',
+                    color: index % 2 === 0 ? 'var(--color-brand-violet)' : 'var(--color-brand-gold-text)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.85)',
+                    padding: '0.5rem 1rem',
                     borderRadius: '9999px',
-                    fontWeight: 600,
+                    border: '1px solid var(--color-border)',
                   }}>
-                    {post.category}
-                  </span>
-                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                    <Calendar size={14} />
-                    {post.date}
+                    {article.category}
                   </span>
                 </div>
 
-                {/* Title */}
-                <h3 style={{
-                  fontSize: '1.125rem',
-                  fontWeight: 700,
-                  color: 'var(--color-dark-maroon)',
-                  marginBottom: '0.75rem',
-                  lineHeight: 1.4,
-                }}>
-                  {post.title}
-                </h3>
-
-                {/* Excerpt */}
-                <p style={{
-                  fontSize: '0.9375rem',
-                  color: 'var(--color-text-secondary)',
-                  lineHeight: 1.6,
-                  marginBottom: '1.25rem',
-                }}>
-                  {post.excerpt}
-                </p>
-
-                {/* Read Article Link */}
-                <Link
-                  to="/technology-insights"
-                  style={{
-                    display: 'inline-flex',
+                {/* Content */}
+                <div style={{ padding: '1.5rem' }}>
+                  {/* Category & Date */}
+                  <div style={{
+                    display: 'flex',
                     alignItems: 'center',
-                    gap: '0.375rem',
-                    color: 'var(--color-primary-maroon)',
-                    fontWeight: 600,
-                    fontSize: '0.875rem',
-                    textDecoration: 'none',
-                  }}
-                >
-                  <span>Read Article</span>
-                  <ArrowRight size={16} />
-                </Link>
-              </div>
+                    flexWrap: 'wrap',
+                    gap: '0.75rem',
+                    marginBottom: '1rem',
+                    fontSize: '0.8125rem',
+                    color: 'var(--color-text-muted)',
+                  }}>
+                    <span style={{
+                      backgroundColor: 'var(--color-surface-muted)',
+                      color: 'var(--color-brand-violet)',
+                      padding: '0.25rem 0.75rem',
+                      borderRadius: '9999px',
+                      fontWeight: 600,
+                    }}>
+                      {article.category}
+                    </span>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                      <Calendar size={14} aria-hidden="true" />
+                      {article.publishedDate}
+                    </span>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                      <Clock size={14} aria-hidden="true" />
+                      {article.readTime}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h3 style={{
+                    fontSize: '1.125rem',
+                    fontWeight: 700,
+                    color: 'var(--color-text-primary)',
+                    marginBottom: '0.75rem',
+                    lineHeight: 1.4,
+                  }}>
+                    {article.title}
+                  </h3>
+
+                  {/* Excerpt */}
+                  <p style={{
+                    fontSize: '0.9375rem',
+                    color: 'var(--color-text-secondary)',
+                    lineHeight: 1.6,
+                    marginBottom: '1.25rem',
+                  }}>
+                    {article.excerpt}
+                  </p>
+
+                  {/* Read Article label (inside the card link) */}
+                  <span
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.375rem',
+                      color: 'var(--color-brand-violet)',
+                      fontWeight: 600,
+                      fontSize: '0.875rem',
+                    }}
+                  >
+                    <span>Read article</span>
+                    <ArrowRight size={16} aria-hidden="true" />
+                  </span>
+                </div>
+              </Link>
             </motion.div>
           ))}
         </div>
@@ -184,7 +193,7 @@ export const BlogSection: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
           style={{ textAlign: 'center' }}
         >
-          <Button to="/technology-insights" variant="outline" size="lg" icon={<ArrowRight size={18} />}>
+          <Button to="/technology-insights" variant="outline" size="lg" icon={<ArrowRight size={18} aria-hidden="true" />}>
             View All Articles
           </Button>
         </motion.div>

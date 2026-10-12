@@ -56,11 +56,11 @@ export const Header: React.FC = () => {
     zIndex: 50,
     width: '100%',
     transition: 'all 240ms ease-out',
-    backgroundColor: isScrolled ? 'rgba(250, 250, 247, 0.94)' : 'rgba(250, 250, 247, 0.82)',
-    backdropFilter: 'blur(16px)',
-    WebkitBackdropFilter: 'blur(16px)',
-    borderBottom: isScrolled ? '1px solid rgba(122, 12, 22, 0.08)' : '1px solid transparent',
-    boxShadow: isScrolled ? '0 4px 20px -2px rgba(122, 12, 22, 0.06)' : 'none',
+    backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.98)' : 'rgba(255, 255, 255, 0.95)',
+    backdropFilter: 'blur(20px)',
+    WebkitBackdropFilter: 'blur(20px)',
+    borderBottom: isScrolled ? '1px solid var(--color-border)' : '1px solid transparent',
+    boxShadow: isScrolled ? '0 4px 24px -2px rgba(38, 48, 59, 0.08)' : 'none',
   };
 
   const navLinkStyle = (path: string, exact = false) => {
@@ -68,13 +68,13 @@ export const Header: React.FC = () => {
     return {
       fontSize: '0.9375rem',
       fontWeight: isActive ? 700 : 600,
-      color: isActive ? 'var(--color-primary-maroon)' : 'var(--color-text-secondary)',
+      color: isActive ? 'var(--color-brand-violet)' : 'var(--color-text-secondary)',
       display: 'inline-flex',
       alignItems: 'center',
       gap: '0.35rem',
       padding: '0.5rem 0.75rem',
       borderRadius: 'var(--radius-sm)',
-      transition: 'color var(--transition-fast)',
+      transition: 'all var(--transition-fast)',
       cursor: 'pointer',
     };
   };
@@ -93,16 +93,16 @@ export const Header: React.FC = () => {
               height: '2.75rem',
               objectFit: 'contain',
               flexShrink: 0,
-              filter: 'drop-shadow(0 2px 6px rgba(122, 12, 22, 0.22))',
+              filter: 'drop-shadow(0 2px 6px rgba(216, 173, 89, 0.22))',
               transition: 'transform var(--transition-fast)',
             }}
             className="brand-logo-img"
           />
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-dark-maroon)', letterSpacing: '-0.025em', lineHeight: 1.1 }}>
+            <span style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-text-primary)', letterSpacing: '-0.025em', lineHeight: 1.1 }}>
               Azaroth
             </span>
-            <span style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--color-primary-maroon)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
+            <span style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--color-brand-violet)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
               Tech-Hive
             </span>
           </div>
@@ -142,8 +142,8 @@ export const Header: React.FC = () => {
                 padding: '0.75rem',
                 backgroundColor: '#ffffff',
                 borderRadius: 'var(--radius-lg)',
-                boxShadow: '0 20px 35px -10px rgba(122, 12, 22, 0.15), 0 0 1px 1px rgba(0,0,0,0.06)',
-                border: '1px solid rgba(122, 12, 22, 0.12)',
+                boxShadow: '0 20px 35px -10px rgba(38, 48, 59, 0.12), 0 0 1px 1px rgba(0,0,0,0.06)',
+                border: '1px solid var(--color-border)',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '0.35rem',
@@ -159,11 +159,11 @@ export const Header: React.FC = () => {
                   color: 'inherit',
                   transition: 'background-color 150ms'
                 }} className="dropdown-item">
-                  <div style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'rgba(122, 12, 22, 0.08)', color: 'var(--color-primary-maroon)' }}>
+                  <div style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-lavender)', color: 'var(--color-brand-violet)' }}>
                     <Building2 size={18} />
                   </div>
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-dark-maroon)' }}>Who We Are / About Us</div>
+                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-text-primary)' }}>Who We Are / About Us</div>
                     <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Purpose, vision and engineering culture</div>
                   </div>
                 </Link>
@@ -178,11 +178,11 @@ export const Header: React.FC = () => {
                   color: 'inherit',
                   transition: 'background-color 150ms'
                 }} className="dropdown-item">
-                  <div style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'rgba(212, 175, 55, 0.12)', color: '#bf9129' }}>
+                  <div style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-peach)', color: 'var(--color-brand-orange)' }}>
                     <Award size={18} />
                   </div>
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-dark-maroon)' }}>Our Values</div>
+                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-text-primary)' }}>Our Values</div>
                     <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>6 principles that shape every solution</div>
                   </div>
                 </Link>
@@ -197,11 +197,11 @@ export const Header: React.FC = () => {
                   color: 'inherit',
                   transition: 'background-color 150ms'
                 }} className="dropdown-item">
-                  <div style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'rgba(122, 12, 22, 0.08)', color: 'var(--color-primary-maroon)' }}>
+                  <div style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-mint)', color: 'var(--color-brand-emerald)' }}>
                     <GitFork size={18} />
                   </div>
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-dark-maroon)' }}>Delivery Framework</div>
+                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-text-primary)' }}>Delivery Framework</div>
                     <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>A clear path from idea to impact</div>
                   </div>
                 </Link>
@@ -235,8 +235,8 @@ export const Header: React.FC = () => {
                 padding: '0.75rem',
                 backgroundColor: '#ffffff',
                 borderRadius: 'var(--radius-lg)',
-                boxShadow: '0 20px 35px -10px rgba(122, 12, 22, 0.15), 0 0 1px 1px rgba(0,0,0,0.06)',
-                border: '1px solid rgba(122, 12, 22, 0.12)',
+                boxShadow: '0 20px 35px -10px rgba(38, 48, 59, 0.12), 0 0 1px 1px rgba(0,0,0,0.06)',
+                border: '1px solid var(--color-border)',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '0.35rem',
@@ -252,11 +252,11 @@ export const Header: React.FC = () => {
                   color: 'inherit',
                   transition: 'background-color 150ms'
                 }} className="dropdown-item">
-                  <div style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'rgba(212, 175, 55, 0.15)', color: '#bf9129' }}>
+                  <div style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-peach)', color: 'var(--color-brand-orange)' }}>
                     <Briefcase size={18} />
                   </div>
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-dark-maroon)' }}>Our Portfolio</div>
+                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-text-primary)' }}>Our Portfolio</div>
                     <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Case studies and delivered systems</div>
                   </div>
                 </Link>
@@ -271,11 +271,11 @@ export const Header: React.FC = () => {
                   color: 'inherit',
                   transition: 'background-color 150ms'
                 }} className="dropdown-item">
-                  <div style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'rgba(122, 12, 22, 0.08)', color: 'var(--color-primary-maroon)' }}>
+                  <div style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-rose)', color: 'var(--color-brand-magenta)' }}>
                     <ShoppingBag size={18} />
                   </div>
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-dark-maroon)' }}>Explore Products</div>
+                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-text-primary)' }}>Explore Products</div>
                     <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>FMS, Omnichannel Commerce & LMP</div>
                   </div>
                 </Link>
@@ -290,11 +290,11 @@ export const Header: React.FC = () => {
                   color: 'inherit',
                   transition: 'background-color 150ms'
                 }} className="dropdown-item">
-                  <div style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'rgba(122, 12, 22, 0.08)', color: 'var(--color-primary-maroon)' }}>
+                  <div style={{ padding: '0.4rem', borderRadius: '8px', backgroundColor: 'var(--color-surface-lavender)', color: 'var(--color-brand-violet)' }}>
                     <Layers size={18} />
                   </div>
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-dark-maroon)' }}>Explore Services</div>
+                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-text-primary)' }}>Explore Services</div>
                     <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Transformation, Consulting & Pods</div>
                   </div>
                 </Link>
@@ -316,7 +316,7 @@ export const Header: React.FC = () => {
 
         {/* Right Action CTA Button - Request for Quote */}
         <div style={{ display: 'none', alignItems: 'center', gap: '0.75rem' }} className="desktop-nav">
-          <Button to="/request-for-quote" variant="gold" size="sm" icon={<ArrowRight size={15} />} id="header-rfq-button">
+          <Button to="/request-for-quote" variant="violet" size="sm" icon={<ArrowRight size={15} />} id="header-rfq-button">
             Request for Quote
           </Button>
         </div>
@@ -360,14 +360,14 @@ export const Header: React.FC = () => {
           flexDirection: 'column',
           gap: '1rem',
           borderTop: '1px solid var(--color-border-subtle)',
-          boxShadow: '0 25px 50px -12px rgba(122, 12, 22, 0.25)',
+          boxShadow: '0 25px 50px -12px rgba(38, 48, 59, 0.15)',
         }}>
           <Link to="/" style={navLinkStyle('/', true)} onClick={() => setMobileMenuOpen(false)}>
             Home
           </Link>
 
           <div style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--color-border-subtle)', borderTop: '1px solid var(--color-border-subtle)' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-primary-maroon)', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '0.5rem 0.75rem', display: 'block' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-brand-violet)', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '0.5rem 0.75rem', display: 'block' }}>
               About Us
             </span>
             <Link to="/about" style={navLinkStyle('/about')} onClick={() => setMobileMenuOpen(false)}>
@@ -382,7 +382,7 @@ export const Header: React.FC = () => {
           </div>
 
           <div style={{ padding: '0.5rem 0', borderBottom: '1px solid var(--color-border-subtle)' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-primary-maroon)', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '0.5rem 0.75rem', display: 'block' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-brand-violet)', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '0.5rem 0.75rem', display: 'block' }}>
               Our Products
             </span>
             <Link to="/products" style={navLinkStyle('/products')} onClick={() => setMobileMenuOpen(false)}>
@@ -404,7 +404,7 @@ export const Header: React.FC = () => {
           </Link>
 
           <div style={{ marginTop: 'auto', paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-            <Button to="/request-for-quote" variant="gold" size="lg" icon={<ArrowRight size={18} />}>
+            <Button to="/request-for-quote" variant="violet" size="lg" icon={<ArrowRight size={18} />}>
               Request for Quote
             </Button>
           </div>
@@ -422,7 +422,7 @@ export const Header: React.FC = () => {
           }
         }
         .dropdown-item:hover {
-          background-color: rgba(122, 12, 22, 0.05) !important;
+          background-color: var(--color-surface-soft) !important;
         }
         #nav-brand-logo:hover .brand-logo-img {
           transform: scale(1.06);

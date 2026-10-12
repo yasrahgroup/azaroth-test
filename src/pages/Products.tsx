@@ -1,81 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import {
   ArrowRight,
   CheckCircle2,
-  AlertCircle,
-  Mail,
 } from 'lucide-react';
 import { SEOHead } from '../components/common/SEOHead';
 import { AnimatedWords } from '../components/common/AnimatedWords';
-import { ProductModal } from '../components/products/ProductModal';
 import { Badge } from '../components/common/Badge';
 import { productsCatalog } from '../data/productsData';
 import { Product } from '../types';
 
 export const Products: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [hasError] = useState<boolean>(false);
   const navigate = useNavigate();
   const { slug } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const activeCategory = searchParams.get('category') || 'All';
-  const categoryOptions = ['All', ...new Set(products.map((product) => product.category))];
+  const categoryOptions = ['All', ...new Set(productsCatalog.map((product) => product.category))];
   const filteredProducts = activeCategory === 'All'
-    ? products
-    : products.filter((product) => product.category === activeCategory);
-
-  useEffect(() => {
-    // Simulate API call with local data
-    setProducts(productsCatalog);
-    setIsLoading(false);
-  }, []);
-
-  useEffect(() => {
-    if (!slug) {
-      setSelectedProduct(null);
-      setIsModalOpen(false);
-      return;
-    }
-
-    const product = products.find((item) => item.slug === slug);
-    if (product) {
-      setSelectedProduct(product);
-      setIsModalOpen(true);
-    } else if (!isLoading) {
-      setSelectedProduct(null);
-      setIsModalOpen(false);
-    }
-  }, [slug, products, isLoading]);
-
-  const openModal = (product: Product) => {
-    setSelectedProduct(product);
-    setIsModalOpen(true);
-    if (slug !== product.slug) {
-      navigate(`/products/${product.slug}`, { replace: true });
-    }
-  };
+    ? productsCatalog
+    : productsCatalog.filter((product) => product.category === activeCategory);
 
   const handleBookDemo = (product: Product) => {
     navigate(`/connect-with-us?product=${encodeURIComponent(product.slug)}`);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    if (slug) {
-      navigate('/products', { replace: true });
-    }
   };
 
   return (
     <>
       <SEOHead
         title="Enterprise Software Platforms — Fitness, E-Commerce, Healthcare & Learning Management"
-        description="Production-ready enterprise software platforms: Fitness Management System, Multi-Store E-Commerce, Healthcare Management System, and Learning Management Platform. Fully customizable with complete source ownership."
+        description="Enterprise software platforms in active development: Fitness Management System, Multi-Store E-Commerce, Healthcare Management System, and Learning Management Platform — available for scoped early builds, fully customizable with complete source ownership."
         canonicalPath={slug ? `/products/${slug}` : '/products'}
         jsonLd={{
           '@context': 'https://schema.org',
@@ -87,26 +41,26 @@ export const Products: React.FC = () => {
                   '@type': 'ListItem',
                   position: 1,
                   name: 'Home',
-                  item: 'https://www.azaroth-techhive.com'
+                  item: 'https://azaroth-techhive.com'
                 },
                 {
                   '@type': 'ListItem',
                   position: 2,
                   name: 'Products',
-                  item: 'https://www.azaroth-techhive.com/products'
+                  item: 'https://azaroth-techhive.com/products'
                 }
               ]
             },
             {
               '@type': 'WebPage',
               name: 'Enterprise Software Platforms',
-              description: 'Production-ready enterprise software platforms: Fitness Management System, Multi-Store E-Commerce, Healthcare Management System, and Learning Management Platform. Fully customizable with complete source ownership.',
-              url: slug ? `https://www.azaroth-techhive.com/products/${slug}` : 'https://www.azaroth-techhive.com/products'
+              description: 'Enterprise software platforms in active development: Fitness Management System, Multi-Store E-Commerce, Healthcare Management System, and Learning Management Platform — available for scoped early builds, fully customizable with complete source ownership.',
+              url: slug ? `https://azaroth-techhive.com/products/${slug}` : 'https://azaroth-techhive.com/products'
             },
             ...(slug ? [{
               '@type': 'SoftwareApplication',
-              name: products.find(p => p.slug === slug)?.name || 'Enterprise Platform',
-              description: products.find(p => p.slug === slug)?.shortDescription || 'Enterprise software platform',
+              name: productsCatalog.find(p => p.slug === slug)?.name || 'Enterprise Platform',
+              description: productsCatalog.find(p => p.slug === slug)?.shortDescription || 'Enterprise software platform',
               applicationCategory: 'BusinessApplication',
               operatingSystem: 'Web',
               offers: {
@@ -122,22 +76,22 @@ export const Products: React.FC = () => {
       {/* Hero */}
       <section style={{
         padding: '4rem 0',
-        borderBottom: '1px solid rgba(122, 12, 22, 0.15)',
-        backgroundColor: 'var(--color-canvas-bg)',
+        borderBottom: '1px solid var(--color-border)',
+        backgroundColor: 'var(--color-background)',
       }}>
         <div className="container">
           <div style={{ maxWidth: '780px' }}>
             <Badge variant="gold" style={{ marginBottom: '1rem' }}>
-              Ready-to-Deploy Platforms
+              Platforms In Active Development
             </Badge>
             <h1 style={{
               fontSize: 'clamp(2.25rem, 4vw, 3.5rem)',
               fontWeight: 800,
-              color: 'var(--color-dark-maroon)',
+              color: 'var(--color-text-primary)',
               marginBottom: '1.25rem',
               lineHeight: 1.1,
             }}>
-              <AnimatedWords text="Business Platforms You Can Launch Fast — And Fully Own" />
+              <AnimatedWords text="Enterprise Platform Foundations You Can Shape and Fully Own" />
             </h1>
             <p style={{
               fontSize: '1.125rem',
@@ -145,7 +99,7 @@ export const Products: React.FC = () => {
               lineHeight: 1.7,
               marginBottom: '2rem',
             }}>
-              Four proven platforms that save you 6–12 months of development. Each one is delivered as a starting point you fully own — customize it, brand it, and run it on your own systems. No lock-in, no hidden fees, no black boxes.
+              Four platforms in active development, each available for scoped early builds. They give your teams a practical starting point for the roadmap while keeping scope, branding, and operational ownership clear.
             </p>
 
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
@@ -179,7 +133,7 @@ export const Products: React.FC = () => {
                   transition: 'all 180ms ease-out',
                 }}
               >
-                Explore Our Services
+                See engineering services
               </Link>
             </div>
           </div>
@@ -196,14 +150,15 @@ export const Products: React.FC = () => {
                 <button
                   key={category}
                   type="button"
+                  aria-pressed={isActive}
                   onClick={() => {
                     const next = category === 'All' ? null : category;
                     setSearchParams(next ? { category: next } : {});
                   }}
                   style={{
                     borderRadius: '999px',
-                    border: isActive ? '1px solid var(--color-primary-maroon)' : '1px solid rgba(122, 12, 22, 0.2)',
-                    backgroundColor: isActive ? 'var(--color-primary-maroon)' : '#ffffff',
+                    border: isActive ? '1px solid var(--color-brand-gold)' : '1px solid var(--color-border)',
+                    backgroundColor: isActive ? 'var(--color-brand-gold)' : '#ffffff',
                     color: isActive ? '#ffffff' : 'var(--color-text-primary)',
                     padding: '0.625rem 1rem',
                     fontWeight: 700,
@@ -218,90 +173,21 @@ export const Products: React.FC = () => {
             })}
           </div>
 
-          {/* Loading Skeleton */}
-          {isLoading && (
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
-              gap: '2rem',
-            }} aria-busy="true">
-              {[0, 1, 2, 3].map((i) => (
-                <div key={i} style={{
-                  borderRadius: '20px',
-                  backgroundColor: '#ffffff',
-                  border: '1px solid var(--color-border-subtle)',
-                  overflow: 'hidden',
-                  animation: 'pulse 1.5s ease-in-out infinite',
-                }}>
-                  <div style={{ height: '250px', backgroundColor: 'rgba(122, 12, 22, 0.08)' }} />
-                  <div style={{ padding: '1.75rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <div style={{ height: '0.75rem', width: '33%', borderRadius: '4px', backgroundColor: 'rgba(122, 12, 22, 0.1)' }} />
-                    <div style={{ height: '0.75rem', width: '100%', borderRadius: '4px', backgroundColor: 'rgba(122, 12, 22, 0.08)' }} />
-                    <div style={{ height: '0.75rem', width: '83%', borderRadius: '4px', backgroundColor: 'rgba(122, 12, 22, 0.08)' }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Error */}
-          {!isLoading && hasError && (
-            <div style={{
-              padding: '3rem',
-              borderRadius: '20px',
-              backgroundColor: '#ffffff',
-              border: '1px solid rgba(239, 68, 68, 0.2)',
-              textAlign: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '1rem',
-            }} role="alert">
-              <AlertCircle size={36} style={{ color: '#ef4444' }} />
-              <h2 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--color-dark-maroon)' }}>
-                We couldn't load the platforms right now.
-              </h2>
-              <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', maxWidth: '400px' }}>
-                Reach out directly and we'll walk you through them personally.
-              </p>
-              <div style={{ paddingTop: '0.5rem' }}>
-                <a
-                  href="mailto:hello@azaroth-techhive.com"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    padding: '0.75rem 1.25rem',
-                    borderRadius: '12px',
-                    background: 'linear-gradient(135deg, #D4AF37 0%, #BF9129 100%)',
-                    color: '#2B0408',
-                    fontWeight: 700,
-                    fontSize: '0.875rem',
-                    textDecoration: 'none',
-                  }}
-                >
-                  <Mail size={16} />
-                  hello@azaroth-techhive.com
-                </a>
-              </div>
-            </div>
-          )}
-
-          {/* Products */}
-          {!isLoading && !hasError && filteredProducts.length === 0 && (
+          {/* Empty State */}
+          {filteredProducts.length === 0 && (
             <div style={{
               padding: '3rem 1.5rem',
               borderRadius: 'var(--radius-xl)',
-              border: '1px dashed rgba(122, 12, 22, 0.2)',
+              border: '1px dashed var(--color-border)',
               backgroundColor: '#ffffff',
               textAlign: 'center',
             }}>
-              <h3 style={{ margin: '0 0 0.5rem', color: 'var(--color-dark-maroon)' }}>No products found in this category.</h3>
+              <h3 style={{ margin: '0 0 0.5rem', color: 'var(--color-text-primary)' }}>No products found in this category.</h3>
               <p style={{ margin: 0, color: 'var(--color-text-secondary)' }}>Try another filter to explore more solutions.</p>
             </div>
           )}
 
-          {!isLoading && !hasError && filteredProducts.length > 0 && (
+          {filteredProducts.length > 0 && (
             <div style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
@@ -323,8 +209,8 @@ export const Products: React.FC = () => {
                     transition: 'all 180ms ease-out',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = '0 12px 24px -8px rgba(122, 12, 22, 0.15)';
-                    e.currentTarget.style.borderColor = 'rgba(122, 12, 22, 0.25)';
+                    e.currentTarget.style.boxShadow = '0 12px 24px -8px rgba(38, 48, 59, 0.12)';
+                    e.currentTarget.style.borderColor = 'var(--color-border-strong)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.06)';
@@ -335,7 +221,10 @@ export const Products: React.FC = () => {
                   <div style={{
                     position: 'relative',
                     height: '250px',
-                    backgroundColor: 'rgba(122, 12, 22, 0.08)',
+                    backgroundColor: product.id === 'prod-fms' ? 'var(--color-surface-lavender)' :
+                                   product.id === 'prod-commerce' ? 'var(--color-surface-mint)' :
+                                   product.id === 'prod-lmp' ? 'var(--color-surface-peach)' :
+                                   'var(--color-surface-rose)',
                     overflow: 'hidden',
                   }}>
                     <img
@@ -354,7 +243,10 @@ export const Products: React.FC = () => {
                     <div style={{
                       position: 'absolute',
                       inset: 0,
-                      background: 'linear-gradient(180deg, rgba(24, 9, 11, 0.08) 10%, rgba(24, 9, 11, 0.78) 100%)',
+                      background: product.id === 'prod-fms' ? 'linear-gradient(180deg, rgba(117, 68, 216, 0.1) 10%, rgba(117, 68, 216, 0.6) 100%)' :
+                             product.id === 'prod-commerce' ? 'linear-gradient(180deg, rgba(21, 155, 121, 0.1) 10%, rgba(21, 155, 121, 0.6) 100%)' :
+                             product.id === 'prod-lmp' ? 'linear-gradient(180deg, rgba(217, 120, 36, 0.1) 10%, rgba(217, 120, 36, 0.6) 100%)' :
+                             'linear-gradient(180deg, rgba(196, 63, 145, 0.1) 10%, rgba(196, 63, 145, 0.6) 100%)',
                     }} />
                     <div style={{
                       position: 'absolute',
@@ -369,16 +261,16 @@ export const Products: React.FC = () => {
                       border: '1px solid var(--color-border-subtle)',
                       fontSize: '0.6875rem',
                       fontWeight: 700,
-                      color: (product.stockStatus || '') === 'Deployment Ready' ? 'var(--color-primary-maroon)' : '#D4AF37',
+                      color: 'var(--color-brand-gold)',
                     }}>
                       <span style={{
                         width: '6px',
                         height: '6px',
                         borderRadius: '50%',
-                        backgroundColor: (product.stockStatus || '') === 'Deployment Ready' ? '#006C35' : '#F59E0B',
+                        backgroundColor: 'var(--color-brand-gold)',
                         animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                       }} />
-                      <span>{product.stockStatus || 'Under Development'}</span>
+                      <span>Under Development</span>
                     </div>
 
                     <div style={{
@@ -393,9 +285,9 @@ export const Products: React.FC = () => {
                         fontWeight: 700,
                         textTransform: 'uppercase',
                         letterSpacing: '0.04em',
-                        color: '#D4AF37',
+                        color: 'var(--color-brand-gold)',
                       }}>
-                        Ready-to-Deploy Platform
+                        Platform In Active Development
                       </span>
                       <h2 style={{
                         fontSize: '1.5rem',
@@ -461,9 +353,8 @@ export const Products: React.FC = () => {
                       display: 'flex',
                       gap: '0.75rem',
                     }}>
-                      <button
-                        type="button"
-                        onClick={() => openModal(product)}
+                      <Link
+                        to={`/products/${product.slug}`}
                         style={{
                           flex: 1,
                           padding: '0.625rem 1rem',
@@ -475,10 +366,14 @@ export const Products: React.FC = () => {
                           fontWeight: 700,
                           cursor: 'pointer',
                           transition: 'all 180ms ease-out',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          textDecoration: 'none',
                         }}
                       >
                         See Full Details
-                      </button>
+                      </Link>
 
                       <button
                         type="button"
@@ -511,13 +406,6 @@ export const Products: React.FC = () => {
           )}
         </div>
       </section>
-
-      {/* Modal */}
-      <ProductModal
-        product={selectedProduct}
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-      />
     </>
   );
 };

@@ -13,15 +13,16 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({
   stepTitles,
 }) => {
   return (
-    <div style={{ marginBottom: '2.5rem' }}>
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        position: 'relative',
-      }}>
-        {/* Progress connecting line */}
-        <div style={{
+    <div style={{ marginBottom: '2.5rem', position: 'relative' }}>
+      {/* Progress connecting line */}
+      <div
+        role="progressbar"
+        aria-label="Request for quote progress"
+        aria-valuemin={1}
+        aria-valuemax={totalSteps}
+        aria-valuenow={currentStep}
+        aria-valuetext={`Step ${currentStep} of ${totalSteps}`}
+        style={{
           position: 'absolute',
           top: '1.25rem',
           left: '1.5rem',
@@ -29,22 +30,33 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({
           height: '2px',
           backgroundColor: 'var(--color-border-subtle)',
           zIndex: 0,
-        }}>
-          <div style={{
-            height: '100%',
-            backgroundColor: 'var(--color-primary-green)',
-            width: `${((currentStep - 1) / (totalSteps - 1)) * 100}%`,
-            transition: 'width 300ms ease-in-out',
-          }} />
-        </div>
+        }}
+      >
+        <div style={{
+          height: '100%',
+          backgroundColor: 'var(--color-primary-green)',
+          width: `${((currentStep - 1) / (totalSteps - 1)) * 100}%`,
+          transition: 'width 300ms ease-in-out',
+        }} />
+      </div>
 
+      <ol style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        position: 'relative',
+        listStyle: 'none',
+        margin: 0,
+        padding: 0,
+      }}>
         {Array.from({ length: totalSteps }, (_, i) => i + 1).map((stepNumber) => {
           const isCompleted = stepNumber < currentStep;
           const isCurrent = stepNumber === currentStep;
 
           return (
-            <div
+            <li
               key={stepNumber}
+              aria-current={isCurrent ? 'step' : undefined}
               style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -104,10 +116,10 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({
               }}>
                 {stepTitles[stepNumber - 1]}
               </span>
-            </div>
+            </li>
           );
         })}
-      </div>
+      </ol>
     </div>
   );
 };

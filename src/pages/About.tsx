@@ -1,13 +1,19 @@
 import React from 'react';
-import { MapPin, Phone, Mail, MessageSquare, ExternalLink } from 'lucide-react';
+import { MapPin, Phone, Mail, MessageSquare, ExternalLink, Building2 } from 'lucide-react';
 import { companyInfo, companyVisionMission } from '../data/companyData';
 import { Card } from '../components/common/Card';
 import { Badge } from '../components/common/Badge';
 import { Button } from '../components/common/Button';
+import { SEOHead } from '../components/common/SEOHead';
 
 export const About: React.FC = () => {
   return (
     <div>
+      <SEOHead
+        title="About Azaroth Tech-Hive — Engineering Better Ways to Work"
+        description="Learn about Azaroth Tech-Hive: our story, vision, mission, and the engineering practices behind dependable software for enterprises in Chennai and worldwide."
+        canonicalPath="/about"
+      />
       {/* Page Hero */}
       <section className="section" style={{ backgroundColor: 'var(--color-canvas-bg)', borderBottom: '1px solid var(--color-border-subtle)' }}>
         <div className="container" style={{ textAlign: 'center', maxWidth: '820px' }}>
@@ -32,20 +38,23 @@ export const About: React.FC = () => {
             gap: '3.5rem',
             alignItems: 'center',
           }}>
-            {/* Left: Image Placeholder */}
+            {/* Left: Decorative panel (no photo) */}
             <div>
-              <div style={{
-                width: '100%',
-                height: '400px',
-                borderRadius: '16px',
-                background: 'linear-gradient(135deg, rgba(122, 12, 22, 0.1) 0%, rgba(212, 175, 55, 0.08) 100%)',
-                border: '2px solid rgba(122, 12, 22, 0.15)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'relative',
-                overflow: 'hidden',
-              }}>
+              <div
+                aria-hidden="true"
+                style={{
+                  width: '100%',
+                  height: '400px',
+                  borderRadius: '16px',
+                  background: 'linear-gradient(135deg, var(--color-surface-lavender) 0%, var(--color-surface-peach) 100%)',
+                  border: '2px solid var(--color-border)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  position: 'relative',
+                  overflow: 'hidden',
+                }}
+              >
                 <div style={{
                   position: 'absolute',
                   top: '20%',
@@ -53,7 +62,7 @@ export const About: React.FC = () => {
                   width: '150px',
                   height: '150px',
                   borderRadius: '50%',
-                  background: 'radial-gradient(circle, rgba(122, 12, 22, 0.15) 0%, rgba(122, 12, 22, 0) 70%)',
+                  background: 'radial-gradient(circle, rgba(117, 68, 216, 0.15) 0%, rgba(117, 68, 216, 0) 70%)',
                 }} />
                 <div style={{
                   position: 'absolute',
@@ -62,13 +71,21 @@ export const About: React.FC = () => {
                   width: '120px',
                   height: '120px',
                   borderRadius: '50%',
-                  background: 'radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, rgba(212, 175, 55, 0) 70%)',
+                  background: 'radial-gradient(circle, rgba(216, 173, 89, 0.12) 0%, rgba(216, 173, 89, 0) 70%)',
                 }} />
                 <div style={{
-                  fontSize: '5rem',
-                  opacity: 0.3,
+                  width: '140px',
+                  height: '140px',
+                  borderRadius: '24px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.75)',
+                  border: '2px solid var(--color-border)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'var(--color-brand-violet)',
+                  boxShadow: 'var(--shadow-lg)',
                 }}>
-                  🏢
+                  <Building2 size={64} strokeWidth={1.5} aria-hidden="true" />
                 </div>
               </div>
             </div>
@@ -78,7 +95,7 @@ export const About: React.FC = () => {
               <Badge variant="gold" style={{ marginBottom: '1rem' }}>
                 About Us
               </Badge>
-              <h2 style={{ fontSize: '2.25rem', marginBottom: '1.25rem' }}>
+              <h2 style={{ fontSize: '2.25rem', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: '1.25rem' }}>
                 Engineering meaningful solutions. Building lasting value.
               </h2>
               <p style={{ fontSize: '1rem', lineHeight: 1.7, marginBottom: '1.25rem' }}>
@@ -89,7 +106,7 @@ export const About: React.FC = () => {
               </p>
 
               <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                <Button to="/delivery-framework" variant="primary">
+                <Button to="/delivery-framework" variant="violet">
                   Review Delivery Process
                 </Button>
                 <Button to="/values" variant="outline">
@@ -108,8 +125,8 @@ export const About: React.FC = () => {
             <Badge variant="gold" style={{ marginBottom: '1rem' }}>
               {companyVisionMission.vision.title}
             </Badge>
-            <h2 style={{ fontSize: '2.25rem', fontWeight: 800, color: 'var(--color-dark-maroon)', marginBottom: '1.25rem' }}>
-              {companyVisionMission.vision.title}
+            <h2 style={{ fontSize: '2.25rem', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: '1.25rem' }}>
+              The future we are engineering for
             </h2>
             <p style={{ fontSize: '1.125rem', color: 'var(--color-text-secondary)', lineHeight: 1.7 }}>
               {companyVisionMission.vision.statement}
@@ -125,8 +142,8 @@ export const About: React.FC = () => {
             <Badge variant="gold" style={{ marginBottom: '1rem' }}>
               {companyVisionMission.mission.title}
             </Badge>
-            <h2 style={{ fontSize: '2.25rem', fontWeight: 800, color: 'var(--color-dark-maroon)', marginBottom: '1.25rem' }}>
-              {companyVisionMission.mission.title}
+            <h2 style={{ fontSize: '2.25rem', fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: '1.25rem' }}>
+              How we deliver on it
             </h2>
             <p style={{ fontSize: '1.125rem', color: 'var(--color-text-secondary)', lineHeight: 1.7 }}>
               {companyVisionMission.mission.statement}
@@ -161,21 +178,21 @@ export const About: React.FC = () => {
               variant="glass"
               padding="lg"
               style={{
-                backgroundColor: 'rgba(250, 250, 247, 0.9)',
-                border: '1px solid rgba(122, 12, 22, 0.2)',
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                border: '1px solid var(--color-border)',
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
                 <div style={{
                   padding: '0.625rem',
                   borderRadius: '10px',
-                  backgroundColor: 'var(--color-primary-maroon)',
+                  backgroundColor: 'var(--color-brand-gold)',
                   color: '#ffffff',
                 }}>
                   <MapPin size={22} />
                 </div>
                 <div>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-dark-maroon)' }}>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-text-primary)' }}>
                     Chennai, Tamil Nadu, India
                   </h3>
                 </div>
@@ -188,15 +205,15 @@ export const About: React.FC = () => {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '2rem', fontSize: '0.875rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <Phone size={16} style={{ color: 'var(--color-primary-maroon)' }} />
+                  <Phone size={16} style={{ color: 'var(--color-brand-gold)' }} />
                   <span>{companyInfo.headquarters.phone}</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <MessageSquare size={16} style={{ color: 'var(--color-primary-maroon)' }} />
+                  <MessageSquare size={16} style={{ color: 'var(--color-brand-gold)' }} />
                   <span>WhatsApp: {companyInfo.headquarters.whatsapp}</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <Mail size={16} style={{ color: 'var(--color-primary-maroon)' }} />
+                  <Mail size={16} style={{ color: 'var(--color-brand-gold)' }} />
                   <span>{companyInfo.headquarters.email}</span>
                 </div>
               </div>
