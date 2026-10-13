@@ -1,210 +1,163 @@
 :root {
   /* ============================================================
-     AZAROTH TECH-HIVE LIGHT-MODE DESIGN SYSTEM
-     Premium Enterprise Technology Identity
+     RECOMMENDED USAGE ACROSS THE SITE (SITE DESIGN TOKENS)
+     - Primary buttons: Indigo #4F46E5
+     - Main links and active navigation: Indigo #4338CA
+     - Page backgrounds: White #FFFFFF or Indigo #F5F3FF
+     - Success messages: Emerald #047857
+     - Premium features: Violet #7C3AED
+     - Alerts and highlights: Rose #E11D48
+     - Warnings and rewards: Amber #D97706
+     - Main text: Slate #1F2937
+     - Borders and dividers: Indigo #E0E7FF
      ============================================================ */
 
-  /* --- MAIN SURFACES --- */
+  /* --- 1. PRIMARY BUTTONS --- */
+  --color-primary-button: #4F46E5;
+  --color-primary-button-hover: #4338CA;
+  --color-primary-button-active: #3730A3;
+  --color-primary-button-text: #FFFFFF;
+  --shadow-primary-button: 0 4px 14px 0 rgba(79, 70, 229, 0.35);
+  --shadow-primary-button-lg: 0 10px 25px -4px rgba(79, 70, 229, 0.45);
+
+  /* --- 2. MAIN LINKS & ACTIVE NAVIGATION --- */
+  --color-link-main: #4338CA;
+  --color-link-hover: #3730A3;
+  --color-link-active: #312E81;
+  --color-nav-active: #4338CA;
+  --color-nav-active-bg: #F5F3FF;
+  --color-nav-indicator: #4338CA;
+
+  /* --- 3. PAGE BACKGROUNDS & SURFACES --- */
   --color-white: #FFFFFF;
-  --color-background: #FFFFFF;
-  --color-background-warm: #F8F9FA;
-  --color-surface-soft: #F5F6F8;
-  --color-surface-lavender: #F0EAFE;
-  --color-surface-mint: #E7F6EF;
-  --color-surface-peach: #FFF0E4;
-  --color-surface-rose: #FCE8F3;
-  --color-surface-muted: #F8F9FA;
-  --color-surface-subtle: #F1F3F5;
-  --color-border: #E9ECEF;
-  --color-border-strong: #DEE2E6;
+  --color-bg-white: #FFFFFF;
+  --color-bg-indigo-soft: #F5F3FF;
+  --color-canvas-bg: #FFFFFF;
+  --color-canvas-card: #FFFFFF;
+  --color-canvas-muted: #F5F3FF;
+  --color-canvas-subtle: #F8FAFC;
+  --color-surface-soft: #F5F3FF;
+  --color-surface-muted: #F8FAFC;
+  --color-surface-subtle: #F1F5F9;
 
-  /* --- BRAND AND TYPOGRAPHY --- */
-  --color-text-primary: #26303B;
-  --color-text-secondary: #646873;
-  --color-text-tertiary: #9AA0A8;
+  /* --- 4. SUCCESS MESSAGES --- */
+  --color-success: #047857;
+  --color-success-hover: #065F46;
+  --color-success-light: #ECFDF5;
+  --color-success-lighter: #F0FDF4;
+  --color-success-text: #047857;
+  --color-success-border: #A7F3D0;
+  --shadow-emerald: 0 4px 14px 0 rgba(4, 120, 87, 0.2);
+  --shadow-emerald-lg: 0 12px 28px -4px rgba(4, 120, 87, 0.25);
+
+  /* --- 5. PREMIUM FEATURES --- */
+  --color-premium: #7C3AED;
+  --color-premium-hover: #6D28D9;
+  --color-premium-light: #EDE9FE;
+  --color-premium-lighter: #F5F3FF;
+  --color-premium-text: #6D28D9;
+  --color-premium-border: #DDD6FE;
+  --shadow-violet: 0 4px 14px 0 rgba(124, 58, 237, 0.25);
+  --shadow-violet-lg: 0 12px 28px -4px rgba(124, 58, 237, 0.3);
+
+  /* --- 6. ALERTS & HIGHLIGHTS --- */
+  --color-alert: #E11D48;
+  --color-alert-hover: #BE123C;
+  --color-alert-light: #FFE4E6;
+  --color-alert-lighter: #FFF1F2;
+  --color-alert-text: #E11D48;
+  --color-alert-border: #FECDD3;
+  --color-danger: #E11D48;
+  --color-danger-light: #FFE4E6;
+  --color-danger-text: #E11D48;
+  --color-danger-border: #FECDD3;
+  --shadow-rose: 0 4px 14px 0 rgba(225, 29, 72, 0.2);
+
+  /* --- 7. WARNINGS & REWARDS --- */
+  --color-warning: #D97706;
+  --color-warning-hover: #B45309;
+  --color-warning-light: #FEF3C7;
+  --color-warning-lighter: #FFFBEB;
+  --color-warning-text: #D97706;
+  --color-warning-border: #FDE68A;
+  --shadow-amber: 0 4px 14px 0 rgba(217, 119, 6, 0.2);
+
+  /* --- 8. MAIN TEXT & TYPOGRAPHY COLORS --- */
+  --color-text-primary: #1F2937;
+  --color-text-secondary: #4B5563;
+  --color-text-tertiary: #9CA3AF;
+  --color-text-muted: #6B7280;
   --color-text-inverse: #FFFFFF;
+  --color-text-on-primary: #FFFFFF;
 
-  /* --- PRODUCT ACCENT COLOURS --- */
-  /* Product 1: Blue-Purple primary identity */
-  --color-brand-violet: #6366F1;
-  --color-brand-violet-hover: #4F46E5;
+  /* --- 9. BORDERS & DIVIDERS --- */
+  --color-border: #E0E7FF;
+  --color-border-subtle: #E0E7FF;
+  --color-border-medium: #C7D2FE;
+  --color-border-strong: #A5B4FC;
+
+  /* --- SYSTEM ALIASES FOR CONSISTENCY ACROSS EXISTING COMPONENTS --- */
+  --color-primary: #4F46E5;
+  --color-primary-hover: #4338CA;
+  --color-primary-light: #EEF2FF;
+  --color-primary-lighter: #F5F3FF;
+  --color-primary-text: #4338CA;
+  --color-primary-border: #E0E7FF;
+  --color-primary-glow: rgba(79, 70, 229, 0.2);
+  --color-primary-shadow: rgba(79, 70, 229, 0.15);
+
+  --color-brand-violet: #4F46E5;
+  --color-brand-violet-hover: #4338CA;
   --color-brand-violet-light: #EEF2FF;
   --color-brand-violet-lighter: #F5F3FF;
   --color-brand-violet-text: #4338CA;
   --color-brand-violet-border: #C7D2FE;
-  --color-brand-violet-glow: rgba(99, 102, 241, 0.25);
-  --color-brand-violet-shadow: rgba(99, 102, 241, 0.15);
+  --color-brand-violet-shadow: rgba(79, 70, 229, 0.15);
+  --color-brand-violet-glow: rgba(79, 70, 229, 0.25);
 
-  /* Product 2: Emerald product identity */
-  --color-brand-emerald: #10B981;
-  --color-brand-emerald-hover: #059669;
-  --color-brand-emerald-light: #D1FAE5;
-  --color-brand-emerald-lighter: #ECFDF5;
-  --color-brand-emerald-text: #065F46;
-  --color-brand-emerald-border: #6EE7B7;
-  --color-brand-emerald-glow: rgba(16, 185, 129, 0.25);
-  --color-brand-emerald-shadow: rgba(16, 185, 129, 0.15);
+  --color-brand-emerald: #047857;
+  --color-brand-emerald-hover: #065F46;
+  --color-brand-emerald-light: #ECFDF5;
+  --color-brand-emerald-lighter: #F0FDF4;
+  --color-brand-emerald-text: #047857;
+  --color-brand-emerald-border: #A7F3D0;
+  --color-brand-emerald-shadow: rgba(4, 120, 87, 0.15);
+  --color-brand-emerald-glow: rgba(4, 120, 87, 0.2);
 
-  /* Product 3: Orange product identity */
-  --color-brand-orange: #F59E0B;
-  --color-brand-orange-hover: #D97706;
+  --color-brand-orange: #D97706;
+  --color-brand-orange-hover: #B45309;
   --color-brand-orange-light: #FEF3C7;
   --color-brand-orange-lighter: #FFFBEB;
-  --color-brand-orange-text: #92400E;
-  --color-brand-orange-border: #FCD34D;
-  --color-brand-orange-glow: rgba(245, 158, 11, 0.25);
-  --color-brand-orange-shadow: rgba(245, 158, 11, 0.15);
+  --color-brand-orange-text: #D97706;
+  --color-brand-orange-border: #FDE68A;
+  --color-brand-orange-shadow: rgba(217, 119, 6, 0.15);
+  --color-brand-orange-glow: rgba(217, 119, 6, 0.2);
 
-  /* Product 4: Magenta product identity */
-  --color-brand-magenta: #EC4899;
-  --color-brand-magenta-hover: #DB2777;
-  --color-brand-magenta-light: #FCE7F3;
-  --color-brand-magenta-lighter: #FDF2F8;
-  --color-brand-magenta-text: #9D174D;
-  --color-brand-magenta-border: #F9A8D4;
-  --color-brand-magenta-glow: rgba(236, 72, 153, 0.25);
-  --color-brand-magenta-shadow: rgba(236, 72, 153, 0.15);
+  --color-brand-magenta: #E11D48;
+  --color-brand-magenta-hover: #BE123C;
+  --color-brand-magenta-light: #FFE4E6;
+  --color-brand-magenta-lighter: #FFF1F2;
+  --color-brand-magenta-text: #E11D48;
+  --color-brand-magenta-border: #FECDD3;
+  --color-brand-magenta-shadow: rgba(225, 29, 72, 0.15);
+  --color-brand-magenta-glow: rgba(225, 29, 72, 0.2);
 
-  /* --- SUBTLE GOLD ACCENTS (Much more subtle) --- */
-  --color-brand-gold: #D4A373;
-  --color-brand-gold-hover: #C9975B;
-  --color-brand-gold-light: #FDF6E3;
-  --color-brand-gold-lighter: #FEFBF7;
-  --color-brand-gold-text: #8B6F47;
-  --color-brand-gold-border: #E8D4B8;
-  --color-brand-gold-glow: rgba(212, 163, 115, 0.2);
-  --color-brand-gold-shadow: rgba(212, 163, 115, 0.12);
+  --color-brand-gold: #4F46E5;
+  --color-brand-gold-hover: #4338CA;
+  --color-brand-gold-light: #EEF2FF;
+  --color-brand-gold-lighter: #F5F3FF;
+  --color-brand-gold-text: #4338CA;
+  --color-brand-gold-border: #E0E7FF;
+  --color-brand-gold-shadow: rgba(79, 70, 229, 0.15);
+  --color-brand-gold-glow: rgba(79, 70, 229, 0.2);
 
-  /* --- SEMANTIC FEEDBACK --- */
-  --color-success: #159B79;
-  --color-success-light: #E7F6EF;
-  --color-success-text: #065F46;
-  --color-success-border: #A7F3D0;
-
-  --color-warning: #D97824;
-  --color-warning-light: #FFF0E4;
-  --color-warning-text: #9A3412;
-  --color-warning-border: #FED7AA;
-
-  --color-danger: #DC2626;
-  --color-danger-light: #FEF2F2;
-  --color-danger-text: #991B1B;
-  --color-danger-border: #FECACA;
-
-  --color-info: #7544D8;
-  --color-info-light: #F0EAFE;
-  --color-info-text: #4C1D95;
-  --color-info-border: #DDD6FE;
-
-  /* --- TYPOGRAPHY --- */
-  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-heading: "Outfit", "Plus Jakarta Sans", sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-
-  /* --- SPACING SCALE --- */
-  --space-0: 0;
-  --space-1: 0.25rem;   /* 4px */
-  --space-2: 0.5rem;    /* 8px */
-  --space-3: 0.75rem;   /* 12px */
-  --space-4: 1rem;      /* 16px */
-  --space-5: 1.25rem;   /* 20px */
-  --space-6: 1.5rem;    /* 24px */
-  --space-8: 2rem;      /* 32px */
-  --space-10: 2.5rem;   /* 40px */
-  --space-12: 3rem;     /* 48px */
-  --space-16: 4rem;     /* 64px */
-  --space-20: 5rem;     /* 80px */
-  --space-24: 6rem;     /* 96px */
-  --space-32: 8rem;     /* 128px */
-
-  /* --- BORDER RADII --- */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-  --radius-2xl: 32px;
-  --radius-full: 9999px;
-
-  /* --- SHADOWS & ELEVATION --- */
-  --shadow-xs: 0 1px 2px 0 rgba(38, 48, 59, 0.03);
-  --shadow-sm: 0 2px 4px 0 rgba(38, 48, 59, 0.05);
-  --shadow-md: 0 4px 12px -2px rgba(38, 48, 59, 0.08);
-  --shadow-lg: 0 12px 24px -4px rgba(38, 48, 59, 0.12);
-  --shadow-xl: 0 20px 32px -8px rgba(38, 48, 59, 0.16);
-  --shadow-2xl: 0 25px 50px -12px rgba(38, 48, 59, 0.2);
-
-  /* Coloured shadows */
-  --shadow-violet: 0 4px 14px 0 var(--color-brand-violet-shadow);
-  --shadow-violet-lg: 0 12px 28px -4px var(--color-brand-violet-shadow);
-  --shadow-emerald: 0 4px 14px 0 var(--color-brand-emerald-shadow);
-  --shadow-emerald-lg: 0 12px 28px -4px var(--color-brand-emerald-shadow);
-  --shadow-orange: 0 4px 14px 0 var(--color-brand-orange-shadow);
-  --shadow-orange-lg: 0 12px 28px -4px var(--color-brand-orange-shadow);
-  --shadow-magenta: 0 4px 14px 0 var(--color-brand-magenta-shadow);
-  --shadow-gold: 0 4px 14px 0 var(--color-brand-gold-shadow);
-  --shadow-gold-lg: 0 12px 28px -4px var(--color-brand-gold-shadow);
-
-  --shadow-glow-violet: 0 0 20px var(--color-brand-violet-glow);
-  --shadow-glow-emerald: 0 0 20px var(--color-brand-emerald-glow);
-  --shadow-glow-orange: 0 0 20px var(--color-brand-orange-glow);
-  --shadow-glow-magenta: 0 0 20px var(--color-brand-magenta-glow);
-  --shadow-glow-gold: 0 0 20px var(--color-brand-gold-glow);
-
-  /* --- TRANSITIONS --- */
-  --transition-fast: 120ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-smooth: 300ms cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-slow: 400ms cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-bounce: 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
-
-  /* --- Z-INDEX --- */
-  --z-dropdown: 100;
-  --z-sticky: 200;
-  --z-fixed: 300;
-  --z-modal-backdrop: 400;
-  --z-modal: 500;
-  --z-popover: 600;
-  --z-tooltip: 700;
-  --z-toast: 800;
-
-  /* --- BREAKPOINTS --- */
-  --breakpoint-sm: 640px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1024px;
-  --breakpoint-xl: 1280px;
-  --breakpoint-2xl: 1536px;
-
-  /* --- CONTAINER WIDTHS --- */
-  --container-sm: 640px;
-  --container-md: 768px;
-  --container-lg: 1024px;
-  --container-xl: 1280px;
-  --container-2xl: 1536px;
-  --container-prose: 768px;
-
-  /* --- TYPOGRAPHY SCALE --- */
-  --text-xs: 0.75rem;     /* 12px */
-  --text-sm: 0.875rem;    /* 14px */
-  --text-base: 1rem;      /* 16px */
-  --text-lg: 1.125rem;    /* 18px */
-  --text-xl: 1.25rem;     /* 20px */
-  --text-2xl: 1.5rem;     /* 24px */
-  --text-3xl: 1.875rem;   /* 30px */
-  --text-4xl: 2.25rem;    /* 36px */
-  --text-5xl: 3rem;       /* 48px */
-  --text-6xl: 3.75rem;    /* 60px */
-  --text-7xl: 4.5rem;     /* 72px */
-
-  /* --- SEMANTIC ALIASES used by global.css utilities --- */
-  /* Primary is violet; other product colours remain available independently. */
-  --color-primary: var(--color-brand-violet);
-  --color-primary-hover: var(--color-brand-violet-hover);
-  --color-primary-light: var(--color-brand-violet-light);
-  --color-primary-lighter: var(--color-brand-violet-lighter);
-  --color-primary-text: var(--color-brand-violet-text);
-  --color-primary-border: var(--color-brand-violet-border);
-  --color-primary-glow: var(--color-brand-violet-glow);
-  --color-primary-shadow: var(--color-brand-violet-shadow);
+  /* Legacy brand tokens mapped directly to user recommended palette */
+  --color-primary-green: #4338CA;
+  --color-dark-forest: #1F2937;
+  --color-dark-maroon: #1F2937;
+  --color-gold-from: #4F46E5;
+  --color-gold-to: #4338CA;
+  --color-canvas-card-elevated: #FFFFFF;
 
   --color-secondary: var(--color-brand-emerald);
   --color-secondary-hover: var(--color-brand-emerald-hover);
@@ -224,78 +177,117 @@
   --color-accent-glow: var(--color-brand-orange-glow);
   --color-accent-shadow: var(--color-brand-orange-shadow);
 
-  --color-warm: var(--color-saffron-600, #F97316);
-  --color-warm-hover: var(--color-saffron-700, #EA580C);
-  --color-warm-light: var(--color-saffron-100, #FFF7ED);
-  --color-warm-lighter: var(--color-saffron-50, #FFFAF5);
-  --color-warm-text: #9A3412;
-  --color-warm-border: #FED7AA;
-  --color-warm-glow: rgba(249, 115, 22, 0.24);
-  --color-warm-shadow: rgba(249, 115, 22, 0.18);
+  --color-warm: #D97706;
+  --color-warm-hover: #B45309;
+  --color-warm-light: #FEF3C7;
+  --color-warm-lighter: #FFFBEB;
+  --color-warm-text: #D97706;
+  --color-warm-border: #FDE68A;
+  --color-warm-glow: rgba(217, 119, 6, 0.2);
+  --color-warm-shadow: rgba(217, 119, 6, 0.15);
 
-  --color-luxury: var(--color-brand-gold);
-  --color-luxury-hover: var(--color-brand-gold-hover);
-  --color-luxury-light: var(--color-brand-gold-light);
-  --color-luxury-lighter: var(--color-brand-gold-lighter);
-  --color-luxury-text: var(--color-brand-gold-text);
-  --color-luxury-border: var(--color-brand-gold-border);
-  --color-luxury-glow: var(--color-brand-gold-glow);
-  --color-luxury-shadow: var(--color-brand-gold-shadow);
+  --color-luxury: #7C3AED;
+  --color-luxury-hover: #6D28D9;
+  --color-luxury-light: #EDE9FE;
+  --color-luxury-lighter: #F5F3FF;
+  --color-luxury-text: #6D28D9;
+  --color-luxury-border: #DDD6FE;
+  --color-luxury-glow: rgba(124, 58, 237, 0.2);
+  --color-luxury-shadow: rgba(124, 58, 237, 0.15);
 
-  --color-text-muted: #7A808A;
-  --color-text-inverse-muted: #E2E8F0;
-  --color-canvas-card-elevated: #FFFFFF;
+  /* --- TYPOGRAPHY --- */
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: "Outfit", "Plus Jakarta Sans", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  /* Legacy shadow aliases used by existing global.css utilities. */
-  --shadow-primary: var(--shadow-violet);
-  --shadow-primary-lg: var(--shadow-violet-lg);
+  /* --- SPACING SCALE --- */
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-7: 1.75rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* --- BORDER RADII --- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-full: 9999px;
+
+  /* --- SHADOWS & ELEVATION --- */
+  --shadow-xs: 0 1px 2px 0 rgba(31, 41, 55, 0.04);
+  --shadow-sm: 0 2px 4px 0 rgba(31, 41, 55, 0.06);
+  --shadow-md: 0 4px 12px -2px rgba(31, 41, 55, 0.08);
+  --shadow-lg: 0 12px 24px -4px rgba(31, 41, 55, 0.12);
+  --shadow-xl: 0 20px 32px -8px rgba(31, 41, 55, 0.16);
+  --shadow-2xl: 0 25px 50px -12px rgba(31, 41, 55, 0.2);
+
+  --shadow-primary: var(--shadow-primary-button);
+  --shadow-primary-lg: var(--shadow-primary-button-lg);
   --shadow-secondary: var(--shadow-emerald);
-  --shadow-accent: var(--shadow-orange);
-  --shadow-warm: 0 4px 14px rgba(249, 115, 22, 0.18);
-  --shadow-luxury: var(--shadow-gold);
-  --shadow-glow-primary: var(--shadow-glow-violet);
-  --shadow-glow-secondary: var(--shadow-glow-emerald);
-  --shadow-glow-accent: var(--shadow-glow-orange);
-  --shadow-glow-warm: 0 0 20px rgba(249, 115, 22, 0.24);
-  --shadow-glow-luxury: var(--shadow-glow-gold);
+  --shadow-accent: var(--shadow-amber);
+  --shadow-warm: var(--shadow-amber);
+  --shadow-luxury: var(--shadow-violet);
+  --shadow-gold: var(--shadow-primary-button);
+  --shadow-gold-lg: var(--shadow-primary-button-lg);
 
-  /* Neutral aliases retained for existing skeleton and scrollbar utilities. */
+  --shadow-glow-primary: 0 0 20px rgba(79, 70, 229, 0.35);
+  --shadow-glow-secondary: 0 0 20px rgba(4, 120, 87, 0.25);
+  --shadow-glow-accent: 0 0 20px rgba(217, 119, 6, 0.25);
+  --shadow-glow-warm: 0 0 20px rgba(217, 119, 6, 0.25);
+  --shadow-glow-luxury: 0 0 20px rgba(124, 58, 237, 0.25);
+  --shadow-glow-gold: 0 0 20px rgba(79, 70, 229, 0.35);
+
+  /* --- TRANSITIONS --- */
+  --transition-fast: 120ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* --- Z-INDEX --- */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+  --z-toast: 800;
+
+  /* --- TYPOGRAPHY SCALE --- */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+  --text-7xl: 4.5rem;
+
+  /* Neutral aliases */
   --color-neutral-50: #F8FAFC;
   --color-neutral-100: #F1F5F9;
-  --color-neutral-200: #E2E8F0;
+  --color-neutral-200: #E0E7FF;
   --color-neutral-300: #CBD5E1;
   --color-neutral-400: #94A3B8;
-  --color-neutral-900: #0F172A;
-
-  /* Compatibility gradient values used by older components. */
-  --bg-gradient-brand: linear-gradient(135deg, var(--color-primary), var(--color-accent), var(--color-secondary));
-  --bg-gradient-premium: linear-gradient(135deg, var(--color-accent), var(--color-luxury), var(--color-secondary));
-  --bg-gradient-warm: linear-gradient(135deg, var(--color-warm), var(--color-primary), var(--color-luxury));
-
-  /* Missing spacing token referenced by legacy utilities. */
-  --space-7: 1.75rem;
-
-  /* --- CLIENT BRAND TOKENS (Per Acceptance Criteria & Reference Audit) --- */
-  --color-primary-green: #006C35;
-  --color-dark-forest: #012411;
-  --color-gold-from: #D4AF37;
-  --color-gold-to: #BF9129;
-  --color-canvas-bg: #fafaf7;
-  --color-canvas-card: #FFFFFF;
-  --color-canvas-muted: #F8F9FA;
-  --color-canvas-subtle: #F1F3F5;
-  --color-border-subtle: rgba(0, 0, 0, 0.08);
-  --color-border-medium: #DEE2E6;
-  --color-text-on-primary: #FFFFFF;
-
-  /* Legacy aliases mapping cleanly to client brand */
-  --color-dark-maroon: #012411;
-  --color-primary-maroon: #006C35;
+  --color-neutral-900: #1F2937;
 }
 
-/* ============================================================
-   REDUCED MOTION
-   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   :root {
     --transition-fast: 0.01ms;
@@ -306,9 +298,6 @@
   }
 }
 
-/* ============================================================
-   HIGH CONTRAST MODE
-   ============================================================ */
 @media (forced-colors: active) {
   :root {
     --color-brand-violet: CanvasText;

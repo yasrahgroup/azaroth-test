@@ -137,16 +137,16 @@
   }
 
   a {
-    color: var(--color-primary);
+    color: var(--color-link-main, #4338CA);
     transition: color var(--transition-fast);
   }
 
   a:hover {
-    color: var(--color-primary-hover);
+    color: var(--color-link-hover, #3730A3);
   }
 
   a:focus-visible {
-    outline: 2px solid var(--color-primary);
+    outline: 2px solid var(--color-link-main, #4338CA);
     outline-offset: 2px;
     border-radius: 2px;
   }
@@ -1470,43 +1470,36 @@
   pointer-events: none;
 }
 
-/* Primary - Violet Brand */
+/* Primary - Indigo #4F46E5 per Recommended Usage */
 .btn-primary {
-  background: linear-gradient(
-    135deg,
-    var(--color-brand-violet) 0%,
-    var(--color-brand-violet-hover) 100%
-  );
-  color: var(--color-text-on-primary);
+  background: var(--color-primary-button, #4F46E5);
+  color: var(--color-primary-button-text, #FFFFFF);
   font-weight: 700;
-  box-shadow: var(--shadow-violet);
+  box-shadow: var(--shadow-primary-button, 0 4px 14px rgba(79, 70, 229, 0.35));
 }
 
 .btn-primary:hover:not(:disabled) {
   transform: translateY(-1px);
-  filter: brightness(1.06);
-  box-shadow: var(--shadow-violet-lg);
+  background: var(--color-primary-button-hover, #4338CA);
+  box-shadow: var(--shadow-primary-button-lg, 0 10px 25px -4px rgba(79, 70, 229, 0.45));
 }
 
 .btn-primary:active:not(:disabled) {
   transform: translateY(0);
+  background: var(--color-primary-button-active, #3730A3);
 }
 
 .btn-gold {
-  background: linear-gradient(
-    135deg,
-    var(--color-brand-gold) 0%,
-    var(--color-brand-gold-hover) 100%
-  );
-  color: var(--color-white);
+  background: var(--color-primary-button, #4F46E5);
+  color: #FFFFFF;
   font-weight: 700;
-  box-shadow: var(--shadow-gold);
+  box-shadow: var(--shadow-primary-button, 0 4px 14px rgba(79, 70, 229, 0.35));
 }
 
 .btn-gold:hover:not(:disabled) {
   transform: translateY(-1px);
-  filter: brightness(1.06);
-  box-shadow: var(--shadow-gold-lg);
+  background: var(--color-primary-button-hover, #4338CA);
+  box-shadow: var(--shadow-primary-button-lg, 0 10px 25px -4px rgba(79, 70, 229, 0.45));
 }
 
 /* Secondary - Emerald Green */

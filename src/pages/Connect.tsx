@@ -19,13 +19,13 @@ export const Connect: React.FC = () => {
       <section className="section" style={{ backgroundColor: 'var(--color-canvas-bg)', borderBottom: '1px solid var(--color-border-subtle)' }}>
         <div className="container" style={{ textAlign: 'center', maxWidth: '820px' }}>
           <Badge variant="gold" style={{ marginBottom: '1rem' }}>
-            Get in Touch
+            Direct Communications
           </Badge>
           <h1 style={{ marginBottom: '1.25rem', fontSize: 'clamp(2.25rem, 4.5vw, 3.5rem)', fontWeight: 800, color: 'var(--color-text-primary)' }}>
-            Every Great Solution Starts With a Conversation
+            Connect With Us
           </h1>
-          <p style={{ fontSize: '1.1875rem', lineHeight: 1.6 }}>
-            Whether you have a question, want to discuss a project, or explore how we can help, we're ready to listen and respond.
+          <p style={{ fontSize: '1.1875rem', lineHeight: 1.6, color: 'var(--color-text-secondary)' }}>
+            Every great solution starts with a conversation. Whether you have a question, want to discuss a project, or explore how we can help, we're ready to listen and respond.
           </p>
         </div>
       </section>

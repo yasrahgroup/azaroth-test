@@ -89,16 +89,16 @@ export const ContactForm: React.FC = () => {
         padding: '3rem 2rem',
         borderRadius: 'var(--radius-xl)',
         backgroundColor: '#ffffff',
-        border: '1px solid rgba(0, 108, 53, 0.25)',
+        border: '1px solid var(--color-success-border, #A7F3D0)',
         textAlign: 'center',
-        boxShadow: '0 20px 40px -15px rgba(0, 108, 53, 0.1)',
+        boxShadow: '0 20px 40px -15px rgba(4, 120, 87, 0.12)',
       }}>
         <div style={{
           width: '4rem',
           height: '4rem',
           borderRadius: '50%',
-          backgroundColor: 'rgba(0, 108, 53, 0.12)',
-          color: '#006C35',
+          backgroundColor: 'var(--color-success-light, #ECFDF5)',
+          color: 'var(--color-success, #047857)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -107,11 +107,11 @@ export const ContactForm: React.FC = () => {
           <CheckCircle2 size={36} />
         </div>
 
-        <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--color-dark-forest, #012411)', marginBottom: '0.75rem' }}>
+        <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--color-text-primary, #1F2937)', marginBottom: '0.75rem' }}>
           Message Received
         </h3>
 
-        <p style={{ maxWidth: '480px', margin: '0 auto 2rem auto', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
+        <p style={{ maxWidth: '480px', margin: '0 auto 2rem auto', color: 'var(--color-text-secondary, #4B5563)', lineHeight: 1.6 }}>
           Thank you, <strong>{formData.fullName}</strong>. We have received your enquiry and will respond soon.
         </p>
 
@@ -137,7 +137,7 @@ export const ContactForm: React.FC = () => {
 
           <Button
             href={WHATSAPP_URL}
-            variant="gold"
+            variant="primary"
             size="sm"
           >
             Instant WhatsApp Chat
@@ -252,7 +252,9 @@ export const ContactForm: React.FC = () => {
             <option value="" disabled>Select an option</option>
             <option value="General">General</option>
             <option value="Products">Products</option>
+            <option value="Services">Services</option>
             <option value="Enquiries">Enquiries</option>
+            <option value="Request for Quote">Request for Quote</option>
           </select>
           {errors.enquiryAbout && <span id="contact-enquiryAbout-error" role="alert" className="form-error"><AlertCircle size={13} /> {errors.enquiryAbout}</span>}
         </div>
@@ -284,7 +286,12 @@ export const ContactForm: React.FC = () => {
             aria-invalid={Boolean(errors.consent)}
             aria-describedby={errors.consent ? 'contact-consent-error' : undefined}
           />
-          <span>I agree that Azaroth Tech-Hive may contact me about this enquiry.</span>
+          <span>
+            I agree that Azaroth Tech-Hive may contact me about this enquiry in accordance with the{' '}
+            <a href="/privacy-policy" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-link-main, #4338CA)', textDecoration: 'underline' }}>
+              Privacy Policy
+            </a>.
+          </span>
         </label>
         {errors.consent && <span id="contact-consent-error" role="alert" className="form-error"><AlertCircle size={13} /> {errors.consent}</span>}
       </div>
@@ -294,10 +301,10 @@ export const ContactForm: React.FC = () => {
         <div role="alert" style={{
           marginTop: '1rem',
           padding: '0.75rem',
-          backgroundColor: 'rgba(239, 68, 68, 0.1)',
-          border: '1px solid rgba(239, 68, 68, 0.3)',
+          backgroundColor: 'var(--color-alert-light, #FFE4E6)',
+          border: '1px solid var(--color-alert-border, #FECDD3)',
           borderRadius: 'var(--radius-md)',
-          color: '#ef4444',
+          color: 'var(--color-alert, #E11D48)',
           fontSize: '0.875rem',
         }}>
           <div>
@@ -305,10 +312,10 @@ export const ContactForm: React.FC = () => {
             {submissionError}
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginTop: '0.5rem' }}>
-            <a href={`mailto:${FALLBACK_EMAIL}`} style={{ color: '#ef4444', fontWeight: 600 }}>
+            <a href={`mailto:${FALLBACK_EMAIL}`} style={{ color: 'var(--color-alert, #E11D48)', fontWeight: 600 }}>
               Email us directly
             </a>
-            <a href={`tel:${FALLBACK_PHONE}`} style={{ color: '#ef4444', fontWeight: 600 }}>
+            <a href={`tel:${FALLBACK_PHONE}`} style={{ color: 'var(--color-alert, #E11D48)', fontWeight: 600 }}>
               Call +91 6379480931
             </a>
           </div>
@@ -318,7 +325,7 @@ export const ContactForm: React.FC = () => {
       <div style={{ marginTop: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}>
         <Button
           type="submit"
-          variant="gold"
+          variant="primary"
           size="lg"
           disabled={isSubmitting}
           icon={<Send size={16} />}

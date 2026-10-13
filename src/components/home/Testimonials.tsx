@@ -88,7 +88,7 @@ export const Testimonials: React.FC = () => {
                 gap: '0.5rem',
                 fontSize: '0.8125rem',
                 fontWeight: 700,
-                color: '#C68A3D',
+                color: '#006C35',
                 letterSpacing: '0.18em',
                 textTransform: 'uppercase',
                 marginBottom: '1rem',
@@ -110,7 +110,7 @@ export const Testimonials: React.FC = () => {
               What Our Clients{' '}
               <span
                 style={{
-                  background: 'linear-gradient(135deg, #2563EB 0%, #7C3AED 100%)',
+                  background: 'linear-gradient(135deg, #006C35 0%, #D4AF37 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                 }}
@@ -244,9 +244,9 @@ export const Testimonials: React.FC = () => {
                     <span style={{ fontSize: '1.0625rem', fontWeight: 700, color: '#1E293B' }}>
                       {current.author}
                     </span>
-                    <div style={{ display: 'flex', gap: '2px', color: '#F59E0B' }}>
+                    <div style={{ display: 'flex', gap: '2px', color: '#D4AF37' }}>
                       {Array.from({ length: current.rating }).map((_, i) => (
-                        <Star key={i} size={13} fill="#F59E0B" />
+                        <Star key={i} size={13} fill="#D4AF37" />
                       ))}
                     </div>
                   </div>
@@ -267,7 +267,7 @@ export const Testimonials: React.FC = () => {
                       width: idx === activeIndex ? '1.5rem' : '0.5rem',
                       height: '0.5rem',
                       borderRadius: '9999px',
-                      backgroundColor: idx === activeIndex ? '#2563EB' : '#CBD5E1',
+                      backgroundColor: idx === activeIndex ? '#006C35' : '#CBD5E1',
                       border: 'none',
                       cursor: 'pointer',
                       transition: 'all 200ms ease-out',

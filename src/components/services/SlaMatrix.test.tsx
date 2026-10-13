@@ -33,7 +33,7 @@ describe('Home page', () => {
 
     expect(screen.getByText(/Intelligence, Engineered/i)).toBeInTheDocument();
     expect(screen.getAllByText(/Innovation/i).length).toBeGreaterThan(0);
-    expect(screen.getByText(/Comprehensive/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Comprehensive/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/Digital Solutions/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/Turning Ideas into/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/Learn More/i).length).toBeGreaterThan(0);

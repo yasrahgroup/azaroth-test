@@ -82,7 +82,7 @@ export const Products: React.FC = () => {
         <div className="container">
           <div style={{ maxWidth: '780px' }}>
             <Badge variant="gold" style={{ marginBottom: '1rem' }}>
-              Platforms In Active Development
+              Our Products &amp; Platforms
             </Badge>
             <h1 style={{
               fontSize: 'clamp(2.25rem, 4vw, 3.5rem)',
@@ -91,7 +91,7 @@ export const Products: React.FC = () => {
               marginBottom: '1.25rem',
               lineHeight: 1.1,
             }}>
-              <AnimatedWords text="Enterprise Platform Foundations You Can Shape and Fully Own" />
+              <AnimatedWords text="Our Products & Platform Foundations" />
             </h1>
             <p style={{
               fontSize: '1.125rem',

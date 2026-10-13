@@ -89,7 +89,7 @@ export const StrategicSolutions: React.FC = () => {
               gap: '0.5rem',
               fontSize: '0.8125rem',
               fontWeight: 700,
-              color: '#C68A3D',
+              color: '#006C35',
               letterSpacing: '0.18em',
               textTransform: 'uppercase',
               marginBottom: '0.75rem',
@@ -111,7 +111,7 @@ export const StrategicSolutions: React.FC = () => {
             Our{' '}
             <span
               style={{
-                background: 'linear-gradient(135deg, #2563EB 0%, #7C3AED 60%, #9333EA 100%)',
+                background: 'linear-gradient(135deg, #006C35 0%, #D4AF37 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
               }}
@@ -303,15 +303,15 @@ export const StrategicSolutions: React.FC = () => {
               gap: '0.5rem',
               padding: '0.75rem 1.5rem',
               borderRadius: '9999px',
-              border: '1.5px solid #C68A3D',
-              color: '#9A6324',
+              border: '1.5px solid rgba(0, 108, 53, 0.3)',
+              color: '#006C35',
               backgroundColor: '#FFFFFF',
               fontWeight: 600,
               fontSize: '0.9375rem',
               textDecoration: 'none',
               transition: 'all 150ms ease-out',
             }}
-            className="hover:bg-amber-50"
+            className="hover:bg-emerald-50/50 hover:border-emerald-700 hover:text-emerald-800"
           >
             <span>Explore All Projects &amp; Platforms</span>
             <ArrowRight size={16} />

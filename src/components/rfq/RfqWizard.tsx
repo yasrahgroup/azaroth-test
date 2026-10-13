@@ -120,11 +120,14 @@ export const RfqWizard: React.FC = () => {
   ];
 
   const solutionOptions = [
-    { title: 'Dedicated Engineering Pods', icon: <Cpu size={20} />, desc: 'Full-stack senior engineering team dedicated 100%' },
-    { title: 'Cloud Modernization & Mesh', icon: <Cloud size={20} />, desc: 'Deconstruct monoliths into multi-region Kubernetes' },
-    { title: 'Enterprise AI & Automation', icon: <Sparkles size={20} />, desc: 'Air-gapped private agentic models & RAG systems' },
-    { title: 'Proprietary Platform Licensing', icon: <Server size={20} />, desc: 'Azaroth NeuralMesh, CloudCore, or StreamForge' },
-    { title: 'Architecture & Security Audit', icon: <FileCheck size={20} />, desc: 'Concurrency stress testing & penetration audit' },
+    { title: 'Cloud and Distributed Systems', icon: <Cloud size={20} />, desc: 'Resilient cloud infrastructure, microservices, and distributed architecture' },
+    { title: 'Legacy Modernization', icon: <Server size={20} />, desc: 'Deconstruct monoliths, upgrade tech stacks, and modernize legacy platforms' },
+    { title: 'Fitness Management', icon: <Cpu size={20} />, desc: 'Multi-location gym operations, membership lifecycle, and facility access' },
+    { title: 'Multi-Store Commerce', icon: <Sparkles size={20} />, desc: 'Headless omnichannel digital storefronts, synchronized inventory, and fulfillment' },
+    { title: 'Healthcare Management', icon: <FileCheck size={20} />, desc: 'Secure clinical workflows, patient record management, and health informatics' },
+    { title: 'Learning Platforms', icon: <Sparkles size={20} />, desc: 'Enterprise training academies, structured learning pathways, and certifications' },
+    { title: 'Dedicated Engineering Pods', icon: <Cpu size={20} />, desc: 'Dedicated cross-functional engineering teams for your technology roadmap' },
+    { title: 'Business Process Automation', icon: <Server size={20} />, desc: 'Targeted system integration, workflow design, and operational automation' },
   ];
 
   const scopeOptions = [
@@ -865,7 +868,7 @@ export const RfqWizard: React.FC = () => {
           ) : (
             <Button
               type="submit"
-              variant="gold"
+              variant="primary"
               size="lg"
               icon={<Check size={18} strokeWidth={2.5} />}
               disabled={isSubmitting}

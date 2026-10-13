@@ -1,26 +1,52 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import {
-  Menu,
-  X,
-  ArrowRight,
-  ChevronDown,
-  Building2,
-  Award,
-  GitFork,
-  ShoppingBag,
-  Layers,
-  Briefcase,
-} from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 import logoImg from '../../assets/Logo.png';
+
+interface NavItem {
+  name: string;
+  href: string;
+  isActive: (pathname: string) => boolean;
+}
+
+const navItems: NavItem[] = [
+  {
+    name: 'Home',
+    href: '/',
+    isActive: (p) => p === '/',
+  },
+  {
+    name: 'About',
+    href: '/about',
+    isActive: (p) => p === '/about' || p.startsWith('/about') || p === '/values' || p === '/delivery-framework',
+  },
+  {
+    name: 'Our Services',
+    href: '/services',
+    isActive: (p) => p === '/services' || p.startsWith('/services'),
+  },
+  {
+    name: 'Our Products',
+    href: '/products',
+    isActive: (p) => p === '/products' || p.startsWith('/products'),
+  },
+  {
+    name: 'Technology Insights',
+    href: '/technology-insights',
+    isActive: (p) => p === '/technology-insights' || p.startsWith('/technology-insights') || p.startsWith('/resource-hub'),
+  },
+  {
+    name: 'Connect with Us',
+    href: '/connect-with-us',
+    isActive: (p) => p === '/connect-with-us' || p.startsWith('/connect-with-us') || p === '/contact',
+  },
+];
 
 export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<'about' | 'products' | null>(null);
   const location = useLocation();
   const mobileToggleRef = useRef<HTMLButtonElement | null>(null);
-  const closeTimerRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,7 +59,6 @@ export const Header: React.FC = () => {
 
   useEffect(() => {
     setMobileMenuOpen(false);
-    setOpenDropdown(null);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -47,21 +72,6 @@ export const Header: React.FC = () => {
     };
   }, [mobileMenuOpen]);
 
-  const scheduleClose = () => {
-    window.clearTimeout(closeTimerRef.current);
-    closeTimerRef.current = window.setTimeout(() => setOpenDropdown(null), 180);
-  };
-
-  const cancelClose = () => window.clearTimeout(closeTimerRef.current);
-
-  const isActiveRoute = (path: string) => {
-    if (path === '/') return location.pathname === '/';
-    return location.pathname.startsWith(path);
-  };
-
-  const isAboutActive = ['/about', '/values', '/delivery-framework'].some((p) => location.pathname.startsWith(p));
-  const isProductsActive = ['/products', '/portfolio', '/services'].some((p) => location.pathname.startsWith(p));
-
   return (
     <header
       style={{
@@ -72,8 +82,8 @@ export const Header: React.FC = () => {
         backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.98)' : 'rgba(255, 255, 255, 0.95)',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
-        borderBottom: '1px solid rgba(226, 232, 240, 0.8)',
-        boxShadow: isScrolled ? '0 4px 20px -2px rgba(15, 23, 42, 0.06)' : 'none',
+        borderBottom: '1px solid var(--color-border, #E0E7FF)',
+        boxShadow: isScrolled ? '0 4px 20px -2px rgba(67, 56, 202, 0.08)' : 'none',
         transition: 'all 200ms ease-out',
       }}
     >
@@ -105,7 +115,7 @@ export const Header: React.FC = () => {
               height: '2.5rem',
               objectFit: 'contain',
               flexShrink: 0,
-              filter: 'drop-shadow(0 2px 4px rgba(212, 175, 55, 0.3))',
+              filter: 'drop-shadow(0 2px 4px rgba(79, 70, 229, 0.3))',
             }}
           />
           <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -113,7 +123,7 @@ export const Header: React.FC = () => {
               style={{
                 fontSize: '1.25rem',
                 fontWeight: 800,
-                color: '#006C35',
+                color: 'var(--color-link-main, #4338CA)',
                 fontFamily: 'serif',
                 letterSpacing: '0.04em',
                 lineHeight: 1.1,
@@ -125,7 +135,7 @@ export const Header: React.FC = () => {
               style={{
                 fontSize: '0.625rem',
                 fontWeight: 700,
-                color: '#D4AF37',
+                color: 'var(--color-primary-button, #4F46E5)',
                 letterSpacing: '0.22em',
                 textTransform: 'uppercase',
               }}
@@ -135,305 +145,51 @@ export const Header: React.FC = () => {
           </div>
         </Link>
 
-        {/* Desktop Navigation Links (Updated per Client Docs) */}
+        {/* Desktop Direct Navigation Links (Without Dropdowns) */}
         <nav
           aria-label="Primary Navigation"
-          className="hidden md:flex items-center gap-1 lg:gap-2"
+          className="hidden md:flex items-center gap-5 lg:gap-7"
         >
-          {/* 1. Home */}
-          <Link
-            to="/"
-            style={{
-              fontSize: '0.9375rem',
-              fontWeight: isActiveRoute('/') ? 700 : 500,
-              color: isActiveRoute('/') ? '#006C35' : '#475569',
-              padding: '0.5rem 0.875rem',
-              borderRadius: '9999px',
-              textDecoration: 'none',
-              transition: 'all 150ms ease-out',
-              backgroundColor: isActiveRoute('/') ? 'rgba(0, 108, 53, 0.08)' : 'transparent',
-              position: 'relative',
-            }}
-          >
-            Home
-            {isActiveRoute('/') && (
-              <span
+          {navItems.map((item) => {
+            const active = item.isActive(location.pathname);
+            return (
+              <Link
+                key={item.name}
+                to={item.href}
+                aria-current={active ? 'page' : undefined}
                 style={{
-                  position: 'absolute',
-                  bottom: '2px',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  width: '16px',
-                  height: '2px',
-                  backgroundColor: '#D4AF37',
-                  borderRadius: '1px',
+                  fontSize: '0.9375rem',
+                  fontWeight: active ? 700 : 600,
+                  color: active ? 'var(--color-link-main, #4338CA)' : 'var(--color-text-primary, #1F2937)',
+                  padding: '0.5rem 0.25rem',
+                  textDecoration: 'none',
+                  position: 'relative',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  transition: 'color 160ms ease-out',
                 }}
-              />
-            )}
-          </Link>
-
-          {/* 2. About Us (Dropdown: Who we are / About Us, Our Values, Delivery Framework) */}
-          <div
-            style={{ position: 'relative' }}
-            onMouseEnter={() => { cancelClose(); setOpenDropdown('about'); }}
-            onMouseLeave={scheduleClose}
-          >
-            <button
-              type="button"
-              style={{
-                fontSize: '0.9375rem',
-                fontWeight: isAboutActive ? 700 : 500,
-                color: isAboutActive ? '#006C35' : '#475569',
-                padding: '0.5rem 0.875rem',
-                borderRadius: '9999px',
-                border: 'none',
-                backgroundColor: isAboutActive ? 'rgba(0, 108, 53, 0.08)' : 'transparent',
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.25rem',
-                fontFamily: 'inherit',
-              }}
-              onClick={() => setOpenDropdown((prev) => (prev === 'about' ? null : 'about'))}
-            >
-              <span>About Us</span>
-              <ChevronDown size={14} style={{ opacity: 0.6 }} />
-            </button>
-
-            {openDropdown === 'about' && (
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '100%',
-                  left: 0,
-                  width: '280px',
-                  padding: '0.5rem',
-                  backgroundColor: '#FFFFFF',
-                  borderRadius: '12px',
-                  boxShadow: '0 12px 30px -4px rgba(15, 23, 42, 0.12), 0 0 1px rgba(0, 0, 0, 0.1)',
-                  border: '1px solid rgba(226, 232, 240, 0.9)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '0.25rem',
-                  zIndex: 60,
-                }}
+                className="hover:text-indigo-700"
               >
-                <Link
-                  to="/about"
-                  style={{
-                    padding: '0.625rem 0.75rem',
-                    borderRadius: '8px',
-                    textDecoration: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.625rem',
-                    color: '#1E293B',
-                    fontSize: '0.875rem',
-                    fontWeight: 600,
-                  }}
-                  className="hover:bg-slate-50"
-                >
-                  <Building2 size={16} style={{ color: '#006C35' }} />
-                  <div>
-                    <div>Who we are / About Us</div>
-                    <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 400 }}>Company story &amp; mission</div>
-                  </div>
-                </Link>
-                <Link
-                  to="/values"
-                  style={{
-                    padding: '0.625rem 0.75rem',
-                    borderRadius: '8px',
-                    textDecoration: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.625rem',
-                    color: '#1E293B',
-                    fontSize: '0.875rem',
-                    fontWeight: 600,
-                  }}
-                  className="hover:bg-slate-50"
-                >
-                  <Award size={16} style={{ color: '#C68A3D' }} />
-                  <div>
-                    <div>Our Values</div>
-                    <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 400 }}>6 core engineering principles</div>
-                  </div>
-                </Link>
-                <Link
-                  to="/delivery-framework"
-                  style={{
-                    padding: '0.625rem 0.75rem',
-                    borderRadius: '8px',
-                    textDecoration: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.625rem',
-                    color: '#1E293B',
-                    fontSize: '0.875rem',
-                    fontWeight: 600,
-                  }}
-                  className="hover:bg-slate-50"
-                >
-                  <GitFork size={16} style={{ color: '#2563EB' }} />
-                  <div>
-                    <div>Delivery Framework</div>
-                    <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 400 }}>6-step path from idea to impact</div>
-                  </div>
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* 3. Our Portfolio (Dropdown: Our Portfolio, Explore Products, Explore Services per REQ-01) */}
-          <div
-            style={{ position: 'relative' }}
-            onMouseEnter={() => { cancelClose(); setOpenDropdown('products'); }}
-            onMouseLeave={scheduleClose}
-          >
-            <button
-              type="button"
-              style={{
-                fontSize: '0.9375rem',
-                fontWeight: isProductsActive ? 700 : 500,
-                color: isProductsActive ? '#006C35' : '#475569',
-                padding: '0.5rem 0.875rem',
-                borderRadius: '9999px',
-                border: 'none',
-                backgroundColor: isProductsActive ? 'rgba(0, 108, 53, 0.08)' : 'transparent',
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.25rem',
-                fontFamily: 'inherit',
-              }}
-              onClick={() => setOpenDropdown((prev) => (prev === 'products' ? null : 'products'))}
-            >
-              <span>Our Portfolio</span>
-              <ChevronDown size={14} style={{ opacity: 0.6 }} />
-            </button>
-
-            {openDropdown === 'products' && (
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '100%',
-                  left: 0,
-                  width: '280px',
-                  padding: '0.5rem',
-                  backgroundColor: '#FFFFFF',
-                  borderRadius: '12px',
-                  boxShadow: '0 12px 30px -4px rgba(15, 23, 42, 0.12), 0 0 1px rgba(0, 0, 0, 0.1)',
-                  border: '1px solid rgba(226, 232, 240, 0.9)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '0.25rem',
-                  zIndex: 60,
-                }}
-              >
-                <Link
-                  to="/portfolio"
-                  style={{
-                    padding: '0.625rem 0.75rem',
-                    borderRadius: '8px',
-                    textDecoration: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.625rem',
-                    color: '#1E293B',
-                    fontSize: '0.875rem',
-                    fontWeight: 600,
-                  }}
-                  className="hover:bg-slate-50"
-                >
-                  <Briefcase size={16} style={{ color: '#D4AF37' }} />
-                  <div>
-                    <div>Our Portfolio</div>
-                    <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 400 }}>Solutions &amp; client work</div>
-                  </div>
-                </Link>
-                <Link
-                  to="/products"
-                  style={{
-                    padding: '0.625rem 0.75rem',
-                    borderRadius: '8px',
-                    textDecoration: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.625rem',
-                    color: '#1E293B',
-                    fontSize: '0.875rem',
-                    fontWeight: 600,
-                  }}
-                  className="hover:bg-slate-50"
-                >
-                  <ShoppingBag size={16} style={{ color: '#059669' }} />
-                  <div>
-                    <div>Explore Products</div>
-                    <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 400 }}>FMS, Commerce &amp; LMP</div>
-                  </div>
-                </Link>
-                <Link
-                  to="/services"
-                  style={{
-                    padding: '0.625rem 0.75rem',
-                    borderRadius: '8px',
-                    textDecoration: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.625rem',
-                    color: '#1E293B',
-                    fontSize: '0.875rem',
-                    fontWeight: 600,
-                  }}
-                  className="hover:bg-slate-50"
-                >
-                  <Layers size={16} style={{ color: '#006C35' }} />
-                  <div>
-                    <div>Explore Services</div>
-                    <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 400 }}>Software engineering practices</div>
-                  </div>
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* 4. Resource Hub (Renamed from Technology Insights) */}
-          <Link
-            to="/technology-insights"
-            style={{
-              fontSize: '0.9375rem',
-              fontWeight: isActiveRoute('/technology-insights') ? 700 : 500,
-              color: isActiveRoute('/technology-insights') ? '#006C35' : '#475569',
-              padding: '0.5rem 0.875rem',
-              borderRadius: '9999px',
-              textDecoration: 'none',
-              transition: 'all 150ms ease-out',
-              backgroundColor: isActiveRoute('/technology-insights') ? 'rgba(0, 108, 53, 0.08)' : 'transparent',
-            }}
-          >
-            Resource Hub
-          </Link>
-
-          {/* 5. Connect With Us */}
-          <Link
-            to="/connect-with-us"
-            style={{
-              fontSize: '0.9375rem',
-              fontWeight: isActiveRoute('/connect-with-us') ? 700 : 500,
-              color: isActiveRoute('/connect-with-us') ? '#006C35' : '#475569',
-              padding: '0.5rem 0.875rem',
-              borderRadius: '9999px',
-              textDecoration: 'none',
-              transition: 'all 150ms ease-out',
-              backgroundColor: isActiveRoute('/connect-with-us') ? 'rgba(0, 108, 53, 0.08)' : 'transparent',
-            }}
-          >
-            Connect With Us
-          </Link>
+                <span>{item.name}</span>
+                {active && (
+                  <span
+                    style={{
+                      position: 'absolute',
+                      bottom: '-2px',
+                      left: 0,
+                      right: 0,
+                      height: '3px',
+                      background: 'linear-gradient(90deg, #4338CA 0%, #4F46E5 100%)',
+                      borderRadius: '2px',
+                    }}
+                  />
+                )}
+              </Link>
+            );
+          })}
         </nav>
 
-        {/* Right Action: Request for Quote Button */}
+        {/* Right Action: Primary Button (Indigo #4F46E5) */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.875rem' }}>
           <Link
             to="/request-for-quote"
@@ -443,18 +199,18 @@ export const Header: React.FC = () => {
               gap: '0.5rem',
               padding: '0.625rem 1.35rem',
               borderRadius: '9999px',
-              background: 'linear-gradient(135deg, #D4AF37 0%, #BF9129 100%)',
-              color: '#012411',
+              backgroundColor: 'var(--color-primary-button, #4F46E5)',
+              color: '#FFFFFF',
               fontWeight: 700,
               fontSize: '0.9375rem',
               textDecoration: 'none',
               transition: 'all 200ms ease-out',
-              boxShadow: '0 3px 12px rgba(212, 175, 55, 0.35)',
+              boxShadow: '0 4px 14px rgba(79, 70, 229, 0.35)',
             }}
-            className="hover:brightness-105 hover:shadow-lg"
+            className="hover:bg-indigo-700 hover:shadow-lg"
           >
             <span>Request for Quote</span>
-            <ArrowRight size={15} style={{ color: '#012411' }} />
+            <ArrowRight size={15} style={{ color: '#FFFFFF' }} />
           </Link>
 
           {/* Mobile Menu Button */}
@@ -469,14 +225,14 @@ export const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer (Direct Flat Links) */}
       {mobileMenuOpen && (
         <div
           style={{
             position: 'fixed',
             inset: 0,
             top: '4.75rem',
-            backgroundColor: 'rgba(15, 23, 42, 0.4)',
+            backgroundColor: 'rgba(31, 41, 55, 0.4)',
             backdropFilter: 'blur(4px)',
             zIndex: 99,
             display: 'flex',
@@ -488,85 +244,43 @@ export const Header: React.FC = () => {
             style={{
               backgroundColor: '#FFFFFF',
               padding: '1.5rem',
-              borderBottom: '1px solid #E2E8F0',
+              borderBottom: '1px solid var(--color-border, #E0E7FF)',
               boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
               display: 'flex',
               flexDirection: 'column',
-              gap: '0.5rem',
+              gap: '0.35rem',
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <Link
-              to="/"
-              style={{
-                padding: '0.75rem 1rem',
-                borderRadius: '8px',
-                fontWeight: 600,
-                color: isActiveRoute('/') ? '#006C35' : '#1E293B',
-                backgroundColor: isActiveRoute('/') ? 'rgba(0, 108, 53, 0.08)' : 'transparent',
-                textDecoration: 'none',
-              }}
-            >
-              Home
-            </Link>
+            {navItems.map((item) => {
+              const active = item.isActive(location.pathname);
+              return (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  aria-current={active ? 'page' : undefined}
+                  style={{
+                    padding: '0.75rem 1rem',
+                    borderRadius: '8px',
+                    fontWeight: active ? 700 : 600,
+                    fontSize: '1rem',
+                    color: active ? 'var(--color-link-main, #4338CA)' : 'var(--color-text-primary, #1F2937)',
+                    backgroundColor: active ? 'var(--color-nav-active-bg, #F5F3FF)' : 'transparent',
+                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    borderLeft: active ? '3px solid var(--color-link-main, #4338CA)' : '3px solid transparent',
+                  }}
+                >
+                  <span>{item.name}</span>
+                </Link>
+              );
+            })}
 
-            <div style={{ padding: '0.5rem 1rem 0.25rem', fontSize: '0.75rem', fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase' }}>
-              About Us
-            </div>
-            <Link to="/about" style={{ padding: '0.5rem 1rem 0.5rem 1.5rem', fontSize: '0.875rem', color: '#334155', textDecoration: 'none' }}>
-              &bull; Who we are / About Us
-            </Link>
-            <Link to="/values" style={{ padding: '0.5rem 1rem 0.5rem 1.5rem', fontSize: '0.875rem', color: '#334155', textDecoration: 'none' }}>
-              &bull; Our Values
-            </Link>
-            <Link to="/delivery-framework" style={{ padding: '0.5rem 1rem 0.5rem 1.5rem', fontSize: '0.875rem', color: '#334155', textDecoration: 'none' }}>
-              &bull; Delivery Framework
-            </Link>
+            <div style={{ height: '1px', backgroundColor: 'var(--color-border, #E0E7FF)', margin: '0.75rem 0' }} />
 
-            <div style={{ padding: '0.5rem 1rem 0.25rem', fontSize: '0.75rem', fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase' }}>
-              Our Portfolio
-            </div>
-            <Link to="/portfolio" style={{ padding: '0.5rem 1rem 0.5rem 1.5rem', fontSize: '0.875rem', color: '#334155', textDecoration: 'none' }}>
-              &bull; Our Portfolio
-            </Link>
-            <Link to="/products" style={{ padding: '0.5rem 1rem 0.5rem 1.5rem', fontSize: '0.875rem', color: '#334155', textDecoration: 'none' }}>
-              &bull; Explore Products
-            </Link>
-            <Link to="/services" style={{ padding: '0.5rem 1rem 0.5rem 1.5rem', fontSize: '0.875rem', color: '#334155', textDecoration: 'none' }}>
-              &bull; Explore Services
-            </Link>
-
-            <div style={{ height: '1px', backgroundColor: '#E2E8F0', margin: '0.5rem 0' }} />
-
-            <Link
-              to="/technology-insights"
-              style={{
-                padding: '0.75rem 1rem',
-                borderRadius: '8px',
-                fontWeight: 600,
-                color: isActiveRoute('/technology-insights') ? '#006C35' : '#1E293B',
-                backgroundColor: isActiveRoute('/technology-insights') ? 'rgba(0, 108, 53, 0.08)' : 'transparent',
-                textDecoration: 'none',
-              }}
-            >
-              Resource Hub
-            </Link>
-
-            <Link
-              to="/connect-with-us"
-              style={{
-                padding: '0.75rem 1rem',
-                borderRadius: '8px',
-                fontWeight: 600,
-                color: isActiveRoute('/connect-with-us') ? '#006C35' : '#1E293B',
-                backgroundColor: isActiveRoute('/connect-with-us') ? 'rgba(0, 108, 53, 0.08)' : 'transparent',
-                textDecoration: 'none',
-              }}
-            >
-              Connect With Us
-            </Link>
-
-            <div style={{ marginTop: '1rem' }}>
+            <div>
               <Link
                 to="/request-for-quote"
                 style={{
@@ -576,11 +290,13 @@ export const Header: React.FC = () => {
                   gap: '0.5rem',
                   padding: '0.75rem',
                   borderRadius: '9999px',
-                  background: 'linear-gradient(135deg, #D4AF37 0%, #BF9129 100%)',
-                  color: '#012411',
+                  backgroundColor: 'var(--color-primary-button, #4F46E5)',
+                  color: '#FFFFFF',
                   fontWeight: 700,
                   textDecoration: 'none',
+                  boxShadow: '0 4px 14px rgba(79, 70, 229, 0.35)',
                 }}
+                className="hover:bg-indigo-700"
               >
                 <span>Request for Quote</span>
                 <ArrowRight size={16} />

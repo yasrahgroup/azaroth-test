@@ -123,7 +123,7 @@ export const About: React.FC = () => {
                 />
               </div>
 
-              {/* Float Experience Badge */}
+              {/* Float Quality Badge */}
               <div
                 style={{
                   position: 'absolute',
@@ -154,11 +154,11 @@ export const About: React.FC = () => {
                   <UserCheck size={20} />
                 </div>
                 <div>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1E293B', lineHeight: 1.1 }}>
-                    5+ Years
+                  <div style={{ fontSize: '1rem', fontWeight: 800, color: '#1E293B', lineHeight: 1.2 }}>
+                    Full Lifecycle
                   </div>
                   <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 600 }}>
-                    Proven Excellence
+                    Engineering Delivery
                   </div>
                 </div>
               </div>
@@ -218,26 +218,26 @@ export const About: React.FC = () => {
                   gridTemplateColumns: 'repeat(3, 1fr)',
                   gap: '1rem',
                   paddingTop: '1.5rem',
-                  borderTop: '1px solid #E2E8F0',
+                  borderTop: '1px solid var(--color-border, #E0E7FF)',
                   marginBottom: '2rem',
                 }}
               >
                 <div>
-                  <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#1E293B' }}>5+</div>
-                  <div style={{ fontSize: '0.8125rem', color: '#64748B' }}>Years Experience</div>
+                  <div style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--color-text-primary, #1F2937)', lineHeight: 1.2 }}>Sound Architecture</div>
+                  <div style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary, #4B5563)' }}>Principled Design</div>
                 </div>
                 <div>
-                  <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#059669' }}>50+</div>
-                  <div style={{ fontSize: '0.8125rem', color: '#64748B' }}>Projects Shipped</div>
+                  <div style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--color-success, #047857)', lineHeight: 1.2 }}>Tested Quality</div>
+                  <div style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary, #4B5563)' }}>Rigorous Verification</div>
                 </div>
                 <div>
-                  <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#C68A3D' }}>30+</div>
-                  <div style={{ fontSize: '0.8125rem', color: '#64748B' }}>Happy Clients</div>
+                  <div style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--color-warning, #D97706)', lineHeight: 1.2 }}>True Partnership</div>
+                  <div style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary, #4B5563)' }}>Transparent Delivery</div>
                 </div>
               </div>
 
               <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                <Button to="/delivery-framework" variant="gold">
+                <Button to="/delivery-framework" variant="primary">
                   Explore Delivery Framework
                 </Button>
                 <Button to="/values" variant="outline">

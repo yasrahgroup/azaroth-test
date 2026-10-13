@@ -55,7 +55,7 @@ export const FinalCTA: React.FC = () => {
             flexWrap: 'wrap',
             gap: '1rem',
           }}>
-            <Button to="/request-for-quote" variant="violet" size="lg" icon={<ArrowRight size={18} aria-hidden="true" />}>
+            <Button to="/request-for-quote" variant="gold" size="lg" icon={<ArrowRight size={18} aria-hidden="true" />}>
               Request a quote
             </Button>
             <Button to="/connect-with-us" variant="outline" size="lg">

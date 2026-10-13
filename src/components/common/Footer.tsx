@@ -71,20 +71,20 @@ export const Footer: React.FC = () => {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem', fontSize: '0.875rem', marginBottom: '1.5rem' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.625rem' }}>
-                <MapPin size={16} style={{ color: '#C68A3D', flexShrink: 0, marginTop: '0.2rem' }} />
+                <MapPin size={16} style={{ color: '#818CF8', flexShrink: 0, marginTop: '0.2rem' }} />
                 <span style={{ color: '#CBD5E1' }}>24, Malaviya Avenue, Thiruvanmiyur, Chennai, India</span>
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
-                <Phone size={16} style={{ color: '#C68A3D', flexShrink: 0 }} />
-                <a href="tel:+916379480931" style={{ color: '#CBD5E1', textDecoration: 'none' }} className="hover:text-amber-400">
+                <Phone size={16} style={{ color: '#818CF8', flexShrink: 0 }} />
+                <a href="tel:+916379480931" style={{ color: '#CBD5E1', textDecoration: 'none' }} className="hover:text-indigo-300">
                   +91 6379480931
                 </a>
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
-                <Mail size={16} style={{ color: '#C68A3D', flexShrink: 0 }} />
-                <a href="mailto:hello@azaroth-techhive.com" style={{ color: '#CBD5E1', textDecoration: 'none' }} className="hover:text-amber-400">
+                <Mail size={16} style={{ color: '#818CF8', flexShrink: 0 }} />
+                <a href="mailto:hello@azaroth-techhive.com" style={{ color: '#CBD5E1', textDecoration: 'none' }} className="hover:text-indigo-300">
                   hello@azaroth-techhive.com
                 </a>
               </div>
@@ -117,20 +117,20 @@ export const Footer: React.FC = () => {
             </h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
               <li>
-                <Link to="/products" style={{ color: '#CBD5E1', textDecoration: 'none', fontSize: '0.875rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }} className="hover:text-amber-400">
-                  <ArrowRight size={14} style={{ color: '#C68A3D' }} />
+                <Link to="/products" style={{ color: '#CBD5E1', textDecoration: 'none', fontSize: '0.875rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }} className="hover:text-indigo-300">
+                  <ArrowRight size={14} style={{ color: '#818CF8' }} />
                   Explore Products
                 </Link>
               </li>
               <li>
-                <Link to="/services" style={{ color: '#CBD5E1', textDecoration: 'none', fontSize: '0.875rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }} className="hover:text-amber-400">
-                  <ArrowRight size={14} style={{ color: '#C68A3D' }} />
+                <Link to="/services" style={{ color: '#CBD5E1', textDecoration: 'none', fontSize: '0.875rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }} className="hover:text-indigo-300">
+                  <ArrowRight size={14} style={{ color: '#818CF8' }} />
                   Explore Services
                 </Link>
               </li>
               <li>
-                <Link to="/technology-insights" style={{ color: '#CBD5E1', textDecoration: 'none', fontSize: '0.875rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }} className="hover:text-amber-400">
-                  <ArrowRight size={14} style={{ color: '#D4AF37' }} />
+                <Link to="/technology-insights" style={{ color: '#CBD5E1', textDecoration: 'none', fontSize: '0.875rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }} className="hover:text-indigo-300">
+                  <ArrowRight size={14} style={{ color: '#818CF8' }} />
                   Resource Hub
                 </Link>
               </li>

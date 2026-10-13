@@ -71,32 +71,30 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({
                 height: '2.5rem',
                 borderRadius: '50%',
                 backgroundColor: isCompleted 
-                  ? 'var(--color-primary-green)' 
+                  ? 'var(--color-link-main, #4338CA)' 
                   : isCurrent 
-                  ? 'linear-gradient(135deg, #D4AF37 0%, #BF9129 100%)' 
+                  ? 'var(--color-primary-button, #4F46E5)' 
                   : '#ffffff',
                 border: isCurrent 
-                  ? '2px solid var(--color-gold-from)' 
+                  ? '2px solid var(--color-primary-button, #4F46E5)' 
                   : isCompleted 
-                  ? '2px solid var(--color-primary-green)' 
-                  : '2px solid var(--color-border-medium)',
-                color: isCompleted 
+                  ? '2px solid var(--color-link-main, #4338CA)' 
+                  : '2px solid var(--color-border, #E0E7FF)',
+                color: (isCompleted || isCurrent)
                   ? '#ffffff' 
-                  : isCurrent 
-                  ? '#2B0408' 
-                  : 'var(--color-text-muted)',
+                  : 'var(--color-text-muted, #6B7280)',
                 fontWeight: 800,
                 fontSize: '0.875rem',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 background: isCurrent 
-                  ? 'linear-gradient(135deg, #D4AF37 0%, #BF9129 100%)' 
+                  ? 'linear-gradient(135deg, #4F46E5 0%, #4338CA 100%)' 
                   : isCompleted 
-                  ? 'var(--color-primary-green)' 
+                  ? 'var(--color-link-main, #4338CA)' 
                   : '#ffffff',
                 boxShadow: isCurrent 
-                  ? '0 0 14px rgba(212, 175, 55, 0.4)' 
+                  ? '0 0 14px rgba(79, 70, 229, 0.4)' 
                   : 'var(--shadow-xs)',
                 transition: 'all 240ms ease-out',
               }}>

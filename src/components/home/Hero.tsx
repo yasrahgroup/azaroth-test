@@ -67,7 +67,7 @@ export const Hero: React.FC = () => {
                 gap: '0.5rem',
                 fontSize: '0.8125rem',
                 fontWeight: 700,
-                color: '#C68A3D',
+                color: 'var(--color-warning, #D97706)',
                 letterSpacing: '0.2em',
                 textTransform: 'uppercase',
                 marginBottom: '1.25rem',
@@ -85,7 +85,7 @@ export const Hero: React.FC = () => {
               style={{
                 fontSize: 'clamp(2.5rem, 5vw, 3.85rem)',
                 fontWeight: 800,
-                color: '#1E293B',
+                color: 'var(--color-text-primary, #1F2937)',
                 lineHeight: 1.15,
                 letterSpacing: '-0.025em',
                 marginBottom: '1.5rem',
@@ -94,7 +94,7 @@ export const Hero: React.FC = () => {
               Intelligence, Engineered and{' '}
               <span
                 style={{
-                  background: 'linear-gradient(135deg, #2563EB 0%, #7C3AED 55%, #A855F7 100%)',
+                  background: 'linear-gradient(135deg, #4F46E5 0%, #4338CA 55%, #7C3AED 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                 }}
@@ -108,7 +108,7 @@ export const Hero: React.FC = () => {
             <p
               style={{
                 fontSize: '1.125rem',
-                color: '#64748B',
+                color: 'var(--color-text-secondary, #4B5563)',
                 lineHeight: 1.65,
                 marginBottom: '2.25rem',
                 maxWidth: '520px',
@@ -134,15 +134,15 @@ export const Hero: React.FC = () => {
                   gap: '0.625rem',
                   padding: '0.875rem 1.75rem',
                   borderRadius: '9999px',
-                  backgroundColor: '#C68A3D',
+                  backgroundColor: 'var(--color-primary-button, #4F46E5)',
                   color: '#FFFFFF',
                   fontWeight: 600,
                   fontSize: '1rem',
                   textDecoration: 'none',
-                  boxShadow: '0 4px 14px rgba(198, 138, 61, 0.35)',
+                  boxShadow: '0 4px 14px rgba(79, 70, 229, 0.35)',
                   transition: 'all 200ms ease-out',
                 }}
-                className="hover:bg-amber-600 hover:shadow-lg"
+                className="hover:bg-indigo-700 hover:shadow-lg"
               >
                 <span>Request for Quote</span>
                 <ArrowRight size={17} />
@@ -157,14 +157,14 @@ export const Hero: React.FC = () => {
                   padding: '0.875rem 1.75rem',
                   borderRadius: '9999px',
                   backgroundColor: '#FFFFFF',
-                  color: '#475569',
-                  border: '1.5px solid #CBD5E1',
+                  color: 'var(--color-text-primary, #1F2937)',
+                  border: '1.5px solid var(--color-border, #E0E7FF)',
                   fontWeight: 600,
                   fontSize: '1rem',
                   textDecoration: 'none',
                   transition: 'all 200ms ease-out',
                 }}
-                className="hover:border-slate-400 hover:text-slate-800"
+                className="hover:border-indigo-400 hover:text-indigo-900 hover:bg-indigo-50"
               >
                 <span>Our Portfolio</span>
                 <ArrowRight size={17} style={{ opacity: 0.7 }} />

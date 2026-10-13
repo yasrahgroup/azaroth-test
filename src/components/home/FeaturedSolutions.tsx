@@ -26,8 +26,8 @@ const services: ServiceItem[] = [
     title: 'Web Development',
     description: 'Custom, responsive and scalable websites tailored for your business needs.',
     icon: <Code2 size={24} />,
-    iconBg: '#EDE9FE',
-    iconColor: '#7C3AED',
+    iconBg: 'rgba(0, 108, 53, 0.08)',
+    iconColor: '#006C35',
     link: '/services#web-development',
   },
   {
@@ -35,8 +35,8 @@ const services: ServiceItem[] = [
     title: 'Mobile Applications',
     description: 'Feature-rich and user-friendly apps for Android and iOS platforms.',
     icon: <Smartphone size={24} />,
-    iconBg: '#D1FAE5',
-    iconColor: '#059669',
+    iconBg: 'rgba(212, 175, 55, 0.15)',
+    iconColor: '#8C6D1F',
     link: '/services#mobile-applications',
   },
   {
@@ -44,8 +44,8 @@ const services: ServiceItem[] = [
     title: 'Cloud Solutions',
     description: 'Secure, scalable and flexible cloud infrastructure for your business.',
     icon: <Cloud size={24} />,
-    iconBg: '#E0F2FE',
-    iconColor: '#0284C7',
+    iconBg: 'rgba(0, 108, 53, 0.08)',
+    iconColor: '#006C35',
     link: '/services#cloud-solutions',
   },
   {
@@ -53,8 +53,8 @@ const services: ServiceItem[] = [
     title: 'IT Consulting',
     description: 'Strategic technology consulting to drive efficiency and growth.',
     icon: <Settings size={24} />,
-    iconBg: '#FEF3C7',
-    iconColor: '#D97706',
+    iconBg: 'rgba(212, 175, 55, 0.15)',
+    iconColor: '#8C6D1F',
     link: '/services#it-consulting',
   },
   {
@@ -62,8 +62,8 @@ const services: ServiceItem[] = [
     title: 'Cybersecurity',
     description: 'Protect your data and business with advanced security solutions.',
     icon: <ShieldCheck size={24} />,
-    iconBg: '#EDE9FE',
-    iconColor: '#6D28D9',
+    iconBg: 'rgba(0, 108, 53, 0.08)',
+    iconColor: '#006C35',
     link: '/services#cybersecurity',
   },
   {
@@ -71,8 +71,8 @@ const services: ServiceItem[] = [
     title: 'UI/UX Design',
     description: 'Intuitive and engaging experiences that users love.',
     icon: <Lightbulb size={24} />,
-    iconBg: '#E0F2FE',
-    iconColor: '#0284C7',
+    iconBg: 'rgba(212, 175, 55, 0.15)',
+    iconColor: '#8C6D1F',
     link: '/services#ui-ux-design',
   },
 ];
@@ -99,7 +99,7 @@ export const FeaturedSolutions: React.FC = () => {
               gap: '0.5rem',
               fontSize: '0.8125rem',
               fontWeight: 700,
-              color: '#C68A3D',
+              color: '#006C35',
               letterSpacing: '0.18em',
               textTransform: 'uppercase',
               marginBottom: '0.75rem',
@@ -121,7 +121,7 @@ export const FeaturedSolutions: React.FC = () => {
             Comprehensive{' '}
             <span
               style={{
-                background: 'linear-gradient(135deg, #2563EB 0%, #7C3AED 60%, #9333EA 100%)',
+                background: 'linear-gradient(135deg, #006C35 0%, #D4AF37 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
               }}
@@ -163,7 +163,7 @@ export const FeaturedSolutions: React.FC = () => {
                 justifyContent: 'space-between',
                 transition: 'all 240ms cubic-bezier(0.16, 1, 0.3, 1)',
               }}
-              className="hover:-translate-y-1 hover:shadow-xl hover:border-slate-300"
+              className="hover:-translate-y-1 hover:shadow-xl hover:border-emerald-300"
             >
               <div>
                 {/* Squircle Icon */}
@@ -215,11 +215,11 @@ export const FeaturedSolutions: React.FC = () => {
                   gap: '0.375rem',
                   fontSize: '0.875rem',
                   fontWeight: 600,
-                  color: '#C68A3D',
+                  color: '#006C35',
                   textDecoration: 'none',
                   transition: 'gap 150ms ease-out',
                 }}
-                className="hover:gap-2"
+                className="hover:gap-2 hover:text-emerald-800"
               >
                 <span>Learn More</span>
                 <ArrowRight size={14} />

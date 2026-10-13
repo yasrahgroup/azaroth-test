@@ -34,14 +34,14 @@ const detailedServices: ServiceDetail[] = [
     icon: <Code2 size={24} />,
     iconBg: '#EDE9FE',
     iconColor: '#7C3AED',
-    description: 'Custom, responsive and scalable websites tailored for your business needs. Built on modern reactive frameworks with lightning-fast performance and SEO architecture.',
+    description: 'Custom, responsive and scalable websites tailored for your business needs. Built on modern reactive frameworks with fast performance and SEO architecture.',
     deliverables: [
       'Next.js & React SPA micro-frontends',
       'High-concurrency GraphQL & RESTful APIs',
-      'Sub-second Core Web Vitals optimization',
+      'Core Web Vitals optimization and accessibility',
       'Headless CMS & automated CI/CD pipelines',
     ],
-    sla: '99.99% Uptime Commitment',
+    sla: 'High-Availability Architecture',
   },
   {
     id: 'mobile-applications',
@@ -57,7 +57,7 @@ const detailedServices: ServiceDetail[] = [
       'Real-time WebSocket notifications & sockets',
       'App Store & Google Play automated release cycle',
     ],
-    sla: 'Zero-downtime over-the-air updates',
+    sla: 'Controlled OTA Release Cycles',
   },
   {
     id: 'cloud-solutions',
@@ -70,10 +70,10 @@ const detailedServices: ServiceDetail[] = [
     deliverables: [
       'Multi-region Kubernetes & Docker mesh',
       'Terraform & Infrastructure as Code (IaC)',
-      'Automated disaster recovery & zero-loss backups',
-      'FinOps audits reducing cloud spend by 30%+',
+      'Automated disaster recovery & data backups',
+      'FinOps audits & cloud resource optimization',
     ],
-    sla: '<15 min incident response time',
+    sla: 'Structured Incident Response Protocols',
   },
   {
     id: 'it-consulting',
@@ -82,14 +82,14 @@ const detailedServices: ServiceDetail[] = [
     icon: <Settings size={24} />,
     iconBg: '#FEF3C7',
     iconColor: '#D97706',
-    description: 'Strategic technology consulting to drive efficiency and growth. Modernizing legacy monolithic architectures into decoupled, cloud-native services with zero operational disruption.',
+    description: 'Strategic technology consulting to drive efficiency and growth. Modernizing legacy monolithic architectures into decoupled, cloud-native services with minimal operational disruption.',
     deliverables: [
       'Monolith-to-microservices decoupling roadmaps',
       'Enterprise database architecture & sharding',
       'Technical debt audits & refactoring plans',
-      'Fractional CTO & architectural steering',
+      'Fractional architectural steering & reviews',
     ],
-    sla: 'Guaranteed milestone outcomes',
+    sla: 'Transparent Milestone Delivery',
   },
   {
     id: 'cybersecurity',
@@ -105,7 +105,7 @@ const detailedServices: ServiceDetail[] = [
       'Data encryption at rest (AES-256) & in transit',
       'SOC2 / ISO27001 compliance readiness audits',
     ],
-    sla: 'Immediate 24/7 security patch dispatch',
+    sla: 'Proactive Security Audits & Patch Management',
   },
   {
     id: 'ui-ux-design',
@@ -121,7 +121,7 @@ const detailedServices: ServiceDetail[] = [
       'Information architecture & conversion funnel mapping',
       'Responsive design across mobile, tablet & desktop',
     ],
-    sla: 'Pixel-perfect production handoff',
+    sla: 'Accessible Design System Handoff',
   },
 ];
 

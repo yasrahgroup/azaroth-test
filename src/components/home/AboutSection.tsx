@@ -103,7 +103,7 @@ export const AboutSection: React.FC = () => {
               style={{
                 fontSize: 'clamp(2.25rem, 4.2vw, 3.25rem)',
                 fontWeight: 800,
-                color: '#1E293B',
+                color: 'var(--color-text-primary, #1F2937)',
                 letterSpacing: '-0.025em',
                 lineHeight: 1.15,
                 marginBottom: '1.5rem',
@@ -112,7 +112,7 @@ export const AboutSection: React.FC = () => {
               Engineering Software.{' '}
               <span
                 style={{
-                  background: 'linear-gradient(135deg, #2563EB 0%, #7C3AED 55%, #9333EA 100%)',
+                  background: 'linear-gradient(135deg, #4F46E5 0%, #4338CA 55%, #7C3AED 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                 }}
@@ -124,7 +124,7 @@ export const AboutSection: React.FC = () => {
             <p
               style={{
                 fontSize: '1.0625rem',
-                color: '#475569',
+                color: 'var(--color-text-secondary, #4B5563)',
                 lineHeight: 1.75,
                 marginBottom: '1.25rem',
               }}
@@ -135,7 +135,7 @@ export const AboutSection: React.FC = () => {
             <p
               style={{
                 fontSize: '1.0625rem',
-                color: '#475569',
+                color: 'var(--color-text-secondary, #4B5563)',
                 lineHeight: 1.75,
                 marginBottom: '2rem',
               }}
@@ -152,7 +152,7 @@ export const AboutSection: React.FC = () => {
                   gap: '0.5rem',
                   fontSize: '0.9375rem',
                   fontWeight: 600,
-                  color: '#C68A3D',
+                  color: 'var(--color-link-main, #4338CA)',
                   textDecoration: 'none',
                 }}
                 className="hover:gap-3"
@@ -177,15 +177,15 @@ export const AboutSection: React.FC = () => {
               <div
                 key={idx}
                 style={{
-                  backgroundColor: '#F8FAFC',
+                  backgroundColor: 'var(--color-canvas-card, #FFFFFF)',
                   borderRadius: '1.25rem',
                   padding: '2rem 1.75rem',
-                  border: '1px solid rgba(226, 232, 240, 0.9)',
+                  border: '1px solid var(--color-border, #E0E7FF)',
                   display: 'flex',
                   flexDirection: 'column',
                   transition: 'all 240ms cubic-bezier(0.16, 1, 0.3, 1)',
                 }}
-                className="hover:-translate-y-1 hover:shadow-lg hover:border-slate-300 hover:bg-white"
+                className="hover:-translate-y-1 hover:shadow-lg hover:border-indigo-300"
               >
                 <div
                   style={{
