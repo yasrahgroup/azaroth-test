@@ -95,10 +95,10 @@ export const Portfolio: React.FC = () => {
           style={{
             position: 'absolute',
             top: 0,
-            right: 0,
+            right: '20%',
             width: '500px',
             height: '400px',
-            background: 'radial-gradient(circle, rgba(198, 138, 61, 0.08) 0%, transparent 70%)',
+            background: 'radial-gradient(circle at center, rgba(198, 138, 61, 0.06) 0%, transparent 70%)',
             pointerEvents: 'none',
           }}
         />

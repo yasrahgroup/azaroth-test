@@ -2,10 +2,6 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://api.azaroth-techhive.com';
 const API_TIMEOUT = parseInt(import.meta.env.VITE_API_TIMEOUT || '5000');
 
-if (import.meta.env.DEV && !import.meta.env.VITE_API_BASE_URL) {
-  console.warn(`VITE_API_BASE_URL is not set; using fallback base URL: ${API_BASE_URL}`);
-}
-
 export interface ApiResponse<T> {
   success: boolean;
   data?: T;
@@ -103,23 +99,26 @@ class ApiService {
   }
 
   async submitContactForm(formData: ContactSubmission): Promise<ApiResponse<{ referenceId: string }>> {
-    const res = await this.request<{ referenceId: string }>('/contact', {
+    const res = await this.request<{ submissionId: number }>('/api/contact', {
       method: 'POST',
       body: JSON.stringify(formData),
     });
 
     if (!res.success) {
-      console.warn('[AI Studio] Backend offline — handling contact submission with local reference ID');
-      const fallbackRefId = `AZR-CT-${Math.floor(100000 + Math.random() * 900000)}`;
-      return { success: true, data: { referenceId: fallbackRefId }, message: 'Submission received successfully' };
+      return { success: false, error: res.error || 'Failed to submit contact form. Please try again or contact us directly.' };
     }
 
-    return res;
+    // Map backend response to frontend expected structure
+    return {
+      success: true,
+      data: { referenceId: res.data?.submissionId?.toString() || 'unknown' },
+      message: res.message,
+    };
   }
 
   async submitRfq(formData: RfqSubmission): Promise<ApiResponse<{ referenceId: string }>> {
     const formDataToSend = new FormData();
-    
+
     // Add all form fields
     formDataToSend.append('solutionCategories', JSON.stringify(formData.solutionCategories));
     formDataToSend.append('projectScope', formData.projectScope);
@@ -133,22 +132,20 @@ class ApiService {
     formDataToSend.append('companyName', formData.contact.companyName);
     formDataToSend.append('country', formData.contact.country);
 
-    // Add documents if any
+    // Add documents if any - backend expects field name 'documents'
     if (formData.documents && formData.documents.length > 0) {
-      formData.documents.forEach((file, index) => {
-        formDataToSend.append(`document_${index}`, file);
+      formData.documents.forEach((file) => {
+        formDataToSend.append('documents', file);
       });
     }
 
-    const res = await this.request<{ referenceId: string }>('/rfq', {
+    const res = await this.request<{ referenceId: string }>('/api/rfq', {
       method: 'POST',
       body: formDataToSend,
     });
 
     if (!res.success) {
-      console.warn('[AI Studio] Backend offline — handling RFQ submission with local reference ID');
-      const fallbackRefId = `AZR-RFQ-2026-${Math.floor(1000 + Math.random() * 9000)}`;
-      return { success: true, data: { referenceId: fallbackRefId }, message: 'RFQ received successfully' };
+      return { success: false, error: res.error || 'Failed to submit RFQ. Please try again or contact us directly.' };
     }
 
     return res;

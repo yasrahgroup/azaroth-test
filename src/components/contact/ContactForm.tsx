@@ -49,7 +49,6 @@ export const ContactForm: React.FC = () => {
     e.preventDefault();
     // Bot check
     if (formData.website_url) {
-      console.warn('Bot submission blocked via honeypot.');
       return;
     }
 

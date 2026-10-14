@@ -15,11 +15,11 @@ export const FinalCTA: React.FC = () => {
       <div style={{
         position: 'absolute',
         top: '-150px',
-        right: '-100px',
+        right: '20%',
         width: '450px',
         height: '450px',
         borderRadius: '50%',
-        background: 'radial-gradient(circle, rgba(216, 173, 89, 0.15) 0%, rgba(216, 173, 89, 0) 70%)',
+        background: 'radial-gradient(circle at center, rgba(216, 173, 89, 0.12) 0%, rgba(216, 173, 89, 0) 70%)',
         pointerEvents: 'none',
       }} />
 

@@ -67,3 +67,38 @@ CREATE TABLE IF NOT EXISTS audit_logs (
 
 CREATE INDEX IF NOT EXISTS idx_audit_logs_table_record ON audit_logs(table_name, record_id);
 CREATE INDEX IF NOT EXISTS idx_audit_logs_created_at ON audit_logs(created_at);
+
+-- RFQ submissions table
+CREATE TABLE IF NOT EXISTS rfq_submissions (
+  id SERIAL PRIMARY KEY,
+  reference_id VARCHAR(50) UNIQUE NOT NULL,
+  solution_categories JSONB NOT NULL,
+  project_scope VARCHAR(255) NOT NULL,
+  target_timeline VARCHAR(255) NOT NULL,
+  budget_range VARCHAR(255) NOT NULL,
+  requirements_description TEXT NOT NULL,
+  nda_required BOOLEAN NOT NULL,
+  full_name VARCHAR(255) NOT NULL,
+  work_email VARCHAR(255) NOT NULL,
+  phone VARCHAR(50),
+  company_name VARCHAR(255) NOT NULL,
+  country VARCHAR(100) NOT NULL,
+  document_paths JSONB DEFAULT '[]'::jsonb,
+  status VARCHAR(50) DEFAULT 'pending',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+
+  CONSTRAINT chk_rfq_email_format CHECK (work_email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'),
+  CONSTRAINT chk_rfq_status CHECK (status IN ('pending', 'reviewed', 'in_progress', 'completed', 'rejected'))
+);
+
+-- Create indexes for RFQ table
+CREATE INDEX IF NOT EXISTS idx_rfq_submissions_reference_id ON rfq_submissions(reference_id);
+CREATE INDEX IF NOT EXISTS idx_rfq_submissions_email ON rfq_submissions(work_email);
+CREATE INDEX IF NOT EXISTS idx_rfq_submissions_status ON rfq_submissions(status);
+CREATE INDEX IF NOT EXISTS idx_rfq_submissions_created_at ON rfq_submissions(created_at);
+
+-- Create trigger for updated_at on RFQ table
+CREATE TRIGGER trigger_update_rfq_updated_at
+BEFORE UPDATE ON rfq_submissions
+FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();

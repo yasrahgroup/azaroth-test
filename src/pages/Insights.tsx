@@ -5,6 +5,7 @@ import { insightsArticles } from '../data/insightsData';
 import { Card } from '../components/common/Card';
 import { Badge } from '../components/common/Badge';
 import { SEOHead } from '../components/common/SEOHead';
+import { PageHeader } from '../components/common/PageHeader';
 
 export const Insights: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
@@ -41,19 +42,12 @@ export const Insights: React.FC = () => {
         canonicalPath="/technology-insights"
       />
       {/* Page Hero */}
-      <section className="section" style={{ backgroundColor: 'var(--color-canvas-bg)', borderBottom: '1px solid var(--color-border-subtle)' }}>
-        <div className="container" style={{ textAlign: 'center', maxWidth: '820px' }}>
-          <Badge variant="gold" style={{ marginBottom: '1rem' }}>
-            Resource Hub
-          </Badge>
-          <h1 style={{ marginBottom: '1.25rem', fontSize: 'clamp(2.25rem, 4.5vw, 3.5rem)', fontWeight: 800, color: 'var(--color-text-primary)' }}>
-            Engineering Insights That Move Ideas Forward
-          </h1>
-          <p style={{ fontSize: '1.1875rem', lineHeight: 1.6 }}>
-            Explore software engineering insights, architecture principles, implementation strategies, and technical guidance to help you make informed technology decisions and build better systems.
-          </p>
-        </div>
-      </section>
+      <PageHeader
+        kicker="- TECHNOLOGY INSIGHTS -"
+        title="Engineering Insights That Move Ideas Forward"
+        gradientWords={['Engineering', 'Insights', 'Ideas', 'Forward']}
+        subtitle="Explore software engineering insights, architecture principles, implementation strategies, and technical guidance to help you make informed technology decisions and build better systems."
+      />
 
       {/* Resource Catalog */}
       <section className="section" style={{ backgroundColor: '#ffffff' }}>

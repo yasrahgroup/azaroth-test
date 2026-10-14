@@ -1,20 +1,21 @@
 import React from 'react';
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
-  MessageSquare, 
-  ExternalLink, 
-  Target, 
-  Compass, 
-  ShieldCheck, 
-  Zap, 
-  UserCheck, 
-  ArrowRight 
+import {
+  MapPin,
+  Phone,
+  Mail,
+  MessageSquare,
+  ExternalLink,
+  Target,
+  Compass,
+  ShieldCheck,
+  Zap,
+  UserCheck,
+  ArrowRight
 } from 'lucide-react';
 import { companyInfo, companyVisionMission } from '../data/companyData';
 import { Button } from '../components/common/Button';
 import { SEOHead } from '../components/common/SEOHead';
+import { PageHeader } from '../components/common/PageHeader';
 import { heroWorkspaceImg } from '../assets/images';
 
 export const About: React.FC = () => {
@@ -27,68 +28,12 @@ export const About: React.FC = () => {
       />
 
       {/* Page Hero Banner */}
-      <section
-        style={{
-          backgroundColor: '#FFFFFF',
-          borderBottom: '1px solid rgba(226, 232, 240, 0.8)',
-          paddingTop: '4.5rem',
-          paddingBottom: '4.5rem',
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            width: '450px',
-            height: '450px',
-            background: 'radial-gradient(circle, rgba(198, 138, 61, 0.08) 0%, transparent 70%)',
-            pointerEvents: 'none',
-          }}
-        />
-        <div className="container" style={{ textAlign: 'center', maxWidth: '840px', position: 'relative', zIndex: 1 }}>
-          <div
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              fontSize: '0.8125rem',
-              fontWeight: 700,
-              color: '#C68A3D',
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              marginBottom: '1rem',
-            }}
-          >
-            &mdash; WHO WE ARE &mdash;
-          </div>
-          <h1
-            style={{
-              fontSize: 'clamp(2.5rem, 5vw, 3.75rem)',
-              fontWeight: 800,
-              color: '#1E293B',
-              lineHeight: 1.2,
-              marginBottom: '1.25rem',
-            }}
-          >
-            Engineering Meaningful Solutions.{' '}
-            <span
-              style={{
-                background: 'linear-gradient(135deg, #2563EB 0%, #7C3AED 60%, #9333EA 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
-            >
-              Building Lasting Value.
-            </span>
-          </h1>
-          <p style={{ fontSize: '1.1875rem', color: '#64748B', lineHeight: 1.7, maxWidth: '720px', margin: '0 auto' }}>
-            At Azaroth Techhive, we are passionate about technology and driven by a simple goal &mdash; to help businesses build smarter, stronger and more innovative digital solutions with a client-first approach.
-          </p>
-        </div>
-      </section>
+      <PageHeader
+        kicker="- WHO WE ARE -"
+        title="Engineering Meaningful Solutions Building Lasting Value"
+        gradientWords={['Building', 'Lasting', 'Value']}
+        subtitle="At Azaroth Techhive, we are passionate about technology and driven by a simple goal — to help businesses build smarter, stronger and more innovative digital solutions with a client-first approach."
+      />
 
       {/* Main Narrative with Visual Workspace Image */}
       <section style={{ backgroundColor: '#F8FAFC', padding: '5.5rem 0' }}>

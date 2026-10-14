@@ -72,9 +72,8 @@ const loadDraft = (): RfqFormData | null => {
     if (!saved) return null;
     const draft: unknown = JSON.parse(saved);
     if (isUsableDraft(draft)) return draft;
-    if (import.meta.env.DEV) console.warn('Discarding RFQ draft with an unexpected shape.');
   } catch (e) {
-    if (import.meta.env.DEV) console.warn('Failed to parse saved draft RFQ:', e);
+    // Discard invalid drafts silently
   }
   return null;
 };
@@ -100,7 +99,7 @@ export const RfqWizard: React.FC = () => {
     try {
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
     } catch (e) {
-      if (import.meta.env.DEV) console.warn('Failed to save RFQ draft to sessionStorage:', e);
+      // Silently fail if sessionStorage is unavailable
     }
   }, [formData]);
 

@@ -8,11 +8,18 @@ import { Header } from '../components/common/Header';
 import { Footer } from '../components/common/Footer';
 import { ContactForm } from '../components/contact/ContactForm';
 import { RfqWizard } from '../components/rfq/RfqWizard';
+import { apiService } from '../services/api';
 
 describe('Azaroth Tech-Hive E2E Acceptance Criteria & User Journeys', () => {
   beforeEach(() => {
     sessionStorage.clear();
     vi.restoreAllMocks();
+    // Mock API service for form submission tests
+    vi.spyOn(apiService, 'submitContactForm').mockResolvedValue({
+      success: true,
+      data: { referenceId: '12345' },
+      message: 'Contact form submitted successfully'
+    });
   });
 
   // AT-01 / E2E-01: Discover company & Home CTAs

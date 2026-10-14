@@ -7,6 +7,7 @@ import {
 import { SEOHead } from '../components/common/SEOHead';
 import { AnimatedWords } from '../components/common/AnimatedWords';
 import { Badge } from '../components/common/Badge';
+import { PageHeader } from '../components/common/PageHeader';
 import { productsCatalog } from '../data/productsData';
 import { Product } from '../types';
 
@@ -74,74 +75,51 @@ export const Products: React.FC = () => {
       />
 
       {/* Hero */}
-      <section style={{
-        padding: '4rem 0',
-        borderBottom: '1px solid var(--color-border)',
-        backgroundColor: 'var(--color-background)',
-      }}>
-        <div className="container">
-          <div style={{ maxWidth: '780px' }}>
-            <Badge variant="gold" style={{ marginBottom: '1rem' }}>
-              Our Products &amp; Platforms
-            </Badge>
-            <h1 style={{
-              fontSize: 'clamp(2.25rem, 4vw, 3.5rem)',
-              fontWeight: 800,
-              color: 'var(--color-text-primary)',
-              marginBottom: '1.25rem',
-              lineHeight: 1.1,
-            }}>
-              <AnimatedWords text="Our Products & Platform Foundations" />
-            </h1>
-            <p style={{
-              fontSize: '1.125rem',
-              color: 'var(--color-text-secondary)',
-              lineHeight: 1.7,
-              marginBottom: '2rem',
-            }}>
-              Four platforms in active development, each available for scoped early builds. They give your teams a practical starting point for the roadmap while keeping scope, branding, and operational ownership clear.
-            </p>
-
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-              <Link
-                to="/request-for-quote"
-                style={{
-                  padding: '0.875rem 1.5rem',
-                  borderRadius: '12px',
-                  background: 'linear-gradient(135deg, #D4AF37 0%, #BF9129 100%)',
-                  color: '#2B0408',
-                  fontWeight: 700,
-                  fontSize: '0.875rem',
-                  textDecoration: 'none',
-                  boxShadow: '0 4px 12px rgba(212, 175, 55, 0.3)',
-                  transition: 'all 180ms ease-out',
-                }}
-              >
-                Request For Quote
-              </Link>
-              <Link
-                to="/services"
-                style={{
-                  padding: '0.875rem 1.5rem',
-                  borderRadius: '12px',
-                  backgroundColor: '#ffffff',
-                  color: 'var(--color-text-primary)',
-                  border: '1px solid var(--color-border-medium)',
-                  fontWeight: 600,
-                  fontSize: '0.875rem',
-                  textDecoration: 'none',
-                  transition: 'all 180ms ease-out',
-                }}
-              >
-                See engineering services
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHeader
+        kicker="- OUR PRODUCTS -"
+        title="Our Products & Platform Foundations"
+        gradientWords={['Products', 'Platform', 'Foundations']}
+        subtitle="Four platforms in active development, each available for scoped early builds. They give your teams a practical starting point for the roadmap while keeping scope, branding, and operational ownership clear."
+        actions={
+          <>
+            <Link
+              to="/request-for-quote"
+              style={{
+                padding: '0.875rem 1.5rem',
+                borderRadius: '12px',
+                background: 'linear-gradient(110deg, #4338ca 5%, #4f46e5 52%, #0f766e 100%)',
+                color: '#FFFFFF',
+                fontWeight: 700,
+                fontSize: '0.875rem',
+                textDecoration: 'none',
+                boxShadow: '0 4px 12px rgba(67, 56, 202, 0.25)',
+                transition: 'all 180ms ease-out',
+              }}
+            >
+              Request For Quote
+            </Link>
+            <Link
+              to="/services"
+              style={{
+                padding: '0.875rem 1.5rem',
+                borderRadius: '12px',
+                backgroundColor: '#ffffff',
+                color: 'var(--color-text-primary)',
+                border: '1px solid var(--color-border-medium)',
+                fontWeight: 600,
+                fontSize: '0.875rem',
+                textDecoration: 'none',
+                transition: 'all 180ms ease-out',
+              }}
+            >
+              See engineering services
+            </Link>
+          </>
+        }
+      />
 
       {/* Product Grid */}
-      <section style={{ backgroundColor: 'var(--color-canvas-bg)', padding: '4rem 0' }}>
+      <section style={{ backgroundColor: 'var(--color-canvas-bg)', padding: '5.5rem 0' }}>
         <div className="container">
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '2rem' }}>
             {categoryOptions.map((category) => {
@@ -188,11 +166,7 @@ export const Products: React.FC = () => {
           )}
 
           {filteredProducts.length > 0 && (
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
-              gap: '2.5rem',
-            }}>
+            <div className="products-grid">
               {filteredProducts.filter((p) => p.isEnabled !== false).map((product) => (
                 <div
                   key={product.id}
@@ -382,12 +356,13 @@ export const Products: React.FC = () => {
                           flex: 1,
                           padding: '0.625rem 1rem',
                           borderRadius: '12px',
-                          background: 'linear-gradient(135deg, #D4AF37 0%, #BF9129 100%)',
-                          color: '#2B0408',
+                          background: 'linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%)',
+                          color: '#FFFFFF',
                           fontSize: '0.75rem',
                           fontWeight: 700,
                           cursor: 'pointer',
                           border: 'none',
+                          boxShadow: '0 4px 12px rgba(79, 70, 229, 0.25)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',

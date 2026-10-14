@@ -1,17 +1,18 @@
 import React from 'react';
-import { 
-  Code2, 
-  Smartphone, 
-  Cloud, 
-  Settings, 
-  ShieldCheck, 
-  Lightbulb, 
-  CheckCircle2, 
-  ArrowRight 
+import {
+  Code2,
+  Smartphone,
+  Cloud,
+  Settings,
+  ShieldCheck,
+  Lightbulb,
+  CheckCircle2,
+  ArrowRight
 } from 'lucide-react';
 import { SlaMatrix } from '../components/services/SlaMatrix';
 import { Button } from '../components/common/Button';
 import { SEOHead } from '../components/common/SEOHead';
+import { PageHeader } from '../components/common/PageHeader';
 import { Link } from 'react-router-dom';
 
 interface ServiceDetail {
@@ -135,77 +136,22 @@ export const Services: React.FC = () => {
       />
 
       {/* Page Hero Banner */}
-      <section
-        style={{
-          backgroundColor: '#FFFFFF',
-          borderBottom: '1px solid rgba(226, 232, 240, 0.8)',
-          paddingTop: '4.5rem',
-          paddingBottom: '4.5rem',
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            width: '500px',
-            height: '400px',
-            background: 'radial-gradient(circle, rgba(198, 138, 61, 0.08) 0%, transparent 70%)',
-            pointerEvents: 'none',
-          }}
-        />
-        <div className="container" style={{ textAlign: 'center', maxWidth: '820px', position: 'relative', zIndex: 1 }}>
-          <div
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              fontSize: '0.8125rem',
-              fontWeight: 700,
-              color: '#C68A3D',
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              marginBottom: '1rem',
-            }}
-          >
-            &mdash; OUR SERVICES &mdash;
-          </div>
-          <h1
-            style={{
-              fontSize: 'clamp(2.5rem, 5vw, 3.75rem)',
-              fontWeight: 800,
-              color: '#1E293B',
-              lineHeight: 1.2,
-              marginBottom: '1.25rem',
-            }}
-          >
-            Comprehensive{' '}
-            <span
-              style={{
-                background: 'linear-gradient(135deg, #2563EB 0%, #7C3AED 60%, #9333EA 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
-            >
-              Digital Solutions
-            </span>
-          </h1>
-          <p style={{ fontSize: '1.1875rem', color: '#64748B', lineHeight: 1.7, maxWidth: '720px', margin: '0 auto 2rem auto' }}>
-            We offer end-to-end technology services to help you build, optimize and scale your digital presence with enterprise performance guarantees.
-          </p>
-
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-            <Button to="/request-for-quote" variant="gold" size="lg" icon={<ArrowRight size={16} />}>
+      <PageHeader
+        kicker="- OUR SERVICES -"
+        title="Comprehensive Digital Solutions"
+        gradientWords={['Digital', 'Solutions']}
+        subtitle="We offer end-to-end technology services to help you build, optimize and scale your digital presence with enterprise performance guarantees."
+        actions={
+          <>
+            <Button to="/request-for-quote" variant="primary" size="lg" icon={<ArrowRight size={16} />}>
               Request Capability Quote
             </Button>
             <Button to="/connect-with-us" variant="outline" size="lg">
               Book Architecture Discovery
             </Button>
-          </div>
-        </div>
-      </section>
+          </>
+        }
+      />
 
       {/* Services Grid (Organized in 2x2 / 3x2 Grid Matching temp.jpeg) */}
       <section style={{ backgroundColor: '#F8FAFC', padding: '5.5rem 0' }} id="services-catalog">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import logoImg from '../../assets/Logo.png';
@@ -18,42 +18,70 @@ const navItems: NavItem[] = [
   {
     name: 'About',
     href: '/about',
-    isActive: (p) => p === '/about' || p.startsWith('/about') || p === '/values' || p === '/delivery-framework',
+    isActive: (p) =>
+      p.startsWith('/about') ||
+      p === '/values' ||
+      p === '/delivery-framework',
   },
   {
     name: 'Our Services',
     href: '/services',
-    isActive: (p) => p === '/services' || p.startsWith('/services'),
+    isActive: (p) => p.startsWith('/services'),
   },
   {
     name: 'Our Products',
     href: '/products',
-    isActive: (p) => p === '/products' || p.startsWith('/products'),
+    isActive: (p) => p.startsWith('/products'),
   },
   {
     name: 'Technology Insights',
     href: '/technology-insights',
-    isActive: (p) => p === '/technology-insights' || p.startsWith('/technology-insights') || p.startsWith('/resource-hub'),
+    isActive: (p) =>
+      p.startsWith('/technology-insights') ||
+      p.startsWith('/resource-hub'),
   },
   {
     name: 'Connect with Us',
     href: '/connect-with-us',
-    isActive: (p) => p === '/connect-with-us' || p.startsWith('/connect-with-us') || p === '/contact',
+    isActive: (p) =>
+      p.startsWith('/connect-with-us') || p === '/contact',
   },
 ];
+
+const GOLD = '#B5A642';
+const GOLD_DARK = '#97872D';
+const MAROON = '#800020';
+
+const rfqButtonStyle: React.CSSProperties = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '0.5rem',
+  padding: '0.7rem 1.35rem',
+  borderRadius: '9999px',
+  background: 'linear-gradient(135deg, #B5A642 0%, #97872D 100%)',
+  color: '#FFFFFF',
+  fontWeight: 700,
+  fontSize: '0.9375rem',
+  textDecoration: 'none',
+  border: '1px solid #B5A642',
+  boxShadow: '0 4px 14px rgba(181, 166, 66, 0.35)',
+  transition: 'all 200ms ease-out',
+};
 
 export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const mobileToggleRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 15);
     };
+
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -62,28 +90,41 @@ export const Header: React.FC = () => {
   }, [location.pathname]);
 
   useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    document.body.style.overflow = mobileMenuOpen ? 'hidden' : '';
+
     return () => {
       document.body.style.overflow = '';
     };
   }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   return (
     <header
       style={{
         position: 'sticky',
         top: 0,
-        zIndex: 50,
+        zIndex: 100,
         width: '100%',
-        backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.98)' : 'rgba(255, 255, 255, 0.95)',
+        backgroundColor: isScrolled
+          ? 'rgba(255, 255, 255, 0.98)'
+          : 'rgba(255, 255, 255, 0.95)',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
-        borderBottom: '1px solid var(--color-border, #E0E7FF)',
-        boxShadow: isScrolled ? '0 4px 20px -2px rgba(67, 56, 202, 0.08)' : 'none',
+        borderBottom: `1px solid rgba(181, 166, 66, 0.35)`,
+        boxShadow: isScrolled
+          ? '0 4px 20px -2px rgba(128, 0, 32, 0.10)'
+          : 'none',
         transition: 'all 200ms ease-out',
       }}
     >
@@ -93,19 +134,22 @@ export const Header: React.FC = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
+          gap: '1rem',
           height: '4.75rem',
         }}
       >
-        {/* Brand Logo & Name */}
+        {/* Brand Logo */}
         <Link
           to="/"
+          id="nav-brand-logo"
+          aria-label="Azaroth Tech-Hive home"
           style={{
             display: 'flex',
             alignItems: 'center',
             gap: '0.75rem',
             textDecoration: 'none',
+            flexShrink: 0,
           }}
-          id="nav-brand-logo"
         >
           <img
             src={logoImg}
@@ -115,15 +159,16 @@ export const Header: React.FC = () => {
               height: '2.5rem',
               objectFit: 'contain',
               flexShrink: 0,
-              filter: 'drop-shadow(0 2px 4px rgba(79, 70, 229, 0.3))',
+              filter: 'drop-shadow(0 2px 4px rgba(181, 166, 66, 0.25))',
             }}
           />
+
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span
               style={{
                 fontSize: '1.25rem',
                 fontWeight: 800,
-                color: 'var(--color-link-main, #4338CA)',
+                color: MAROON,
                 fontFamily: 'serif',
                 letterSpacing: '0.04em',
                 lineHeight: 1.1,
@@ -131,11 +176,12 @@ export const Header: React.FC = () => {
             >
               AZAROTH
             </span>
+
             <span
               style={{
                 fontSize: '0.625rem',
                 fontWeight: 700,
-                color: 'var(--color-primary-button, #4F46E5)',
+                color: GOLD_DARK,
                 letterSpacing: '0.22em',
                 textTransform: 'uppercase',
               }}
@@ -145,13 +191,14 @@ export const Header: React.FC = () => {
           </div>
         </Link>
 
-        {/* Desktop Direct Navigation Links (Without Dropdowns) */}
+        {/* Desktop Navigation */}
         <nav
           aria-label="Primary Navigation"
           className="hidden md:flex items-center gap-5 lg:gap-7"
         >
           {navItems.map((item) => {
             const active = item.isActive(location.pathname);
+
             return (
               <Link
                 key={item.name}
@@ -160,79 +207,84 @@ export const Header: React.FC = () => {
                 style={{
                   fontSize: '0.9375rem',
                   fontWeight: active ? 700 : 600,
-                  color: active ? 'var(--color-link-main, #4338CA)' : 'var(--color-text-primary, #1F2937)',
-                  padding: '0.5rem 0.25rem',
+                  color: active ? MAROON : '#374151',
+                  padding: '0.65rem 0.25rem',
                   textDecoration: 'none',
                   position: 'relative',
                   display: 'inline-flex',
                   alignItems: 'center',
                   transition: 'color 160ms ease-out',
                 }}
-                className="hover:text-indigo-700"
+                className="azaroth-nav-link"
               >
                 <span>{item.name}</span>
-                {active && (
-                  <span
-                    style={{
-                      position: 'absolute',
-                      bottom: '-2px',
-                      left: 0,
-                      right: 0,
-                      height: '3px',
-                      background: 'linear-gradient(90deg, #4338CA 0%, #4F46E5 100%)',
-                      borderRadius: '2px',
-                    }}
-                  />
-                )}
+
+                {/* Maroon-to-gold active navigation line */}
+                <span
+                  aria-hidden="true"
+                  style={{
+                    position: 'absolute',
+                    bottom: '-2px',
+                    left: 0,
+                    right: 0,
+                    height: '3px',
+                    background: active
+                      ? `linear-gradient(90deg, ${MAROON} 0%, ${GOLD} 100%)`
+                      : `linear-gradient(90deg, ${MAROON} 0%, ${GOLD} 100%)`,
+                    borderRadius: '2px',
+                    transform: active ? 'scaleX(1)' : 'scaleX(0)',
+                    transformOrigin: 'left',
+                    transition: 'transform 200ms ease-out',
+                  }}
+                  className="azaroth-nav-indicator"
+                />
               </Link>
             );
           })}
         </nav>
 
-        {/* Right Action: Primary Button (Indigo #4F46E5) */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.875rem' }}>
+        {/* Right Actions */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.875rem',
+            flexShrink: 0,
+          }}
+        >
           <Link
             to="/request-for-quote"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              padding: '0.625rem 1.35rem',
-              borderRadius: '9999px',
-              backgroundColor: 'var(--color-primary-button, #4F46E5)',
-              color: '#FFFFFF',
-              fontWeight: 700,
-              fontSize: '0.9375rem',
-              textDecoration: 'none',
-              transition: 'all 200ms ease-out',
-              boxShadow: '0 4px 14px rgba(79, 70, 229, 0.35)',
-            }}
-            className="hover:bg-indigo-700 hover:shadow-lg"
+            style={rfqButtonStyle}
+            className="azaroth-rfq-button"
           >
             <span>Request for Quote</span>
-            <ArrowRight size={15} style={{ color: '#FFFFFF' }} />
+            <ArrowRight size={16} />
           </Link>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Toggle */}
           <button
-            ref={mobileToggleRef}
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label={mobileMenuOpen ? 'Close navigation' : 'Open navigation'}
-            className="md:hidden flex items-center justify-center w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 text-slate-700"
+            type="button"
+            onClick={() => setMobileMenuOpen((open) => !open)}
+            aria-label={
+              mobileMenuOpen ? 'Close navigation' : 'Open navigation'
+            }
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
+            className="md:hidden flex items-center justify-center w-10 h-10 rounded-xl border border-amber-200 bg-white text-rose-950"
           >
             {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer (Direct Flat Links) */}
+      {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
         <div
           style={{
             position: 'fixed',
             inset: 0,
             top: '4.75rem',
-            backgroundColor: 'rgba(31, 41, 55, 0.4)',
+            backgroundColor: 'rgba(31, 41, 55, 0.45)',
             backdropFilter: 'blur(4px)',
             zIndex: 99,
             display: 'flex',
@@ -240,71 +292,120 @@ export const Header: React.FC = () => {
           }}
           onClick={() => setMobileMenuOpen(false)}
         >
-          <div
+          <nav
+            id="mobile-navigation"
+            aria-label="Mobile Navigation"
             style={{
               backgroundColor: '#FFFFFF',
-              padding: '1.5rem',
-              borderBottom: '1px solid var(--color-border, #E0E7FF)',
-              boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
+              padding: '1.25rem',
+              borderBottom: `2px solid ${GOLD}`,
+              boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.12)',
               display: 'flex',
               flexDirection: 'column',
               gap: '0.35rem',
+              maxHeight: 'calc(100vh - 4.75rem)',
+              overflowY: 'auto',
             }}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(event) => event.stopPropagation()}
           >
             {navItems.map((item) => {
               const active = item.isActive(location.pathname);
+
               return (
                 <Link
                   key={item.name}
                   to={item.href}
                   aria-current={active ? 'page' : undefined}
                   style={{
-                    padding: '0.75rem 1rem',
+                    padding: '0.8rem 1rem',
                     borderRadius: '8px',
                     fontWeight: active ? 700 : 600,
                     fontSize: '1rem',
-                    color: active ? 'var(--color-link-main, #4338CA)' : 'var(--color-text-primary, #1F2937)',
-                    backgroundColor: active ? 'var(--color-nav-active-bg, #F5F3FF)' : 'transparent',
+                    color: active ? MAROON : '#374151',
+                    backgroundColor: active
+                      ? 'rgba(181, 166, 66, 0.12)'
+                      : 'transparent',
                     textDecoration: 'none',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    borderLeft: active ? '3px solid var(--color-link-main, #4338CA)' : '3px solid transparent',
+                    borderLeft: active
+                      ? `3px solid ${GOLD}`
+                      : '3px solid transparent',
                   }}
                 >
                   <span>{item.name}</span>
+
+                  {active && (
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        width: '7px',
+                        height: '7px',
+                        borderRadius: '50%',
+                        backgroundColor: GOLD,
+                      }}
+                    />
+                  )}
                 </Link>
               );
             })}
 
-            <div style={{ height: '1px', backgroundColor: 'var(--color-border, #E0E7FF)', margin: '0.75rem 0' }} />
+            <div
+              style={{
+                height: '1px',
+                backgroundColor: 'rgba(181, 166, 66, 0.35)',
+                margin: '0.75rem 0',
+              }}
+            />
 
-            <div>
-              <Link
-                to="/request-for-quote"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '0.5rem',
-                  padding: '0.75rem',
-                  borderRadius: '9999px',
-                  backgroundColor: 'var(--color-primary-button, #4F46E5)',
-                  color: '#FFFFFF',
-                  fontWeight: 700,
-                  textDecoration: 'none',
-                  boxShadow: '0 4px 14px rgba(79, 70, 229, 0.35)',
-                }}
-                className="hover:bg-indigo-700"
-              >
-                <span>Request for Quote</span>
-                <ArrowRight size={16} />
-              </Link>
-            </div>
-          </div>
+            <Link
+              to="/request-for-quote"
+              style={{
+                ...rfqButtonStyle,
+                width: '100%',
+                boxSizing: 'border-box',
+              }}
+              className="azaroth-rfq-button"
+            >
+              <span>Request for Quote</span>
+              <ArrowRight size={16} />
+            </Link>
+          </nav>
         </div>
       )}
+
+      {/* Theme-matched hover and keyboard focus styles */}
+      <style>{`
+        .azaroth-nav-link:hover {
+          color: ${MAROON} !important;
+        }
+
+        .azaroth-nav-link:hover .azaroth-nav-indicator {
+          transform: scaleX(1) !important;
+        }
+
+        .azaroth-nav-link:focus-visible,
+        .azaroth-rfq-button:focus-visible {
+          outline: 3px solid #4F46E5;
+          outline-offset: 4px;
+        }
+
+        .azaroth-rfq-button:hover {
+          background: linear-gradient(135deg, #97872D 0%, #7d6c24 100%) !important;
+          border-color: #97872D !important;
+          box-shadow: 0 6px 18px rgba(181, 166, 66, 0.3) !important;
+          transform: translateY(-1px);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .azaroth-nav-link,
+          .azaroth-nav-indicator,
+          .azaroth-rfq-button {
+            transition: none !important;
+          }
+        }
+      `}</style>
     </header>
   );
 };

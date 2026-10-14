@@ -70,6 +70,32 @@
   --color-amber-100: #fef9c3;
   --color-amber-50: #fefce8;
 
+  /* --- MAROON (Azaroth Company Name) --- */
+  --color-maroon-950: #3e0a0a;
+  --color-maroon-900: #7a1414;
+  --color-maroon-800: #991a1a;
+  --color-maroon-700: #b82020;
+  --color-maroon-600: #cc2929;
+  --color-maroon-500: #d63e3e;
+  --color-maroon-400: #e16767;
+  --color-maroon-300: #ec9090;
+  --color-maroon-200: #f3c4c4;
+  --color-maroon-100: #fae6e6;
+  --color-maroon-50: #fdf3f3;
+
+  /* --- ROYAL GOLD (Tech Hive Company Name) --- */
+  --color-royal-950: #3e3b25;
+  --color-royal-900: #7d7a4a;
+  --color-royal-800: #908c55;
+  --color-royal-700: #a19d60;
+  --color-royal-600: #b5a642;
+  --color-royal-500: #c9b549;
+  --color-royal-400: #d7c35a;
+  --color-royal-300: #e0d06c;
+  --color-royal-200: #e9dd8e;
+  --color-royal-100: #f2e9b0;
+  --color-royal-50: #faf7d1;
+
   /* --- SLATE NEUTRALS (Crisp Light Theme Scaling) --- */
   --color-slate-950: #020617;
   --color-slate-900: #0f172a;
@@ -256,48 +282,41 @@
 /* Primary Brand Mesh - Indigo + Violet + Emerald */
 .bg-mesh-brand {
   background:
-    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.1) 0px, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%),
-    var(--color-white);
+    linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.06) 50%, rgba(16, 185, 129, 0.07) 100%),
+    radial-gradient(ellipse at 50% 50%, rgba(99, 102, 241, 0.05) 0%, transparent 60%);
+  background-blend-mode: normal;
 }
 
 /* Warm Energy Mesh - Rose + Indigo + Violet */
 .bg-mesh-warm {
   background:
-    radial-gradient(at 20% 20%, rgba(236, 72, 153, 0.1) 0px, transparent 40%),
-    radial-gradient(at 80% 80%, rgba(99, 102, 241, 0.1) 0px, transparent 40%),
-    radial-gradient(at 50% 0%, rgba(139, 92, 246, 0.08) 0px, transparent 50%),
-    var(--color-white);
+    linear-gradient(135deg, rgba(236, 72, 153, 0.08) 0%, rgba(99, 102, 241, 0.06) 50%, rgba(139, 92, 246, 0.05) 100%),
+    radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.04) 0%, transparent 60%);
+  background-blend-mode: normal;
 }
 
 /* Premium Mesh - Violet + Indigo + Emerald */
 .bg-mesh-premium {
   background:
-    radial-gradient(at 10% 10%, rgba(139, 92, 246, 0.1) 0px, transparent 45%),
-    radial-gradient(at 90% 10%, rgba(99, 102, 241, 0.08) 0px, transparent 45%),
-    radial-gradient(at 50% 100%, rgba(16, 185, 129, 0.08) 0px, transparent 50%),
-    var(--color-white);
+    linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(99, 102, 241, 0.06) 50%, rgba(16, 185, 129, 0.06) 100%),
+    radial-gradient(ellipse at 50% 50%, rgba(139, 92, 246, 0.04) 0%, transparent 60%);
+  background-blend-mode: normal;
 }
 
 /* Subtle Multi-color Mesh */
 .bg-mesh-subtle {
   background:
-    radial-gradient(at 10% 10%, rgba(99, 102, 241, 0.06) 0px, transparent 40%),
-    radial-gradient(at 90% 90%, rgba(139, 92, 246, 0.06) 0px, transparent 40%),
-    radial-gradient(at 50% 50%, rgba(16, 185, 129, 0.04) 0px, transparent 50%),
-    var(--color-neutral-50);
+    linear-gradient(135deg, rgba(99, 102, 241, 0.04) 0%, rgba(139, 92, 246, 0.03) 50%, rgba(16, 185, 129, 0.03) 100%),
+    radial-gradient(ellipse at 50% 50%, rgba(99, 102, 241, 0.02) 0%, transparent 60%);
+  background-blend-mode: normal;
 }
 
 /* Hero Mesh - Full spectrum */
 .bg-mesh-hero {
   background:
-    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.18) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(16, 185, 129, 0.12) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.1) 0px, transparent 50%),
-    radial-gradient(at 50% 50%, rgba(99, 102, 241, 0.08) 0px, transparent 60%),
-    var(--color-white);
+    linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(139, 92, 246, 0.1) 50%, rgba(16, 185, 129, 0.08) 100%),
+    radial-gradient(ellipse at 50% 50%, rgba(99, 102, 241, 0.06) 0%, transparent 60%);
+  background-blend-mode: normal;
 }
 
 /* ============================================================
@@ -581,6 +600,73 @@
 }
 
 /* ============================================================
+   CURSOR ANIMATION WITH GRADIENT COLORS
+   ============================================================ */
+
+@keyframes cursorGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.cursor-gradient-indigo-rose {
+  background: linear-gradient(
+    270deg,
+    var(--color-indigo-500) 0%,
+    var(--color-emerald-500) 25%,
+    var(--color-violet-500) 50%,
+    var(--color-rose-500) 75%,
+    var(--color-amber-500) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: cursorGradient 4s ease-in-out infinite;
+}
+
+.cursor-gradient-rose-indigo {
+  background: linear-gradient(
+    270deg,
+    var(--color-rose-500) 0%,
+    var(--color-amber-500) 25%,
+    var(--color-indigo-500) 50%,
+    var(--color-emerald-500) 75%,
+    var(--color-violet-500) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: cursorGradient 5s ease-in-out infinite reverse;
+}
+
+.cursor-gradient-violet-coral {
+  background: linear-gradient(
+    270deg,
+    var(--color-violet-500) 0%,
+    var(--color-rose-500) 25%,
+    var(--color-amber-500) 50%,
+    var(--color-indigo-500) 75%,
+    var(--color-emerald-500) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: cursorGradient 6s ease-in-out infinite;
+}
+
+/* ============================================================
    BRAND BORDERS & GLOWS
    ============================================================ */
 .border-brand-glow {
@@ -750,6 +836,72 @@
   }
 }
 
+/* Page-specific hero animations */
+@keyframes gradientShift {
+  0%, 100% { transform: translateX(0) translateY(0); }
+  25% { transform: translateX(10px) translateY(-10px); }
+  50% { transform: translateX(-5px) translateY(-5px); }
+  75% { transform: translateX(-10px) translateY(10px); }
+}
+
+@keyframes pulseSlow {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.1); opacity: 0.4; }
+}
+
+@keyframes floatUpDown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes floatLeftRight {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(20px); }
+}
+
+@keyframes scaleBreath {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes textShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes waveFlow {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-10px); }
+}
+
+@keyframes orbitFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(5px, -5px) scale(1.1); }
+  50% { transform: translate(-5px, 5px) scale(0.9); }
+  75% { transform: translate(3px, -3px) scale(1.05); }
+}
+
+@keyframes shimmerText {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes shimmerPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
 .animate-on-scroll {
   opacity: 0;
   transform: translateY(30px);
@@ -873,6 +1025,73 @@
 }
 .smooth-transition-bounce {
   transition: all var(--transition-bounce);
+}
+
+/* ============================================================
+   CURSOR ANIMATION WITH GRADIENT COLORS
+   ============================================================ */
+
+@keyframes cursorGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.cursor-gradient-indigo-rose {
+  background: linear-gradient(
+    270deg,
+    var(--color-indigo-500) 0%,
+    var(--color-emerald-500) 25%,
+    var(--color-violet-500) 50%,
+    var(--color-rose-500) 75%,
+    var(--color-amber-500) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: cursorGradient 4s ease-in-out infinite;
+}
+
+.cursor-gradient-rose-indigo {
+  background: linear-gradient(
+    270deg,
+    var(--color-rose-500) 0%,
+    var(--color-amber-500) 25%,
+    var(--color-indigo-500) 50%,
+    var(--color-emerald-500) 75%,
+    var(--color-violet-500) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: cursorGradient 5s ease-in-out infinite reverse;
+}
+
+.cursor-gradient-violet-coral {
+  background: linear-gradient(
+    270deg,
+    var(--color-violet-500) 0%,
+    var(--color-rose-500) 25%,
+    var(--color-amber-500) 50%,
+    var(--color-indigo-500) 75%,
+    var(--color-emerald-500) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: cursorGradient 6s ease-in-out infinite;
 }
 
 /* ============================================================
@@ -2730,3 +2949,203 @@ button {
   }
 }
 
+/* Home hero services remain separated at every viewport width. */
+.hero-visual {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.hero-service-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.hero-service-badge {
+  position: relative;
+  flex: 0 1 auto;
+  max-width: 100%;
+  white-space: nowrap;
+  animation: hero-service-float 5s ease-in-out infinite;
+}
+
+.hero-service-badge:nth-child(2) {
+  animation-delay: -1s;
+}
+
+.hero-service-badge:nth-child(3) {
+  animation-delay: -2s;
+}
+
+.hero-service-badge:nth-child(4) {
+  animation-delay: -3s;
+}
+
+.hero-service-badge:nth-child(5) {
+  animation-delay: -4s;
+}
+
+@keyframes hero-service-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.custom-cursor-dot,
+.custom-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.custom-cursor-dot {
+  z-index: 9999;
+  width: 12px;
+  height: 12px;
+  background: #006c35;
+  box-shadow: 0 0 10px rgba(0, 108, 53, 0.5);
+  transition:
+    width 180ms ease,
+    height 180ms ease;
+}
+
+.custom-cursor-dot.is-hovering {
+  width: 16px;
+  height: 16px;
+}
+
+.custom-cursor-ring {
+  z-index: 9998;
+  width: 32px;
+  height: 32px;
+  border: 2px dashed #d4af37;
+  opacity: 0.6;
+  transition:
+    width 180ms ease,
+    height 180ms ease,
+    transform 100ms ease-out;
+}
+
+.custom-cursor-ring.is-hovering {
+  width: 40px;
+  height: 40px;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .custom-cursor-dot,
+  .custom-cursor-ring {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-service-badge {
+    animation: none;
+  }
+}
+
+/* Shared visual language for the primary navigation page heroes. */
+.site-hero {
+  isolation: isolate;
+  background:
+    linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.03) 50%, rgba(16, 185, 129, 0.04) 100%),
+    radial-gradient(ellipse at 50% 50%, rgba(99, 102, 241, 0.06) 0%, transparent 70%);
+  background-blend-mode: normal;
+}
+
+.site-hero::before {
+  position: absolute;
+  z-index: -1;
+  inset: -20%;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.05) 50%, rgba(16, 185, 129, 0.06) 100%);
+  background-size: 150% 150%;
+  animation: site-hero-atmosphere 18s ease-in-out infinite alternate;
+}
+
+.site-hero-accent {
+  display: inline-block;
+  background: linear-gradient(110deg, #4338ca 5%, #4f46e5 52%, #0f766e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.home-hero h1.site-hero-accent {
+  display: block;
+  background-image: linear-gradient(105deg, #4338ca 0%, #4f46e5 48%, #0f766e 100%);
+}
+
+.site-hero-kicker {
+  color: #4338ca;
+}
+
+.site-hero h1,
+.site-hero p,
+.site-hero .site-hero-kicker,
+.site-hero .badge {
+  animation: site-hero-enter 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both !important;
+}
+
+.site-hero h1 {
+  animation-delay: 120ms !important;
+}
+
+.site-hero p {
+  animation-delay: 240ms !important;
+}
+
+@keyframes site-hero-atmosphere {
+  from {
+    background-position: 0% 0%;
+    transform: scale(1);
+  }
+  to {
+    background-position: 50% 50%;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes site-hero-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-hero::before {
+    animation: none;
+  }
+
+  .site-hero h1,
+  .site-hero p,
+  .site-hero .site-hero-kicker,
+  .site-hero .badge {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+
+  .custom-cursor-dot,
+  .custom-cursor-ring {
+    transition: none;
+  }
+}

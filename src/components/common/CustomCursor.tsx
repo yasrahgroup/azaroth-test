@@ -1,78 +1,59 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export const CustomCursor: React.FC = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+  const dotRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const updatePosition = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+    if (
+      !window.matchMedia ||
+      !window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    ) {
+      return;
+    }
+
+    const updatePosition = (event: MouseEvent) => {
+      const transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0) translate(-50%, -50%)`;
+      if (dotRef.current) dotRef.current.style.transform = transform;
+      if (ringRef.current) ringRef.current.style.transform = transform;
       setIsVisible(true);
     };
 
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('a') || target.closest('button')) {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
-      }
+    const updateHoverState = (event: MouseEvent) => {
+      const target = event.target;
+      setIsHovering(
+        target instanceof Element &&
+          (target.closest('a, button, [role="button"]') !== null),
+      );
     };
 
-    const handleMouseLeave = () => {
-      setIsVisible(false);
-    };
+    const hideCursor = () => setIsVisible(false);
 
     window.addEventListener('mousemove', updatePosition);
-    window.addEventListener('mouseover', handleMouseOver);
-    document.addEventListener('mouseleave', handleMouseLeave);
-
+    window.addEventListener('mouseover', updateHoverState);
+    document.addEventListener('mouseleave', hideCursor);
     return () => {
       window.removeEventListener('mousemove', updatePosition);
-      window.removeEventListener('mouseover', handleMouseOver);
-      document.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('mouseover', updateHoverState);
+      document.removeEventListener('mouseleave', hideCursor);
     };
   }, []);
 
-  if (!isVisible) return null;
-
   return (
     <>
-      {/* Main dot */}
       <div
-        style={{
-          position: 'fixed',
-          top: position.y,
-          left: position.x,
-          width: isHovering ? '16px' : '12px',
-          height: isHovering ? '16px' : '12px',
-          backgroundColor: '#006C35',
-          borderRadius: '50%',
-          pointerEvents: 'none',
-          zIndex: 9999,
-          transform: 'translate(-50%, -50%)',
-          transition: 'width 0.2s, height 0.2s, background-color 0.2s',
-          boxShadow: '0 0 10px rgba(0, 108, 53, 0.5)',
-        }}
+        ref={dotRef}
+        className={`custom-cursor-dot${isHovering ? ' is-hovering' : ''}`}
+        aria-hidden="true"
+        style={{ visibility: isVisible ? 'visible' : 'hidden' }}
       />
-
-      {/* Dashed circle */}
       <div
-        style={{
-          position: 'fixed',
-          top: position.y,
-          left: position.x,
-          width: isHovering ? '40px' : '32px',
-          height: isHovering ? '40px' : '32px',
-          border: '2px dashed #D4AF37',
-          borderRadius: '50%',
-          pointerEvents: 'none',
-          zIndex: 9998,
-          transform: 'translate(-50%, -50%)',
-          transition: 'width 0.2s, height 0.2s',
-          opacity: 0.6,
-        }}
+        ref={ringRef}
+        className={`custom-cursor-ring${isHovering ? ' is-hovering' : ''}`}
+        aria-hidden="true"
+        style={{ visibility: isVisible ? 'visible' : 'hidden' }}
       />
     </>
   );

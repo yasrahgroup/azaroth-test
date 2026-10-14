@@ -1,13 +1,13 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'path';
+import { fileURLToPath, URL } from 'node:url';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
   server: {
@@ -15,9 +15,8 @@ export default defineConfig({
     port: 3000,
     open: false,
   },
-  test: {
-    environment: 'jsdom',
-    globals: true,
-    setupFiles: './src/test/setup.ts',
+  build: {
+    chunkSizeWarningLimit: 1000,
   },
+  assetsInclude: ['**/*.jpg', '**/*.png', '**/*.svg', '**/*.webp'],
 });

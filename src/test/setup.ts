@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom/vitest';
+import { vi } from 'vitest';
 
-if (!window.scrollTo) {
-  window.scrollTo = () => {};
-}
+// Unconditionally mock window.scrollTo for jsdom compatibility
+window.scrollTo = () => {};
 
 if (!window.matchMedia) {
   Object.defineProperty(window, 'matchMedia', {
@@ -49,3 +49,57 @@ if (!window.IntersectionObserver) {
     value: IntersectionObserverMock,
   });
 }
+
+// Mock AbortController and AbortSignal for jsdom compatibility
+class AbortSignalMock {
+  aborted = false;
+  reason: any = null;
+  onabort: ((event: Event) => void) | null = null;
+
+  addEventListener(type: string, listener: (event: Event) => void) {
+    if (type === 'abort') {
+      this.onabort = listener;
+    }
+  }
+
+  removeEventListener(type: string, listener: (event: Event) => void) {
+    if (type === 'abort' && this.onabort === listener) {
+      this.onabort = null;
+    }
+  }
+
+  dispatchEvent(event: Event): boolean {
+    if (event.type === 'abort' && this.onabort) {
+      this.onabort(event);
+    }
+    return true;
+  }
+}
+
+class AbortControllerMock {
+  signal = new AbortSignalMock();
+
+  abort(reason?: any) {
+    this.signal.aborted = true;
+    this.signal.reason = reason;
+    const event = new Event('abort');
+    this.signal.dispatchEvent(event);
+  }
+}
+
+if (!window.AbortController) {
+  Object.defineProperty(window, 'AbortController', {
+    writable: true,
+    value: AbortControllerMock,
+  });
+}
+
+if (!window.AbortSignal) {
+  Object.defineProperty(window, 'AbortSignal', {
+    writable: true,
+    value: AbortSignalMock,
+  });
+}
+
+// Mock fetch for API tests
+globalThis.fetch = vi.fn();

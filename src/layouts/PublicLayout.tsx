@@ -6,6 +6,7 @@ import { Footer } from '../components/common/Footer';
 import { BackToTop } from '../components/common/BackToTop';
 import { ErrorBoundary } from '../components/common/ErrorBoundary';
 import { Chatbot } from '../components/common/Chatbot';
+import { CustomCursor } from '../components/common/CustomCursor';
 
 const RouteEffects: React.FC = () => {
   const { pathname, hash } = useLocation();
@@ -79,6 +80,7 @@ export const PublicLayout: React.FC = () => {
         </ErrorBoundary>
         <BackToTop />
         <Chatbot />
+        <CustomCursor />
       </div>
     </MotionConfig>
   );

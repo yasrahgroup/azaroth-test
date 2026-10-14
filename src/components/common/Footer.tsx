@@ -26,10 +26,10 @@ export const Footer: React.FC = () => {
         style={{
           position: 'absolute',
           top: 0,
-          left: '20%',
+          left: '30%',
           width: '500px',
           height: '200px',
-          background: 'radial-gradient(ellipse at top, rgba(0, 108, 53, 0.18) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgba(0, 108, 53, 0.15) 0%, transparent 70%)',
           pointerEvents: 'none',
         }}
       />
@@ -37,10 +37,10 @@ export const Footer: React.FC = () => {
         style={{
           position: 'absolute',
           bottom: 0,
-          right: '15%',
+          right: '30%',
           width: '400px',
           height: '200px',
-          background: 'radial-gradient(ellipse at bottom, rgba(212, 175, 55, 0.12) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgba(212, 175, 55, 0.1) 0%, transparent 70%)',
           pointerEvents: 'none',
         }}
       />
