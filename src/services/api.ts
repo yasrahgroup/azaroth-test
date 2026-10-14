@@ -89,12 +89,16 @@ class ApiService {
       
       if (error instanceof Error) {
         if (error.name === 'AbortError' || controller.signal.aborted) {
-          return { success: false, error: 'Request timeout' };
+          return { success: false, error: 'Request timeout. Please check your connection and try again.' };
         }
-        return { success: false, error: error.message };
+        // Don't expose detailed error messages to client
+        if (error.message.includes('HTTP error')) {
+          return { success: false, error: 'Server error. Please try again later.' };
+        }
+        return { success: false, error: 'Network error. Please check your connection.' };
       }
       
-      return { success: false, error: 'Unknown error occurred' };
+      return { success: false, error: 'An unexpected error occurred. Please try again.' };
     }
   }
 

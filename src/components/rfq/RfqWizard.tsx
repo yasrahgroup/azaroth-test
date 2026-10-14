@@ -19,6 +19,7 @@ import { Card } from '../common/Card';
 import { apiService, RfqSubmission } from '../../services/api';
 
 const STORAGE_KEY = 'azr_rfq_draft_v1';
+const DRAFT_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 const budgetOptions = [
   '$25,000 – $50,000',
@@ -47,6 +48,13 @@ const isUsableDraft = (value: unknown): value is RfqFormData => {
   if (typeof value !== 'object' || value === null) return false;
   const draft = value as Record<string, unknown>;
   const contact = draft.contact as Record<string, unknown> | null | undefined;
+  
+  // Check draft timestamp for expiry
+  if (draft.timestamp && typeof draft.timestamp === 'number') {
+    const age = Date.now() - draft.timestamp;
+    if (age > DRAFT_EXPIRY_MS) return false;
+  }
+  
   return (
     (draft.step === undefined || typeof draft.step === 'number') &&
     Array.isArray(draft.solutionCategories) &&
@@ -71,7 +79,11 @@ const loadDraft = (): RfqFormData | null => {
     const saved = sessionStorage.getItem(STORAGE_KEY);
     if (!saved) return null;
     const draft: unknown = JSON.parse(saved);
-    if (isUsableDraft(draft)) return draft;
+    if (isUsableDraft(draft)) {
+      // Remove timestamp before returning
+      const { timestamp, ...draftData } = draft as RfqFormData & { timestamp?: number };
+      return draftData as RfqFormData;
+    }
   } catch (e) {
     // Discard invalid drafts silently
   }
@@ -90,6 +102,14 @@ export const RfqWizard: React.FC = () => {
   const shouldFocusStepRef = useRef(false);
 
   const [formData, setFormData] = useState<RfqFormData>(() => loadDraft() ?? createDraft());
+  const [hasRestoredDraft, setHasRestoredDraft] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem(STORAGE_KEY);
+      return saved !== null;
+    } catch {
+      return false;
+    }
+  });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [fileErrors, setFileErrors] = useState<Record<string, string>>({});
@@ -97,7 +117,8 @@ export const RfqWizard: React.FC = () => {
   // Persist draft to sessionStorage on changes
   useEffect(() => {
     try {
-      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+      const draftWithTimestamp = { ...formData, timestamp: Date.now() };
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(draftWithTimestamp));
     } catch (e) {
       // Silently fail if sessionStorage is unavailable
     }
@@ -172,6 +193,9 @@ export const RfqWizard: React.FC = () => {
         errs.workEmail = 'Valid business email is required.';
       }
       if (!formData.contact.companyName.trim()) errs.companyName = 'Organization Name is required.';
+      if (!formData.contact.country || formData.contact.country.trim() === '') {
+        errs.country = 'Country / Region is required.';
+      }
     }
 
     setErrors(errs);
@@ -271,6 +295,7 @@ export const RfqWizard: React.FC = () => {
     setFileErrors({});
     setErrors({});
     setFormData(createDraft());
+    setHasRestoredDraft(false);
   };
 
   if (submittedRefId) {
@@ -331,6 +356,19 @@ export const RfqWizard: React.FC = () => {
               <p style={{ fontSize: '0.9375rem', color: 'var(--color-text-secondary)' }}>
                 Select one or more capabilities your organization is seeking to deploy or augment.
               </p>
+              {hasRestoredDraft && (
+                <div style={{
+                  marginTop: '0.75rem',
+                  padding: '0.5rem 0.75rem',
+                  backgroundColor: 'rgba(198, 138, 61, 0.1)',
+                  border: '1px solid rgba(198, 138, 61, 0.3)',
+                  borderRadius: 'var(--radius-md)',
+                  fontSize: '0.8125rem',
+                  color: '#C68A3D',
+                }}>
+                  Your draft has been restored. It will expire after 24 hours of inactivity.
+                </div>
+              )}
             </div>
 
             <div
@@ -343,9 +381,11 @@ export const RfqWizard: React.FC = () => {
               {solutionOptions.map((opt) => {
                 const isSelected = formData.solutionCategories.includes(opt.title);
                 return (
-                  <div
+                  <button
+                    type="button"
                     key={opt.title}
                     onClick={() => toggleCategory(opt.title)}
+                    aria-pressed={isSelected}
                     style={{
                       padding: '1.25rem',
                       borderRadius: 'var(--radius-lg)',
@@ -356,6 +396,7 @@ export const RfqWizard: React.FC = () => {
                       flexDirection: 'column',
                       gap: '0.75rem',
                       transition: 'all 180ms ease-out',
+                      textAlign: 'left',
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -391,7 +432,7 @@ export const RfqWizard: React.FC = () => {
                         {opt.desc}
                       </span>
                     </div>
-                  </div>
+                  </button>
                 );
               })}
             </div>
@@ -420,9 +461,11 @@ export const RfqWizard: React.FC = () => {
                 {scopeOptions.map((scope) => {
                   const isSelected = formData.projectScope === scope;
                   return (
-                    <div
+                    <button
+                      type="button"
                       key={scope}
                       onClick={() => setFormData({ ...formData, projectScope: scope })}
+                      aria-pressed={isSelected}
                       style={{
                         padding: '1rem',
                         borderRadius: 'var(--radius-md)',
@@ -432,10 +475,11 @@ export const RfqWizard: React.FC = () => {
                         fontWeight: isSelected ? 700 : 500,
                         fontSize: '0.875rem',
                         color: isSelected ? 'var(--color-primary-green, #006C35)' : 'var(--color-text-primary)',
+                        textAlign: 'left',
                       }}
                     >
                       {scope}
-                    </div>
+                    </button>
                   );
                 })}
               </div>
@@ -450,9 +494,11 @@ export const RfqWizard: React.FC = () => {
                 {timelineOptions.map((time) => {
                   const isSelected = formData.targetTimeline === time;
                   return (
-                    <div
+                    <button
+                      type="button"
                       key={time}
                       onClick={() => setFormData({ ...formData, targetTimeline: time })}
+                      aria-pressed={isSelected}
                       style={{
                         padding: '1rem',
                         borderRadius: 'var(--radius-md)',
@@ -466,7 +512,7 @@ export const RfqWizard: React.FC = () => {
                       }}
                     >
                       {time}
-                    </div>
+                    </button>
                   );
                 })}
               </div>
@@ -494,9 +540,11 @@ export const RfqWizard: React.FC = () => {
                 {budgetOptions.map((b) => {
                   const isSelected = formData.budgetRange === b;
                   return (
-                    <div
+                    <button
+                      type="button"
                       key={b}
                       onClick={() => setFormData({ ...formData, budgetRange: b })}
+                      aria-pressed={isSelected}
                       style={{
                         padding: '1rem',
                         borderRadius: 'var(--radius-md)',
@@ -510,7 +558,7 @@ export const RfqWizard: React.FC = () => {
                       }}
                     >
                       {b}
-                    </div>
+                    </button>
                   );
                 })}
               </div>
@@ -776,7 +824,7 @@ export const RfqWizard: React.FC = () => {
               </div>
 
               <div className="form-group">
-                <label className="form-label" htmlFor="rfqCountry">Country / Region</label>
+                <label className="form-label" htmlFor="rfqCountry">Country / Region *</label>
                 <select
                   id="rfqCountry"
                   className="form-select"
@@ -785,6 +833,8 @@ export const RfqWizard: React.FC = () => {
                     ...formData,
                     contact: { ...formData.contact, country: e.target.value }
                   })}
+                  aria-invalid={Boolean(errors.country)}
+                  aria-describedby={errors.country ? 'rfq-country-error' : undefined}
                 >
                   <option value="">Select Country</option>
                   <option value="India">India</option>
@@ -795,6 +845,7 @@ export const RfqWizard: React.FC = () => {
                   <option value="Australia">Australia</option>
                   <option value="Other">Other</option>
                 </select>
+                {errors.country && <span id="rfq-country-error" role="alert" className="form-error"><AlertCircle size={13} /> {errors.country}</span>}
               </div>
 
             </div>

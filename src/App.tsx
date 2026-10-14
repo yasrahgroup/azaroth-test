@@ -45,7 +45,7 @@ export const App: React.FC = () => {
 
           {/* Portfolio & Case Studies */}
           <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/portfolio/:slug" element={<Portfolio />} />
+          <Route path="/portfolio/:slug" element={<NotFound />} />
           <Route path="/projects" element={<Navigate to="/portfolio" replace />} />
 
           {/* Resource Hub & Technology Insights */}

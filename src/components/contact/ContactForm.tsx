@@ -35,6 +35,9 @@ export const ContactForm: React.FC = () => {
       errs.workEmail = 'Please provide a valid email address.';
     }
     if (!formData.companyName.trim()) errs.companyName = 'Company name is required.';
+    if (!formData.enquiryAbout || formData.enquiryAbout.trim() === '') {
+      errs.enquiryAbout = 'Please select an enquiry type.';
+    }
     if (!formData.message.trim() || formData.message.length < 10) {
       errs.message = 'Please provide at least a brief summary of your requirements (min 10 characters).';
     }
@@ -126,7 +129,9 @@ export const ContactForm: React.FC = () => {
                 enquiryAbout: 'General',
                 message: '',
                 consent: false,
+                website_url: '',
               });
+              setErrors({});
             }}
             variant="outline"
             size="sm"

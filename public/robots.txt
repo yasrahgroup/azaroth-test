@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://azaroth-techhive.com/sitemap.xml
+Sitemap: https://azaroth-test.vercel.app/sitemap.xml

@@ -62,6 +62,30 @@ const storage = multer.diskStorage({
   }
 });
 
+// File signature (magic bytes) validation
+const fileSignatures = {
+  'application/pdf': [[0x25, 0x50, 0x44, 0x46]], // %PDF
+  'image/jpeg': [[0xFF, 0xD8, 0xFF]], // JPEG SOI
+  'image/png': [[0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]], // PNG header
+  'application/zip': [[0x50, 0x4B, 0x03, 0x04], [0x50, 0x4B, 0x05, 0x06], [0x50, 0x4B, 0x07, 0x08]], // ZIP signatures
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': [[0x50, 0x4B, 0x03, 0x04]], // DOCX is ZIP-based
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': [[0x50, 0x4B, 0x03, 0x04]], // XLSX is ZIP-based
+  'application/x-zip-compressed': [[0x50, 0x4B, 0x03, 0x04], [0x50, 0x4B, 0x05, 0x06], [0x50, 0x4B, 0x07, 0x08]],
+};
+
+const validateFileSignature = (buffer, mimetype) => {
+  const signatures = fileSignatures[mimetype];
+  if (!signatures) return false;
+  
+  return signatures.some(signature => {
+    if (buffer.length < signature.length) return false;
+    for (let i = 0; i < signature.length; i++) {
+      if (buffer[i] !== signature[i]) return false;
+    }
+    return true;
+  });
+};
+
 const fileFilter = (req, file, cb) => {
   const allowedMimes = [
     'application/pdf',
@@ -72,11 +96,25 @@ const fileFilter = (req, file, cb) => {
     'application/zip',
     'application/x-zip-compressed'
   ];
-  if (allowedMimes.includes(file.mimetype)) {
-    cb(null, true);
-  } else {
-    cb(new Error('Invalid file type. Allowed: PDF, DOCX, XLSX, PNG, JPG, ZIP'), false);
+  
+  if (!allowedMimes.includes(file.mimetype)) {
+    return cb(new Error('Invalid file type. Allowed: PDF, DOCX, XLSX, PNG, JPG, ZIP'), false);
   }
+  
+  // Read first 8 bytes for signature validation
+  const buffer = Buffer.alloc(8);
+  file.stream.once('data', (chunk) => {
+    chunk.copy(buffer);
+    if (validateFileSignature(buffer, file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('File content does not match its declared type'), false);
+    }
+  });
+  
+  file.stream.on('error', () => {
+    cb(new Error('Error reading file for validation'), false);
+  });
 };
 
 const upload = multer({
@@ -126,6 +164,7 @@ app.use(helmet({
       objectSrc: ["'none'"],
       mediaSrc: ["'self'"],
       frameSrc: ["'none'"],
+      formAction: ["'self'"],
     },
   },
   hsts: {
@@ -135,6 +174,8 @@ app.use(helmet({
   },
   noSniff: true,
   referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+  xssFilter: true,
+  crossOriginEmbedderPolicy: false,
 }));
 
 app.use(cors({
@@ -190,7 +231,15 @@ app.get('/api/health', async (req, res) => {
 // Contact form submission endpoint
 app.post('/api/contact', contactRateLimit, async (req, res) => {
   try {
-    const { fullName, workEmail, phone, companyName, enquiryAbout, message, consent } = req.body;
+    const { fullName, workEmail, phone, companyName, enquiryAbout, message, consent, website_url } = req.body;
+
+    // Honeypot check - if filled, it's a bot
+    if (website_url) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation failed',
+      });
+    }
 
     // Validation
     const errors = [];
@@ -202,6 +251,9 @@ app.post('/api/contact', contactRateLimit, async (req, res) => {
     }
     if (!companyName || companyName.trim().length < 2) {
       errors.push('Company name must be at least 2 characters');
+    }
+    if (!enquiryAbout || enquiryAbout.trim() === '') {
+      errors.push('Enquiry type is required');
     }
     if (!message || message.trim().length < 10) {
       errors.push('Message must be at least 10 characters');
@@ -268,7 +320,6 @@ app.post('/api/contact', contactRateLimit, async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Internal server error',
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined,
     });
   }
 });
@@ -489,7 +540,7 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({
     success: false,
-    message: process.env.NODE_ENV === 'development' ? err.message : 'Internal server error',
+    message: 'Internal server error',
   });
 });
 
