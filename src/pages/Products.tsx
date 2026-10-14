@@ -5,8 +5,6 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { SEOHead } from '../components/common/SEOHead';
-import { AnimatedWords } from '../components/common/AnimatedWords';
-import { Badge } from '../components/common/Badge';
 import { PageHeader } from '../components/common/PageHeader';
 import { productsCatalog } from '../data/productsData';
 import { Product } from '../types';
