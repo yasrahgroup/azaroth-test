@@ -22,6 +22,9 @@ import {
   Sparkles,
   RefreshCw,
   MousePointer,
+  Layout,
+  AlignLeft,
+  AlignRight,
 } from 'lucide-react';
 import { useCMS, defaultTheme, defaultModules } from '../../context/CMSContext';
 import { WebsiteSettings, ThemeConfig, WebsiteModuleSetting, ChatbotConfig } from '../../services/cmsService';
@@ -2353,6 +2356,139 @@ export const AdminSettingsManager: React.FC = () => {
                 style={adminStyles.input}
               />
             </div>
+          </div>
+        </div>
+
+        {/* ========================================================
+            8. FOOTER ARCHITECTURE, ALIGNMENT & LEGAL PORTAL
+        ======================================================== */}
+        <div style={{ backgroundColor: adminColors.slate.card, border: `1px solid ${adminColors.slate.border}`, borderRadius: '12px', padding: '1.75rem', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', marginBottom: '1.25rem', borderBottom: `1px solid ${adminColors.slate.borderLight}`, paddingBottom: '0.875rem' }}>
+            <div style={{ width: '32px', height: '32px', borderRadius: '8px', backgroundColor: adminColors.amber.light, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Layout size={17} color={adminColors.amber.text} />
+            </div>
+            <div>
+              <h2 style={{ fontSize: '1.0625rem', fontWeight: 700, color: adminColors.amber.text, margin: 0 }}>
+                8. Footer Architecture &amp; Column Orientation
+              </h2>
+              <span style={{ fontSize: '0.75rem', color: adminColors.slate.textMuted }}>
+                Configure whether footer content is aligned standard (left-to-right) or reversed (right-to-left), and customize copyright text and policy links.
+              </span>
+            </div>
+          </div>
+
+          {/* Footer Alignment Selector Cards */}
+          <div style={{ marginBottom: '1.5rem' }}>
+            <label style={{ ...adminStyles.label, marginBottom: '0.75rem' }}>
+              Footer Column Alignment &amp; Flow
+            </label>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
+              {/* Option A: Reversed Layout */}
+              <div
+                onClick={() => setFormData({ ...formData, footerLayout: 'reversed' })}
+                style={{
+                  padding: '1.25rem',
+                  borderRadius: '10px',
+                  border: (formData.footerLayout || 'reversed') === 'reversed'
+                    ? '2px solid var(--color-primary-button, #18181B)'
+                    : '1px solid #E2E8F0',
+                  backgroundColor: (formData.footerLayout || 'reversed') === 'reversed' ? '#F8FAFC' : '#FFFFFF',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <AlignRight size={18} color="var(--color-brand-gold, #F59E0B)" />
+                    <span style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#0F172A' }}>
+                      Reversed Alignment (Left ⇄ Right)
+                    </span>
+                  </div>
+                  {(formData.footerLayout || 'reversed') === 'reversed' && (
+                    <span style={{ padding: '0.15rem 0.5rem', borderRadius: '9999px', fontSize: '0.625rem', fontWeight: 700, backgroundColor: 'var(--color-primary-button, #18181B)', color: '#FFFFFF' }}>
+                      Active
+                    </span>
+                  )}
+                </div>
+                <p style={{ fontSize: '0.8125rem', color: '#64748B', margin: '0 0 0.75rem 0', lineHeight: 1.5 }}>
+                  <strong>Contact details &amp; social channels on the Left</strong>, Services and Quick Links in the center, and <strong>Brand Logo &amp; Tagline on the Right</strong>.
+                </p>
+                <div style={{ display: 'flex', gap: '0.35rem', fontSize: '0.6875rem', color: '#94A3B8' }}>
+                  <span style={{ padding: '0.2rem 0.4rem', backgroundColor: '#EDE9FE', color: '#7C3AED', borderRadius: '4px' }}>[1] Contact &amp; Social</span>
+                  <span>&rarr;</span>
+                  <span style={{ padding: '0.2rem 0.4rem', backgroundColor: '#F1F5F9', borderRadius: '4px' }}>[2] Services</span>
+                  <span>&rarr;</span>
+                  <span style={{ padding: '0.2rem 0.4rem', backgroundColor: '#F1F5F9', borderRadius: '4px' }}>[3] Links</span>
+                  <span>&rarr;</span>
+                  <span style={{ padding: '0.2rem 0.4rem', backgroundColor: '#FEF3C7', color: '#B45309', borderRadius: '4px' }}>[4] Logo &amp; Tagline</span>
+                </div>
+              </div>
+
+              {/* Option B: Standard Layout */}
+              <div
+                onClick={() => setFormData({ ...formData, footerLayout: 'standard' })}
+                style={{
+                  padding: '1.25rem',
+                  borderRadius: '10px',
+                  border: formData.footerLayout === 'standard'
+                    ? '2px solid var(--color-primary-button, #18181B)'
+                    : '1px solid #E2E8F0',
+                  backgroundColor: formData.footerLayout === 'standard' ? '#F8FAFC' : '#FFFFFF',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <AlignLeft size={18} color="#64748B" />
+                    <span style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#0F172A' }}>
+                      Standard Alignment (Left ➔ Right)
+                    </span>
+                  </div>
+                  {formData.footerLayout === 'standard' && (
+                    <span style={{ padding: '0.15rem 0.5rem', borderRadius: '9999px', fontSize: '0.625rem', fontWeight: 700, backgroundColor: 'var(--color-primary-button, #18181B)', color: '#FFFFFF' }}>
+                      Active
+                    </span>
+                  )}
+                </div>
+                <p style={{ fontSize: '0.8125rem', color: '#64748B', margin: '0 0 0.75rem 0', lineHeight: 1.5 }}>
+                  <strong>Brand Logo &amp; Tagline on the Left</strong>, Quick Links and Services in the center, and <strong>Contact details &amp; social channels on the Right</strong>.
+                </p>
+                <div style={{ display: 'flex', gap: '0.35rem', fontSize: '0.6875rem', color: '#94A3B8' }}>
+                  <span style={{ padding: '0.2rem 0.4rem', backgroundColor: '#FEF3C7', color: '#B45309', borderRadius: '4px' }}>[1] Logo &amp; Tagline</span>
+                  <span>&rarr;</span>
+                  <span style={{ padding: '0.2rem 0.4rem', backgroundColor: '#F1F5F9', borderRadius: '4px' }}>[2] Links</span>
+                  <span>&rarr;</span>
+                  <span style={{ padding: '0.2rem 0.4rem', backgroundColor: '#F1F5F9', borderRadius: '4px' }}>[3] Services</span>
+                  <span>&rarr;</span>
+                  <span style={{ padding: '0.2rem 0.4rem', backgroundColor: '#EDE9FE', color: '#7C3AED', borderRadius: '4px' }}>[4] Contact &amp; Social</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Copyright Notice Field */}
+          <div style={{ marginBottom: '1.25rem' }}>
+            <label style={adminStyles.label}>
+              Copyright Notice Text
+            </label>
+            <input
+              type="text"
+              value={formData.copyright_text || ''}
+              onChange={(e) => setFormData({ ...formData, copyright_text: e.target.value })}
+              placeholder="All rights reserved © 2026 Azaroth Tech-Hive Inc"
+              style={adminStyles.input}
+            />
+          </div>
+
+          {/* Policy & Admin Access Notice */}
+          <div style={{ padding: '0.875rem 1rem', backgroundColor: '#F1F5F9', borderRadius: '8px', border: '1px solid #E2E8F0', fontSize: '0.8125rem', color: '#475569', display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
+            <span style={{ fontSize: '1rem' }}>🛡️</span>
+            <span>
+              <strong>Built-in Footer Links:</strong> The footer bottom bar automatically provides quick links for <strong>Privacy Policy</strong>, <strong>Cookies</strong>, and a discrete <strong>Admin Portal</strong> access link (`/admin/login`).
+            </span>
           </div>
         </div>
 

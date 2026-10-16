@@ -85,6 +85,7 @@ const defaultSettings: WebsiteSettings = {
   whatsapp_number: companyInfo.headquarters.whatsapp,
   linkedin_url: 'https://linkedin.com/company/azaroth-tech-hive',
   copyright_text: 'All rights reserved © 2026 Azaroth Tech-Hive Inc',
+  footerLayout: 'reversed',
 };
 
 const defaultNavigation: NavigationItem[] = [

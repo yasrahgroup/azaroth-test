@@ -69,6 +69,7 @@ export interface WebsiteSettings {
   whatsapp_number?: string;
   linkedin_url?: string;
   copyright_text?: string;
+  footerLayout?: 'standard' | 'reversed';
 }
 
 export interface NavigationItem {
