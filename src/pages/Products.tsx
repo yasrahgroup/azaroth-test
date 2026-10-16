@@ -7,20 +7,43 @@ import {
 import { SEOHead } from '../components/common/SEOHead';
 import { PageHeader } from '../components/common/PageHeader';
 import { productsCatalog } from '../data/productsData';
-import { Product } from '../types';
+import { useCMS } from '../context/CMSContext';
+import { ProductStatusBadge } from '../components/common/ProductStatusBadge';
 
 export const Products: React.FC = () => {
   const navigate = useNavigate();
   const { slug } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { products: cmsProducts } = useCMS();
+
+  const effectiveProducts = (cmsProducts && cmsProducts.length > 0)
+    ? cmsProducts.map((p, idx) => {
+        const match = productsCatalog.find(cp => cp.slug === p.slug || cp.id === p.id);
+        return {
+          id: p.id || match?.id || `prod-${idx}`,
+          name: p.name || p.title || match?.name || 'Enterprise Platform',
+          slug: p.slug || match?.slug || `product-${idx}`,
+          category: (p as any).category || match?.category || 'Enterprise Software',
+          badge: p.badge || match?.badge || 'Enterprise Software',
+          status: p.status || match?.status || 'Under Development',
+          tagline: p.tagline || match?.tagline || 'Modular Enterprise Engine',
+          shortDescription: p.shortDescription || (p as any).short_description || match?.shortDescription || '',
+          description: (p as any).description || p.fullDescription || match?.description || '',
+          coverImage: p.coverImage || match?.coverImage || 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
+          coverAlt: (p as any).coverAlt || match?.coverAlt || p.name,
+          benefits: p.benefits || match?.benefits || ['Enterprise source code ownership', 'Tailored modular architecture', 'Full SLA & deployment pod'],
+          isEnabled: p.status !== 'ARCHIVED' && p.status !== 'DRAFT',
+        };
+      })
+    : productsCatalog;
 
   const activeCategory = searchParams.get('category') || 'All';
-  const categoryOptions = ['All', ...new Set(productsCatalog.map((product) => product.category))];
+  const categoryOptions = ['All', ...new Set(effectiveProducts.map((product) => product.category))];
   const filteredProducts = activeCategory === 'All'
-    ? productsCatalog
-    : productsCatalog.filter((product) => product.category === activeCategory);
+    ? effectiveProducts
+    : effectiveProducts.filter((product) => product.category === activeCategory);
 
-  const handleBookDemo = (product: Product) => {
+  const handleBookDemo = (product: any) => {
     navigate(`/connect-with-us?product=${encodeURIComponent(product.slug)}`);
   };
 
@@ -85,12 +108,12 @@ export const Products: React.FC = () => {
               style={{
                 padding: '0.875rem 1.5rem',
                 borderRadius: '12px',
-                background: 'linear-gradient(110deg, #4338ca 5%, #4f46e5 52%, #0f766e 100%)',
+                background: 'linear-gradient(110deg, var(--color-primary-button, #18181B) 0%, #27272A 100%)',
                 color: '#FFFFFF',
                 fontWeight: 700,
                 fontSize: '0.875rem',
                 textDecoration: 'none',
-                boxShadow: '0 4px 12px rgba(67, 56, 202, 0.25)',
+                boxShadow: 'var(--shadow-primary-button, 0 4px 12px rgba(24, 24, 27, 0.22))',
                 transition: 'all 180ms ease-out',
               }}
             >
@@ -224,25 +247,9 @@ export const Products: React.FC = () => {
                       position: 'absolute',
                       top: '1rem',
                       right: '1rem',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.375rem',
-                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                      padding: '0.5rem 0.75rem',
-                      borderRadius: '8px',
-                      border: '1px solid var(--color-border-subtle)',
-                      fontSize: '0.6875rem',
-                      fontWeight: 700,
-                      color: 'var(--color-brand-gold)',
+                      zIndex: 2,
                     }}>
-                      <span style={{
-                        width: '6px',
-                        height: '6px',
-                        borderRadius: '50%',
-                        backgroundColor: 'var(--color-brand-gold)',
-                        animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                      }} />
-                      <span>Under Development</span>
+                      <ProductStatusBadge status={product.status || 'Under Development'} size="sm" />
                     </div>
 
                     <div style={{
@@ -308,7 +315,7 @@ export const Products: React.FC = () => {
                         What You Get
                       </span>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
-                        {(product.benefits || []).slice(0, 3).map((benefit, i) => (
+                        {(product.benefits || []).slice(0, 3).map((benefit: string, i: number) => (
                           <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', fontSize: '0.75rem', color: 'var(--color-text-secondary)' }}>
                             <CheckCircle2 size={14} style={{ color: 'var(--color-primary-maroon)', flexShrink: 0, marginTop: '0.125rem' }} />
                             <span>{benefit}</span>
@@ -354,13 +361,13 @@ export const Products: React.FC = () => {
                           flex: 1,
                           padding: '0.625rem 1rem',
                           borderRadius: '12px',
-                          background: 'linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%)',
+                          background: 'linear-gradient(135deg, var(--color-primary-button, #18181B) 0%, #27272A 100%)',
                           color: '#FFFFFF',
                           fontSize: '0.75rem',
                           fontWeight: 700,
                           cursor: 'pointer',
                           border: 'none',
-                          boxShadow: '0 4px 12px rgba(79, 70, 229, 0.25)',
+                          boxShadow: 'var(--shadow-primary-button, 0 4px 12px rgba(24, 24, 27, 0.22))',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',

@@ -7,8 +7,16 @@ import { Badge } from '../components/common/Badge';
 import { Button } from '../components/common/Button';
 import { SEOHead } from '../components/common/SEOHead';
 import { PageHeader } from '../components/common/PageHeader';
+import { AnimatedImage } from '../components/common/AnimatedImage';
+import { useCMS } from '../context/CMSContext';
 
 export const Connect: React.FC = () => {
+  const { settings } = useCMS();
+  const address = settings.headquarters || settings.headquarters_address || companyInfo.headquarters.address;
+  const phone = settings.phone || settings.primary_phone || companyInfo.headquarters.phone;
+  const email = settings.supportEmail || settings.primary_email || companyInfo.headquarters.email;
+  const whatsapp = settings.whatsapp_number || companyInfo.headquarters.whatsapp;
+
   return (
     <div>
       <SEOHead
@@ -17,12 +25,31 @@ export const Connect: React.FC = () => {
         canonicalPath="/connect-with-us"
       />
       {/* Page Hero */}
-      <PageHeader
-        kicker="- CONNECT WITH US -"
-        title="Connect With Us"
-        gradientWords={['Connect', 'Us']}
-        subtitle="Every great solution starts with a conversation. Whether you have a question, want to discuss a project, or explore how we can help, we're ready to listen and respond."
-      />
+      <div style={{ position: 'relative' }}>
+        <AnimatedImage
+          src="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1920&q=80"
+          alt="Communication background"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: -1,
+            height: '100vh',
+          }}
+          animationType="fade-in"
+          duration={1200}
+          overlay={true}
+          overlayColor="rgba(79, 70, 229, 0.1)"
+        />
+        <PageHeader
+          kicker="- CONNECT WITH US -"
+          title="Connect With Us"
+          gradientWords={['Connect', 'Us']}
+          subtitle="Every great solution starts with a conversation. Whether you have a question, want to discuss a project, or explore how we can help, we're ready to listen and respond."
+        />
+      </div>
 
       {/* Main Split Section: Office Info + Contact Form */}
       <section className="section" style={{ backgroundColor: '#ffffff' }}>
@@ -56,7 +83,7 @@ export const Connect: React.FC = () => {
                     <div>
                       <strong style={{ color: 'var(--color-text-primary)', display: 'block', marginBottom: '0.2rem' }}>Physical Address:</strong>
                       <span style={{ color: 'var(--color-text-primary)', fontSize: '0.9375rem' }}>
-                        {companyInfo.headquarters.address}
+                        {address}
                       </span>
                     </div>
                   </div>
@@ -65,8 +92,8 @@ export const Connect: React.FC = () => {
                     <Phone size={20} style={{ color: 'var(--color-brand-gold)', flexShrink: 0 }} />
                     <div>
                       <strong style={{ color: 'var(--color-text-primary)', display: 'block', marginBottom: '0.2rem' }}>Direct Line:</strong>
-                      <a href={`tel:${companyInfo.headquarters.phone}`} style={{ color: 'var(--color-brand-gold)', fontWeight: 700, textDecoration: 'none' }}>
-                        {companyInfo.headquarters.phone}
+                      <a href={`tel:${phone.replace(/\s+/g, '')}`} style={{ color: 'var(--color-brand-gold)', fontWeight: 700, textDecoration: 'none' }}>
+                        {phone}
                       </a>
                     </div>
                   </div>
@@ -75,8 +102,8 @@ export const Connect: React.FC = () => {
                     <MessageSquare size={20} style={{ color: 'var(--color-brand-gold)', flexShrink: 0 }} />
                     <div>
                       <strong style={{ color: 'var(--color-text-primary)', display: 'block', marginBottom: '0.2rem' }}>WhatsApp Inquiries:</strong>
-                      <a href={`https://wa.me/${companyInfo.headquarters.whatsapp}`} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-brand-gold)', fontWeight: 700, textDecoration: 'none' }}>
-                        +91 6379480931 (Instant Chat)
+                      <a href={`https://wa.me/${whatsapp.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-brand-gold)', fontWeight: 700, textDecoration: 'none' }}>
+                        {whatsapp} (Instant Chat)
                       </a>
                     </div>
                   </div>
@@ -85,8 +112,8 @@ export const Connect: React.FC = () => {
                     <Mail size={20} style={{ color: 'var(--color-brand-gold)', flexShrink: 0 }} />
                     <div>
                       <strong style={{ color: 'var(--color-text-primary)', display: 'block', marginBottom: '0.2rem' }}>General & Sales Email:</strong>
-                      <a href={`mailto:${companyInfo.headquarters.email}`} style={{ color: 'var(--color-brand-gold)', fontWeight: 700, textDecoration: 'none' }}>
-                        {companyInfo.headquarters.email}
+                      <a href={`mailto:${email}`} style={{ color: 'var(--color-brand-gold)', fontWeight: 700, textDecoration: 'none' }}>
+                        {email}
                       </a>
                     </div>
                   </div>

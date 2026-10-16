@@ -89,7 +89,7 @@ export const StrategicSolutions: React.FC = () => {
               gap: '0.5rem',
               fontSize: '0.8125rem',
               fontWeight: 700,
-              color: '#006C35',
+              color: 'var(--color-brand-gold, #F59E0B)',
               letterSpacing: '0.18em',
               textTransform: 'uppercase',
               marginBottom: '0.75rem',
@@ -111,7 +111,7 @@ export const StrategicSolutions: React.FC = () => {
             Our{' '}
             <span
               style={{
-                background: 'linear-gradient(135deg, #006C35 0%, #D4AF37 100%)',
+                background: 'linear-gradient(135deg, var(--color-primary, #18181B) 0%, var(--color-brand-gold, #F59E0B) 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
               }}
@@ -303,15 +303,15 @@ export const StrategicSolutions: React.FC = () => {
               gap: '0.5rem',
               padding: '0.75rem 1.5rem',
               borderRadius: '9999px',
-              border: '1.5px solid rgba(0, 108, 53, 0.3)',
-              color: '#006C35',
+              border: '1.5px solid var(--color-border, #E4E4E7)',
+              color: 'var(--color-primary, #18181B)',
               backgroundColor: '#FFFFFF',
               fontWeight: 600,
               fontSize: '0.9375rem',
               textDecoration: 'none',
               transition: 'all 150ms ease-out',
             }}
-            className="hover:bg-emerald-50/50 hover:border-emerald-700 hover:text-emerald-800"
+            className="hover:bg-zinc-50 hover:border-zinc-800 hover:text-zinc-900"
           >
             <span>Explore All Projects &amp; Platforms</span>
             <ArrowRight size={16} />

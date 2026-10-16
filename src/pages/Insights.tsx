@@ -6,13 +6,40 @@ import { Card } from '../components/common/Card';
 import { Badge } from '../components/common/Badge';
 import { SEOHead } from '../components/common/SEOHead';
 import { PageHeader } from '../components/common/PageHeader';
+import { useCMS } from '../context/CMSContext';
 
 export const Insights: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [debouncedQuery, setDebouncedQuery] = useState<string>('');
+  const { insights: cmsInsights } = useCMS();
 
-  const categories = ['All', 'System Architecture', 'Enterprise AI', 'Cloud Modernization'];
+  const effectiveArticles = useMemo(() => {
+    return (cmsInsights && cmsInsights.length > 0)
+      ? cmsInsights.map((ins, idx) => {
+          const match = insightsArticles.find(ia => ia.slug === ins.slug || ia.id === ins.id);
+          return {
+            id: ins.slug || ins.id || `art-${idx}`,
+            title: ins.title,
+            slug: ins.slug || `insight-${idx}`,
+            category: ins.category || match?.category || 'System Architecture',
+            readTime: ins.readTime || (ins as any).read_time || match?.readTime || '6 min read',
+            excerpt: ins.excerpt || match?.excerpt || '',
+            author: {
+              name: ins.authorName || ins.author?.name || (ins as any).author || match?.author.name || 'Azaroth Architecture Pod',
+              role: ins.authorRole || ins.author?.role || (ins as any).author_role || match?.author.role || 'Senior Solutions Architect',
+            },
+            publishedDate: ins.publishedAt || ins.publishedDate || (ins as any).published_date || match?.publishedDate || 'October 2026',
+            tags: ins.tags || match?.tags || ['Architecture', 'Engineering'],
+            content: ins.content || match?.content || '',
+          };
+        })
+      : insightsArticles;
+  }, [cmsInsights]);
+
+  const categories = useMemo(() => {
+    return ['All', ...new Set(effectiveArticles.map(a => a.category))];
+  }, [effectiveArticles]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -23,7 +50,7 @@ export const Insights: React.FC = () => {
   }, [searchQuery]);
 
   const filteredArticles = useMemo(() => {
-    return insightsArticles.filter((article) => {
+    return effectiveArticles.filter((article) => {
       const matchesCat = selectedCategory === 'All' || article.category === selectedCategory;
       const normalizedQuery = debouncedQuery.toLowerCase();
       const matchesSearch = !normalizedQuery ||
@@ -32,7 +59,7 @@ export const Insights: React.FC = () => {
         article.tags.some((tag) => tag.toLowerCase().includes(normalizedQuery));
       return matchesCat && matchesSearch;
     });
-  }, [debouncedQuery, selectedCategory]);
+  }, [effectiveArticles, debouncedQuery, selectedCategory]);
 
   return (
     <div>

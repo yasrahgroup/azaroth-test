@@ -13,9 +13,9 @@ test.describe('Azaroth Tech-Hive Comprehensive Playwright Suite', () => {
 
     // Hero title check
     const heroHeading = page.locator('h1');
-    await expect(heroHeading).toContainText('Intelligence, Engineered and');
     await expect(heroHeading).toContainText('Innovation');
-    await expect(heroHeading).toContainText('Unleashed.');
+    await expect(heroHeading).toContainText('Technology');
+    await expect(heroHeading).toContainText('Excellence');
 
     // Flat navigation links check
     await expect(page.getByRole('link', { name: /^Home$/i })).toBeVisible();

@@ -8,6 +8,7 @@ export interface Product {
   name: string;
   category: ProductCategory;
   badge?: string;
+  status?: 'Live' | 'Under Development' | 'PUBLISHED' | 'DRAFT' | string;
   tagline: string;
   description: string;
   shortDescription: string;

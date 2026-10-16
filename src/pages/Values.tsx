@@ -6,8 +6,20 @@ import { Card } from '../components/common/Card';
 import { Badge } from '../components/common/Badge';
 import { Button } from '../components/common/Button';
 import { SEOHead } from '../components/common/SEOHead';
+import { useCMS } from '../context/CMSContext';
 
 export const Values: React.FC = () => {
+  const { pages } = useCMS();
+  const pageData = pages['values'];
+  const content = pageData?.content || {};
+
+  const badge = content.badge || 'Our Principles';
+  const heading = content.heading || pageData?.title || 'Principles That Shape Every Solution';
+  const description = content.description || pageData?.meta_description || 'The foundational values that guide our engineering decisions, client partnerships, and continuous pursuit of excellence in every solution we build.';
+  const principles = (content.principles && Array.isArray(content.principles) && content.principles.length > 0)
+    ? content.principles
+    : ourValuesPrinciples;
+
   const getIcon = (name: string) => {
     switch (name) {
       case 'Lightbulb': return <Lightbulb size={28} />;
@@ -23,21 +35,21 @@ export const Values: React.FC = () => {
   return (
     <div>
       <SEOHead
-        title="Our Values — Azaroth Tech-Hive"
-        description="The principles that guide our engineering decisions, client partnerships, and delivery of dependable software solutions for every engagement and long-term relationship."
+        title={pageData?.title ? `${pageData.title} — Azaroth Tech-Hive` : 'Our Values — Azaroth Tech-Hive'}
+        description={pageData?.meta_description || "The principles that guide our engineering decisions, client partnerships, and delivery of dependable software solutions for every engagement and long-term relationship."}
         canonicalPath="/values"
       />
       {/* Page Hero */}
       <section className="section" style={{ backgroundColor: 'var(--color-canvas-bg)', borderBottom: '1px solid var(--color-border-subtle)' }}>
         <div className="container" style={{ textAlign: 'center', maxWidth: '800px' }}>
           <Badge variant="gold" style={{ marginBottom: '1rem' }}>
-            Our Principles
+            {badge}
           </Badge>
           <h1 style={{ marginBottom: '1.25rem', fontSize: 'clamp(2.25rem, 4.5vw, 3.5rem)', fontWeight: 800, color: 'var(--color-text-primary)' }}>
-            Principles That Shape Every Solution
+            {heading}
           </h1>
           <p style={{ fontSize: '1.1875rem', lineHeight: 1.6 }}>
-            The foundational values that guide our engineering decisions, client partnerships, and continuous pursuit of excellence in every solution we build.
+            {description}
           </p>
         </div>
       </section>
@@ -53,7 +65,7 @@ export const Values: React.FC = () => {
             gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
             gap: '2.5rem',
           }}>
-            {ourValuesPrinciples.map((val, index) => (
+            {principles.map((val: any, index: number) => (
               <motion.div
                 key={val.number}
                 initial={{ opacity: 0, y: 30 }}

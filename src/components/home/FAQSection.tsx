@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import { Badge } from '../common/Badge';
 import { Button } from '../common/Button';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { useCMS } from '../../context/CMSContext';
 
-const faqs = [
+const defaultFaqs = [
   {
     question: 'What industries do you build for?',
     answer: 'We build for retail and digital commerce, education and digital learning, healthcare and health technology, supply chain and logistics, and ERP and business management systems. Industry context shapes the architecture, so we begin by learning which constraints apply to your environment before proposing a solution.',
@@ -28,22 +28,16 @@ const faqs = [
   },
   {
     question: 'How is pricing structured?',
-    answer: (
-      <>
-        Pricing is scoped per engagement after discovery, once the scope, constraints, and delivery approach are clear. Submit your requirements through the{' '}
-        <Link
-          to="/request-for-quote"
-          style={{ color: 'var(--color-brand-violet)', fontWeight: 600 }}
-        >
-          request-for-quote form
-        </Link>{' '}
-        and we will return a scoped quote.
-      </>
-    ),
+    answer: 'Pricing is scoped per engagement after discovery, once the scope, constraints, and delivery approach are clear. Submit your requirements through the request-for-quote form and we will return a scoped quote.',
   },
 ];
 
 export const FAQSection: React.FC = () => {
+  const { pages } = useCMS();
+  const pageData = pages['home'];
+  const cmsFaqs = pageData?.content?.faqs;
+  const activeFaqs = (Array.isArray(cmsFaqs) && cmsFaqs.length > 0) ? cmsFaqs : defaultFaqs;
+
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleFAQ = (index: number) => {
@@ -91,7 +85,7 @@ export const FAQSection: React.FC = () => {
           maxWidth: '800px',
           margin: '0 auto 3rem',
         }}>
-          {faqs.map((faq, index) => {
+          {activeFaqs.map((faq: any, index: number) => {
             const buttonId = `faq-question-${index}`;
             const panelId = `faq-answer-${index}`;
             const isOpen = openIndex === index;

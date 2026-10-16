@@ -88,7 +88,7 @@ export const Testimonials: React.FC = () => {
                 gap: '0.5rem',
                 fontSize: '0.8125rem',
                 fontWeight: 700,
-                color: '#006C35',
+                color: 'var(--color-brand-gold, #F59E0B)',
                 letterSpacing: '0.18em',
                 textTransform: 'uppercase',
                 marginBottom: '1rem',
@@ -110,7 +110,7 @@ export const Testimonials: React.FC = () => {
               What Our Clients{' '}
               <span
                 style={{
-                  background: 'linear-gradient(135deg, #006C35 0%, #D4AF37 100%)',
+                  background: 'linear-gradient(135deg, var(--color-primary, #18181B) 0%, var(--color-brand-gold, #F59E0B) 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                 }}
@@ -267,7 +267,7 @@ export const Testimonials: React.FC = () => {
                       width: idx === activeIndex ? '1.5rem' : '0.5rem',
                       height: '0.5rem',
                       borderRadius: '9999px',
-                      backgroundColor: idx === activeIndex ? '#006C35' : '#CBD5E1',
+                      backgroundColor: idx === activeIndex ? 'var(--color-primary, #18181B)' : '#CBD5E1',
                       border: 'none',
                       cursor: 'pointer',
                       transition: 'all 200ms ease-out',

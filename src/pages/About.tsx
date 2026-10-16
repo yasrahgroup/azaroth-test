@@ -17,22 +17,42 @@ import { Button } from '../components/common/Button';
 import { SEOHead } from '../components/common/SEOHead';
 import { PageHeader } from '../components/common/PageHeader';
 import { heroWorkspaceImg } from '../assets/images';
+import { useCMS } from '../context/CMSContext';
 
 export const About: React.FC = () => {
+  const { pages, settings } = useCMS();
+  const pageData = pages['about'];
+  const content = pageData?.content || {};
+
+  const kicker = content.kicker || '- WHO WE ARE -';
+  const heroTitle = content.heroTitle || pageData?.title || 'Engineering Meaningful Solutions Building Lasting Value';
+  const heroSubtitle = content.heroSubtitle || pageData?.meta_description || 'At Azaroth Techhive, we are passionate about technology and driven by a simple goal — to help businesses build smarter, stronger and more innovative digital solutions with a client-first approach.';
+  const storyBadge = content.storyBadge || '— OUR STORY —';
+  const storyTitle = content.storyTitle || 'Turning Ideas into Digital Reality';
+  const storyParagraph1 = content.storyParagraph1 || 'Azaroth Techhive delivers practical software engineering solutions that help businesses overcome complex technical bottlenecks, modernise legacy operations, and turn high-stakes ideas into dependable digital products.';
+  const storyParagraph2 = content.storyParagraph2 || 'With dedicated engineering pods, cloud modernisation, and custom application development, we bring your vision to life, one line of clean, tested code at a time.';
+  const visionText = content.vision || companyVisionMission.vision.statement;
+  const missionText = content.mission || companyVisionMission.mission.statement;
+
+  const address = settings.headquarters || settings.headquarters_address || companyInfo.headquarters.address;
+  const phone = settings.phone || settings.primary_phone || companyInfo.headquarters.phone;
+  const email = settings.supportEmail || settings.primary_email || companyInfo.headquarters.email;
+  const whatsapp = settings.whatsapp_number || companyInfo.headquarters.whatsapp;
+
   return (
     <div>
       <SEOHead
-        title="About Us — Turning Ideas into Digital Reality | Azaroth Techhive"
-        description="Learn about Azaroth Techhive: our vision, mission, and the engineering practices behind dependable software for enterprises worldwide."
+        title={pageData?.title ? `${pageData.title} | Azaroth Techhive` : "About Us — Turning Ideas into Digital Reality | Azaroth Techhive"}
+        description={pageData?.meta_description || "Learn about Azaroth Techhive: our vision, mission, and the engineering practices behind dependable software for enterprises worldwide."}
         canonicalPath="/about"
       />
 
       {/* Page Hero Banner */}
       <PageHeader
-        kicker="- WHO WE ARE -"
-        title="Engineering Meaningful Solutions Building Lasting Value"
-        gradientWords={['Building', 'Lasting', 'Value']}
-        subtitle="At Azaroth Techhive, we are passionate about technology and driven by a simple goal — to help businesses build smarter, stronger and more innovative digital solutions with a client-first approach."
+        kicker={kicker}
+        title={heroTitle}
+        gradientWords={['Building', 'Lasting', 'Value', 'Meaningful', 'Solutions']}
+        subtitle={heroSubtitle}
       />
 
       {/* Main Narrative with Visual Workspace Image */}
@@ -124,7 +144,7 @@ export const About: React.FC = () => {
                   marginBottom: '1rem',
                 }}
               >
-                &mdash; OUR STORY &mdash;
+                {storyBadge}
               </div>
 
               <h2
@@ -137,23 +157,14 @@ export const About: React.FC = () => {
                   marginBottom: '1.25rem',
                 }}
               >
-                Turning Ideas into{' '}
-                <span
-                  style={{
-                    background: 'linear-gradient(135deg, #2563EB 0%, #7C3AED 55%, #9333EA 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                  }}
-                >
-                  Digital Reality
-                </span>
+                {storyTitle}
               </h2>
 
               <p style={{ fontSize: '1.0625rem', color: '#475569', lineHeight: 1.7, marginBottom: '1.25rem' }}>
-                Azaroth Techhive delivers practical software engineering solutions that help businesses overcome complex technical bottlenecks, modernise legacy operations, and turn high-stakes ideas into dependable digital products.
+                {storyParagraph1}
               </p>
               <p style={{ fontSize: '1.0625rem', color: '#475569', lineHeight: 1.7, marginBottom: '2rem' }}>
-                With dedicated engineering pods, cloud modernisation, and custom application development, we bring your vision to life, one line of clean, tested code at a time.
+                {storyParagraph2}
               </p>
 
               {/* Stats Bar */}
@@ -283,7 +294,7 @@ export const About: React.FC = () => {
                 Long-Horizon Vision
               </h3>
               <p style={{ color: '#64748B', fontSize: '0.9375rem', lineHeight: 1.65, margin: 0 }}>
-                {companyVisionMission.vision.statement}
+                {visionText}
               </p>
             </div>
 
@@ -319,7 +330,7 @@ export const About: React.FC = () => {
                 Precision Delivery Mission
               </h3>
               <p style={{ color: '#64748B', fontSize: '0.9375rem', lineHeight: 1.65, margin: 0 }}>
-                {companyVisionMission.mission.statement}
+                {missionText}
               </p>
             </div>
 
@@ -472,26 +483,26 @@ export const About: React.FC = () => {
 
               <p style={{ color: '#475569', fontSize: '0.9375rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
                 <strong>Address:</strong><br />
-                {companyInfo.headquarters.address}
+                {address}
               </p>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '2rem', fontSize: '0.875rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', color: '#334155' }}>
                   <Phone size={16} style={{ color: '#C68A3D' }} />
-                  <a href={`tel:${companyInfo.headquarters.phone}`} style={{ color: 'inherit', textDecoration: 'none' }}>
-                    {companyInfo.headquarters.phone}
+                  <a href={`tel:${phone.replace(/\s+/g, '')}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                    {phone}
                   </a>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', color: '#334155' }}>
                   <MessageSquare size={16} style={{ color: '#059669' }} />
-                  <a href={`https://wa.me/${companyInfo.headquarters.whatsapp.replace(/[^0-9]/g, '')}`} target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>
-                    WhatsApp: {companyInfo.headquarters.whatsapp}
+                  <a href={`https://wa.me/${whatsapp.replace(/[^0-9]/g, '')}`} target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>
+                    WhatsApp: {whatsapp}
                   </a>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', color: '#334155' }}>
                   <Mail size={16} style={{ color: '#2563EB' }} />
-                  <a href={`mailto:${companyInfo.headquarters.email}`} style={{ color: 'inherit', textDecoration: 'none' }}>
-                    {companyInfo.headquarters.email}
+                  <a href={`mailto:${email}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                    {email}
                   </a>
                 </div>
               </div>

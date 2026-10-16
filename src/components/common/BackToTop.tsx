@@ -33,23 +33,23 @@ export const BackToTop: React.FC = () => {
         width: '46px',
         height: '46px',
         borderRadius: '50%',
-        backgroundColor: '#006C35',
+        backgroundColor: 'var(--color-primary-button, #18181B)',
         color: '#ffffff',
-        border: '1px solid rgba(212, 175, 55, 0.4)',
+        border: '1px solid rgba(245, 158, 11, 0.4)',
         cursor: 'pointer',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        boxShadow: '0 4px 12px rgba(0, 108, 53, 0.35)',
+        boxShadow: '0 4px 12px rgba(24, 24, 27, 0.35)',
         transition: 'all 180ms ease-out',
         zIndex: 1000,
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.backgroundColor = '#059669';
+        e.currentTarget.style.backgroundColor = '#27272A';
         e.currentTarget.style.transform = 'translateY(-2px)';
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.backgroundColor = '#006C35';
+        e.currentTarget.style.backgroundColor = '#18181B';
         e.currentTarget.style.transform = 'translateY(0)';
       }}
       aria-label="Back to top"

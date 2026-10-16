@@ -1,52 +1,10 @@
 import React from 'react';
 import { 
-  Code2, 
   GitBranch, 
   Cpu, 
-  Users, 
-  ArrowRight 
+  Users 
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { heroWorkspaceImg } from '../../assets/images';
-
-interface CapabilityCard {
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-  iconBg: string;
-  iconColor: string;
-}
-
-const capabilities: CapabilityCard[] = [
-  {
-    title: 'End-to-End Software Engineering',
-    description: 'Design, develop, integrate, and enhance robust software applications and digital solutions that address complex business requirements, improve operational performance, and support sustainable growth.',
-    icon: <Code2 size={22} />,
-    iconBg: '#EDE9FE',
-    iconColor: '#7C3AED',
-  },
-  {
-    title: 'Technology Modernization & Evolution',
-    description: 'Enhance existing systems, improve technical foundations, streamline development practices, and evolve software environments to strengthen reliability, maintainability, adaptability, and long-term business value.',
-    icon: <GitBranch size={22} />,
-    iconBg: '#D1FAE5',
-    iconColor: '#059669',
-  },
-  {
-    title: 'Business Process Optimization & Automation',
-    description: 'Transform business processes through intelligent workflow design, system integration, and targeted automation that reduces manual effort, improves operational efficiency, strengthens data consistency, and enables informed decision-making.',
-    icon: <Cpu size={22} />,
-    iconBg: '#FEF3C7',
-    iconColor: '#D97706',
-  },
-  {
-    title: 'Dedicated Engineering & Delivery Teams',
-    description: 'Extend your capabilities with skilled, cross-functional engineering professionals who collaborate with your organization to accelerate development, address technical challenges, maintain quality, and deliver on strategic objectives.',
-    icon: <Users size={22} />,
-    iconBg: '#E0F2FE',
-    iconColor: '#0284C7',
-  },
-];
 
 export const AboutSection: React.FC = () => {
   return (
@@ -97,8 +55,24 @@ export const AboutSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: Copy per Client Docs */}
+          {/* Right Column: Copy matching user reference image */}
           <div style={{ maxWidth: '620px' }}>
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                fontSize: '0.8125rem',
+                fontWeight: 700,
+                color: 'var(--color-brand-gold, #F59E0B)',
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase',
+                marginBottom: '0.875rem',
+              }}
+            >
+              &mdash; ABOUT AZAROTH TECHHIVE &mdash;
+            </div>
+
             <h2
               style={{
                 fontSize: 'clamp(2.25rem, 4.2vw, 3.25rem)',
@@ -109,15 +83,15 @@ export const AboutSection: React.FC = () => {
                 marginBottom: '1.5rem',
               }}
             >
-              Engineering Software.{' '}
+              Turning Ideas into{' '}
               <span
                 style={{
-                  background: 'linear-gradient(135deg, #4F46E5 0%, #4338CA 55%, #7C3AED 100%)',
+                  background: 'linear-gradient(135deg, var(--color-primary, #18181B) 0%, var(--color-accent, #7C3AED) 50%, var(--color-brand-gold, #F59E0B) 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                 }}
               >
-                Enabling Progress.
+                Digital Reality
               </span>
             </h2>
 
@@ -126,214 +100,94 @@ export const AboutSection: React.FC = () => {
                 fontSize: '1.0625rem',
                 color: 'var(--color-text-secondary, #4B5563)',
                 lineHeight: 1.75,
-                marginBottom: '1.25rem',
+                marginBottom: '1.5rem',
               }}
             >
-              Azaroth Tech-Hive delivers practical software engineering solutions that help businesses overcome technical challenges, improve operations, and turn ideas into dependable digital products. We work across the software lifecycle&mdash;from developing applications and integrating systems to enhancing existing solutions and addressing complex technical requirements. Our approach combines thoughtful problem-solving, sound engineering principles, and a clear understanding of each project&apos;s goals.
+              At Azaroth Techhive, we are passionate about technology and driven by a simple goal &mdash; to help businesses build smarter, stronger and more innovative digital solutions. With a team of skilled professionals and a client-first approach, we bring your vision to life, one line of code at a time.
             </p>
 
-            <p
+            {/* 3 Metric Pills from reference image */}
+            <div
               style={{
-                fontSize: '1.0625rem',
-                color: 'var(--color-text-secondary, #4B5563)',
-                lineHeight: 1.75,
-                marginBottom: '2rem',
+                display: 'flex',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                gap: '1.5rem',
+                margin: '2rem 0',
+                paddingTop: '1.25rem',
+                borderTop: '1px solid #E2E8F0',
               }}
             >
-              From initial discovery and solution design to development, testing, deployment, and ongoing support, we focus on building software that is reliable, secure, maintainable, and ready to evolve. We prioritise code quality, performance, usability, and long-term adaptability, ensuring every solution serves a meaningful purpose without introducing unnecessary complexity. Whether creating something new or improving what already exists, we help businesses make better use of technology and build a strong foundation for future opportunities.
-            </p>
-
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-              <Link
-                to="/about"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  fontSize: '0.9375rem',
-                  fontWeight: 600,
-                  color: 'var(--color-link-main, #4338CA)',
-                  textDecoration: 'none',
-                }}
-                className="hover:gap-3"
-              >
-                <span>Read more about our vision &amp; values</span>
-                <ArrowRight size={15} />
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* 4 Capabilities ("Try Dynamic Design") */}
-        <div style={{ marginBottom: '4.5rem' }}>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: '1.5rem',
-            }}
-          >
-            {capabilities.map((cap, idx) => (
-              <div
-                key={idx}
-                style={{
-                  backgroundColor: 'var(--color-canvas-card, #FFFFFF)',
-                  borderRadius: '1.25rem',
-                  padding: '2rem 1.75rem',
-                  border: '1px solid var(--color-border, #E0E7FF)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  transition: 'all 240ms cubic-bezier(0.16, 1, 0.3, 1)',
-                }}
-                className="hover:-translate-y-1 hover:shadow-lg hover:border-indigo-300"
-              >
+              {/* Metric 1 */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                 <div
                   style={{
-                    width: '3.25rem',
-                    height: '3.25rem',
-                    borderRadius: '12px',
-                    backgroundColor: cap.iconBg,
-                    color: cap.iconColor,
+                    width: '42px',
+                    height: '42px',
+                    borderRadius: '50%',
+                    backgroundColor: '#EDE9FE',
+                    color: '#7C3AED',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    marginBottom: '1.25rem',
-                  }}
-                >
-                  {cap.icon}
-                </div>
-
-                <h3
-                  style={{
-                    fontSize: '1.2rem',
+                    fontSize: '1rem',
                     fontWeight: 700,
-                    color: '#1E293B',
-                    marginBottom: '0.75rem',
-                    lineHeight: 1.3,
                   }}
                 >
-                  {cap.title}
-                </h3>
+                  <Users size={19} />
+                </div>
+                <div>
+                  <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1E293B', lineHeight: 1.1 }}>5+</div>
+                  <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 500 }}>Years of Experience</div>
+                </div>
+              </div>
 
-                <p
+              {/* Metric 2 */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <div
                   style={{
-                    fontSize: '0.9375rem',
-                    color: '#64748B',
-                    lineHeight: 1.65,
-                    margin: 0,
+                    width: '42px',
+                    height: '42px',
+                    borderRadius: '50%',
+                    backgroundColor: '#D1FAE5',
+                    color: '#059669',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1rem',
+                    fontWeight: 700,
                   }}
                 >
-                  {cap.description}
-                </p>
+                  <GitBranch size={19} />
+                </div>
+                <div>
+                  <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1E293B', lineHeight: 1.1 }}>50+</div>
+                  <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 500 }}>Projects Delivered</div>
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Dynamic & Responsive Metrics / Trust Banner ("Try NewDesign") */}
-        <div
-          style={{
-            background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)',
-            borderRadius: '24px',
-            padding: '3rem 2.5rem',
-            border: '1px solid rgba(198, 138, 61, 0.35)',
-            boxShadow: '0 20px 45px -10px rgba(15, 23, 42, 0.25)',
-            color: '#FFFFFF',
-          }}
-        >
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-              gap: '2.5rem',
-              alignItems: 'center',
-            }}
-          >
-            {/* Metric 1 */}
-            <div style={{ textAlign: 'center' }}>
-              <div
-                style={{
-                  fontSize: 'clamp(2.5rem, 4vw, 3.25rem)',
-                  fontWeight: 800,
-                  color: '#C68A3D',
-                  lineHeight: 1,
-                  marginBottom: '0.5rem',
-                  fontFamily: 'serif',
-                }}
-              >
-                95%
-              </div>
-              <div style={{ fontSize: '1.125rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.25rem' }}>
-                Client Satisfaction
-              </div>
-              <div style={{ fontSize: '0.8125rem', color: '#94A3B8', lineHeight: 1.5 }}>
-                Focused on client expectations and outcomes
-              </div>
-            </div>
-
-            {/* Metric 2 */}
-            <div style={{ textAlign: 'center' }}>
-              <div
-                style={{
-                  fontSize: 'clamp(2.5rem, 4vw, 3.25rem)',
-                  fontWeight: 800,
-                  color: '#10B981',
-                  lineHeight: 1,
-                  marginBottom: '0.5rem',
-                  fontFamily: 'serif',
-                }}
-              >
-                100%
-              </div>
-              <div style={{ fontSize: '1.125rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.25rem' }}>
-                Commitment to Quality
-              </div>
-              <div style={{ fontSize: '0.8125rem', color: '#94A3B8', lineHeight: 1.5 }}>
-                Quality-driven engineering practices
-              </div>
-            </div>
-
-            {/* Metric 3 */}
-            <div style={{ textAlign: 'center' }}>
-              <div
-                style={{
-                  fontSize: 'clamp(2.5rem, 4vw, 3.25rem)',
-                  fontWeight: 800,
-                  color: '#38BDF8',
-                  lineHeight: 1,
-                  marginBottom: '0.5rem',
-                  fontFamily: 'serif',
-                }}
-              >
-                90%
-              </div>
-              <div style={{ fontSize: '1.125rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.25rem' }}>
-                On-Time Delivery
-              </div>
-              <div style={{ fontSize: '0.8125rem', color: '#94A3B8', lineHeight: 1.5 }}>
-                360&deg; Software Engineering
-              </div>
-            </div>
-
-            {/* Metric 4 */}
-            <div style={{ textAlign: 'center' }}>
-              <div
-                style={{
-                  fontSize: 'clamp(2rem, 3.5vw, 2.75rem)',
-                  fontWeight: 800,
-                  color: '#A855F7',
-                  lineHeight: 1,
-                  marginBottom: '0.5rem',
-                  fontFamily: 'serif',
-                }}
-              >
-                Long-Term
-              </div>
-              <div style={{ fontSize: '1.125rem', fontWeight: 700, color: '#FFFFFF', marginBottom: '0.25rem' }}>
-                Client Partnerships
-              </div>
-              <div style={{ fontSize: '0.8125rem', color: '#94A3B8', lineHeight: 1.5 }}>
-                Built around continuity and evolving needs
+              {/* Metric 3 */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <div
+                  style={{
+                    width: '42px',
+                    height: '42px',
+                    borderRadius: '50%',
+                    backgroundColor: '#FEF3C7',
+                    color: '#D97706',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1rem',
+                    fontWeight: 700,
+                  }}
+                >
+                  <Cpu size={19} />
+                </div>
+                <div>
+                  <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-text-primary, #1E293B)', lineHeight: 1.1 }}>30+</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted, #64748B)', fontWeight: 500 }}>Happy Clients</div>
+                </div>
               </div>
             </div>
           </div>

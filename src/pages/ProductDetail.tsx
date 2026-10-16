@@ -17,6 +17,7 @@ import { Card } from '../components/common/Card';
 import { Badge } from '../components/common/Badge';
 import { Button } from '../components/common/Button';
 import { SEOHead } from '../components/common/SEOHead';
+import { ProductStatusBadge } from '../components/common/ProductStatusBadge';
 
 export const ProductDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -97,9 +98,10 @@ export const ProductDetail: React.FC = () => {
             </div>
 
             <div>
-              <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.25rem' }}>
+              <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.375rem', alignItems: 'center', flexWrap: 'wrap' }}>
                 <Badge variant="gold">{product.category}</Badge>
-                {product.badge && <Badge variant="gold">{product.badge}</Badge>}
+                {product.badge && product.badge !== 'Under Development' && <Badge variant="gold">{product.badge}</Badge>}
+                <ProductStatusBadge status={product.status || 'Under Development'} size="md" />
               </div>
               <h1 style={{ fontSize: 'clamp(2.25rem, 4vw, 3.25rem)', color: 'var(--color-text-primary)', margin: 0 }}>
                 {product.name}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import logoImg from '../../assets/Logo.png';
+import { useCMS } from '../../context/CMSContext';
 
 interface NavItem {
   name: string;
@@ -16,63 +17,61 @@ const navItems: NavItem[] = [
     isActive: (p) => p === '/',
   },
   {
-    name: 'About',
-    href: '/about',
-    isActive: (p) =>
-      p.startsWith('/about') ||
-      p === '/values' ||
-      p === '/delivery-framework',
-  },
-  {
-    name: 'Our Services',
+    name: 'Services',
     href: '/services',
     isActive: (p) => p.startsWith('/services'),
   },
   {
-    name: 'Our Products',
-    href: '/products',
-    isActive: (p) => p.startsWith('/products'),
+    name: 'About',
+    href: '/about',
+    isActive: (p) => p.startsWith('/about'),
   },
   {
-    name: 'Technology Insights',
-    href: '/technology-insights',
-    isActive: (p) =>
-      p.startsWith('/technology-insights') ||
-      p.startsWith('/resource-hub'),
+    name: 'Projects',
+    href: '/portfolio',
+    isActive: (p) => p.startsWith('/portfolio') || p.startsWith('/projects'),
   },
   {
-    name: 'Connect with Us',
+    name: 'Contact',
     href: '/connect-with-us',
-    isActive: (p) =>
-      p.startsWith('/connect-with-us') || p === '/contact',
+    isActive: (p) => p.startsWith('/connect-with-us') || p === '/contact',
   },
 ];
 
-const GOLD = '#B5A642';
-const GOLD_DARK = '#97872D';
-const MAROON = '#800020';
+const GOLD = 'var(--color-brand-gold, #F59E0B)';
+const GOLD_DARK = 'var(--color-brand-gold, #D97706)';
+const MAROON = 'var(--color-primary, #18181B)';
+const BRAND_PRIMARY = 'var(--color-primary, #18181B)';
 
-const rfqButtonStyle: React.CSSProperties = {
+const getStartedButtonStyle: React.CSSProperties = {
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
   gap: '0.5rem',
-  padding: '0.7rem 1.35rem',
+  padding: '0.625rem 1.4rem',
   borderRadius: '9999px',
-  background: 'linear-gradient(135deg, #B5A642 0%, #97872D 100%)',
-  color: '#FFFFFF',
-  fontWeight: 700,
+  background: 'transparent',
+  color: 'var(--color-brand-gold-text, var(--color-brand-gold, #F59E0B))',
+  fontWeight: 600,
   fontSize: '0.9375rem',
   textDecoration: 'none',
-  border: '1px solid #B5A642',
-  boxShadow: '0 4px 14px rgba(181, 166, 66, 0.35)',
+  border: '1.5px solid var(--color-brand-gold, #F59E0B)',
   transition: 'all 200ms ease-out',
 };
 
 export const Header: React.FC = () => {
+  const { navigation: cmsNavigation, settings } = useCMS();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+
+  const currentNavItems = (cmsNavigation && cmsNavigation.length > 0)
+    ? cmsNavigation.filter(item => item.isVisible).map(item => ({
+        name: item.label,
+        href: item.path,
+        isActive: (p: string) => p === item.path || (item.path !== '/' && p.startsWith(item.path)),
+      }))
+    : navItems;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -121,9 +120,9 @@ export const Header: React.FC = () => {
           : 'rgba(255, 255, 255, 0.95)',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
-        borderBottom: `1px solid rgba(181, 166, 66, 0.35)`,
+        borderBottom: `1px solid var(--color-border, #E4E4E7)`,
         boxShadow: isScrolled
-          ? '0 4px 20px -2px rgba(128, 0, 32, 0.10)'
+          ? '0 4px 20px -2px rgba(24, 24, 27, 0.08)'
           : 'none',
         transition: 'all 200ms ease-out',
       }}
@@ -152,14 +151,14 @@ export const Header: React.FC = () => {
           }}
         >
           <img
-            src={logoImg}
-            alt="Azaroth Tech-Hive Logo"
+            src={settings?.logoUrl || logoImg}
+            alt={settings?.companyName || "Azaroth Tech-Hive Logo"}
             style={{
-              width: '2.5rem',
-              height: '2.5rem',
+              maxHeight: '2.5rem',
+              maxWidth: '8rem',
               objectFit: 'contain',
               flexShrink: 0,
-              filter: 'drop-shadow(0 2px 4px rgba(181, 166, 66, 0.25))',
+              filter: 'drop-shadow(0 2px 4px rgba(24, 24, 27, 0.15))',
             }}
           />
 
@@ -196,7 +195,7 @@ export const Header: React.FC = () => {
           aria-label="Primary Navigation"
           className="hidden md:flex items-center gap-5 lg:gap-7"
         >
-          {navItems.map((item) => {
+          {currentNavItems.map((item) => {
             const active = item.isActive(location.pathname);
 
             return (
@@ -207,7 +206,7 @@ export const Header: React.FC = () => {
                 style={{
                   fontSize: '0.9375rem',
                   fontWeight: active ? 700 : 600,
-                  color: active ? MAROON : '#374151',
+                  color: active ? BRAND_PRIMARY : '#374151',
                   padding: '0.65rem 0.25rem',
                   textDecoration: 'none',
                   position: 'relative',
@@ -219,7 +218,7 @@ export const Header: React.FC = () => {
               >
                 <span>{item.name}</span>
 
-                {/* Maroon-to-gold active navigation line */}
+                {/* Dynamic brand gradient navigation indicator */}
                 <span
                   aria-hidden="true"
                   style={{
@@ -227,10 +226,8 @@ export const Header: React.FC = () => {
                     bottom: '-2px',
                     left: 0,
                     right: 0,
-                    height: '3px',
-                    background: active
-                      ? `linear-gradient(90deg, ${MAROON} 0%, ${GOLD} 100%)`
-                      : `linear-gradient(90deg, ${MAROON} 0%, ${GOLD} 100%)`,
+                    height: '2.5px',
+                    background: 'var(--color-brand-gold, #F59E0B)',
                     borderRadius: '2px',
                     transform: active ? 'scaleX(1)' : 'scaleX(0)',
                     transformOrigin: 'left',
@@ -253,12 +250,12 @@ export const Header: React.FC = () => {
           }}
         >
           <Link
-            to="/request-for-quote"
-            style={rfqButtonStyle}
-            className="azaroth-rfq-button"
+            to="/connect-with-us"
+            style={getStartedButtonStyle}
+            className="hover:opacity-90 hover:shadow-sm"
           >
-            <span>Request for Quote</span>
-            <ArrowRight size={16} />
+            <span>Get Started</span>
+            <ArrowRight size={15} />
           </Link>
 
           {/* Mobile Menu Toggle */}
@@ -308,7 +305,7 @@ export const Header: React.FC = () => {
             }}
             onClick={(event) => event.stopPropagation()}
           >
-            {navItems.map((item) => {
+            {currentNavItems.map((item) => {
               const active = item.isActive(location.pathname);
 
               return (
@@ -321,9 +318,9 @@ export const Header: React.FC = () => {
                     borderRadius: '8px',
                     fontWeight: active ? 700 : 600,
                     fontSize: '1rem',
-                    color: active ? MAROON : '#374151',
+                    color: active ? BRAND_PRIMARY : '#374151',
                     backgroundColor: active
-                      ? 'rgba(181, 166, 66, 0.12)'
+                      ? 'rgba(24, 24, 27, 0.06)'
                       : 'transparent',
                     textDecoration: 'none',
                     display: 'flex',
@@ -343,7 +340,7 @@ export const Header: React.FC = () => {
                         width: '7px',
                         height: '7px',
                         borderRadius: '50%',
-                        backgroundColor: GOLD,
+                        backgroundColor: BRAND_PRIMARY,
                       }}
                     />
                   )}
@@ -354,21 +351,21 @@ export const Header: React.FC = () => {
             <div
               style={{
                 height: '1px',
-                backgroundColor: 'rgba(181, 166, 66, 0.35)',
+                backgroundColor: 'var(--color-border, #E4E4E7)',
                 margin: '0.75rem 0',
               }}
             />
 
             <Link
-              to="/request-for-quote"
+              to="/connect-with-us"
               style={{
-                ...rfqButtonStyle,
+                ...getStartedButtonStyle,
                 width: '100%',
                 boxSizing: 'border-box',
               }}
-              className="azaroth-rfq-button"
+              className="hover:opacity-90"
             >
-              <span>Request for Quote</span>
+              <span>Get Started</span>
               <ArrowRight size={16} />
             </Link>
           </nav>
@@ -378,7 +375,7 @@ export const Header: React.FC = () => {
       {/* Theme-matched hover and keyboard focus styles */}
       <style>{`
         .azaroth-nav-link:hover {
-          color: ${MAROON} !important;
+          color: ${BRAND_PRIMARY} !important;
         }
 
         .azaroth-nav-link:hover .azaroth-nav-indicator {
@@ -387,14 +384,14 @@ export const Header: React.FC = () => {
 
         .azaroth-nav-link:focus-visible,
         .azaroth-rfq-button:focus-visible {
-          outline: 3px solid #4F46E5;
+          outline: 3px solid var(--color-primary, #18181B);
           outline-offset: 4px;
         }
 
         .azaroth-rfq-button:hover {
-          background: linear-gradient(135deg, #97872D 0%, #7d6c24 100%) !important;
-          border-color: #97872D !important;
-          box-shadow: 0 6px 18px rgba(181, 166, 66, 0.3) !important;
+          background: var(--color-primary-button-hover, #27272A) !important;
+          border-color: #27272A !important;
+          box-shadow: 0 6px 18px rgba(24, 24, 27, 0.3) !important;
           transform: translateY(-1px);
         }
 

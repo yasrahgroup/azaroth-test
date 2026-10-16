@@ -5,10 +5,24 @@ import { Button } from '../common/Button';
 import { ArrowRight, Calendar, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { insightsArticles } from '../../data/insightsData';
-
-const articles = insightsArticles.slice(0, 3);
+import { useCMS } from '../../context/CMSContext';
 
 export const BlogSection: React.FC = () => {
+  const { insights: cmsInsights } = useCMS();
+  const displayArticles = (cmsInsights && cmsInsights.length > 0)
+    ? cmsInsights.slice(0, 3).map((ins, idx) => {
+        const match = insightsArticles.find(ia => ia.slug === ins.slug || ia.id === ins.id);
+        return {
+          id: ins.slug || ins.id || `art-${idx}`,
+          title: ins.title,
+          slug: ins.slug || `insight-${idx}`,
+          category: ins.category || match?.category || 'System Architecture',
+          readTime: ins.readTime || (ins as any).read_time || match?.readTime || '6 min read',
+          excerpt: ins.excerpt || match?.excerpt || '',
+          publishedDate: ins.publishedDate || (ins as any).published_date || match?.publishedDate || 'October 2026',
+        };
+      })
+    : insightsArticles.slice(0, 3);
   return (
     <section style={{
       backgroundColor: 'var(--color-canvas-bg)',
@@ -52,7 +66,7 @@ export const BlogSection: React.FC = () => {
           gap: '2rem',
           marginBottom: '3rem',
         }}>
-          {articles.map((article, index) => (
+          {displayArticles.map((article: any, index: number) => (
             <motion.div
               key={article.id}
               initial={{ opacity: 0, y: 30 }}

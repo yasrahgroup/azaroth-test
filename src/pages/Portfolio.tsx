@@ -14,6 +14,7 @@ import {
   creativePortfolioImg 
 } from '../assets/images';
 import { productsCatalog } from '../data/productsData';
+import { useCMS } from '../context/CMSContext';
 
 interface CaseStudy {
   id: string;
@@ -71,6 +72,29 @@ const caseStudies: CaseStudy[] = [
 
 export const Portfolio: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'all' | 'projects' | 'platforms'>('all');
+  const { portfolio: cmsPortfolio } = useCMS();
+
+  const effectiveCaseStudies = (cmsPortfolio && cmsPortfolio.length > 0)
+    ? cmsPortfolio.map((p, idx) => {
+        const match = caseStudies.find(cs => cs.id === p.slug || cs.id === p.id);
+        return {
+          id: p.slug || p.id || `proj-${idx}`,
+          title: p.title || p.name || match?.title || 'Enterprise Case Study',
+          categories: (p as any).categories || p.category || match?.categories || 'Engineering Case Study',
+          image: p.coverImage || (p as any).cover_image || match?.image || ecommercePlatformImg,
+          description: p.description || p.summary || match?.description || '',
+          metrics: p.metrics && Array.isArray(p.metrics) && p.metrics.length > 0
+            ? p.metrics
+            : (match?.metrics || ['Sub-second Page Transitions', 'Synchronized Omnichannel Inventory']),
+          client: p.client || p.clientName || match?.client || 'Enterprise Partner',
+          techStack: p.techStack && Array.isArray(p.techStack) && p.techStack.length > 0
+            ? p.techStack
+            : (p.technologies && Array.isArray(p.technologies) && p.technologies.length > 0
+              ? p.technologies
+              : (match?.techStack || ['React', 'TypeScript', 'PostgreSQL'])),
+        };
+      })
+    : caseStudies;
 
   return (
     <div>
@@ -234,7 +258,7 @@ export const Portfolio: React.FC = () => {
                 margin: '0 auto',
               }}
             >
-              {caseStudies.map((study) => (
+              {effectiveCaseStudies.map((study: any) => (
                 <div
                   key={study.id}
                   id={study.id}
@@ -313,7 +337,7 @@ export const Portfolio: React.FC = () => {
                         borderRadius: '10px',
                       }}
                     >
-                      {study.metrics.map((metric, i) => (
+                      {study.metrics.map((metric: string, i: number) => (
                         <div
                           key={i}
                           style={{
@@ -333,7 +357,7 @@ export const Portfolio: React.FC = () => {
 
                     {/* Tech Stack Pills */}
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem', marginBottom: '1.5rem' }}>
-                      {study.techStack.map((tech, i) => (
+                      {study.techStack.map((tech: string, i: number) => (
                         <span
                           key={i}
                           style={{

@@ -6,13 +6,18 @@ import App from './App';
 // Import Design System
 import './styles/global.css';
 
+// Import CMS Provider
+import { CMSProvider } from './context/CMSContext';
+
 const rootElement = document.getElementById('root');
 
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>
       <HelmetProvider>
-        <App />
+        <CMSProvider>
+          <App />
+        </CMSProvider>
       </HelmetProvider>
     </React.StrictMode>
   );

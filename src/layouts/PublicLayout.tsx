@@ -7,6 +7,7 @@ import { BackToTop } from '../components/common/BackToTop';
 import { ErrorBoundary } from '../components/common/ErrorBoundary';
 import { Chatbot } from '../components/common/Chatbot';
 import { CustomCursor } from '../components/common/CustomCursor';
+import { AdminFloatingBadge } from '../components/common/AdminFloatingBadge';
 
 const RouteEffects: React.FC = () => {
   const { pathname, hash } = useLocation();
@@ -51,7 +52,7 @@ export const PublicLayout: React.FC = () => {
             top: 0,
             zIndex: 200,
             padding: '0.75rem 1.25rem',
-            backgroundColor: 'var(--color-primary-button, #4F46E5)',
+            backgroundColor: 'var(--color-primary-button, #18181B)',
             color: '#ffffff',
             fontWeight: 700,
             textDecoration: 'none',
@@ -81,6 +82,7 @@ export const PublicLayout: React.FC = () => {
         <BackToTop />
         <Chatbot />
         <CustomCursor />
+        <AdminFloatingBadge />
       </div>
     </MotionConfig>
   );

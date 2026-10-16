@@ -1,46 +1,47 @@
 :root {
   /* ============================================================
-     RECOMMENDED USAGE ACROSS THE SITE (SITE DESIGN TOKENS)
-     - Primary buttons: Indigo #4F46E5
-     - Main links and active navigation: Indigo #4338CA
-     - Page backgrounds: White #FFFFFF or Indigo #F5F3FF
-     - Success messages: Emerald #047857
-     - Premium features: Violet #7C3AED
-     - Alerts and highlights: Rose #E11D48
-     - Warnings and rewards: Amber #D97706
-     - Main text: Slate #1F2937
-     - Borders and dividers: Indigo #E0E7FF
+     AZAROTH TECH-HIVE DESIGN SYSTEM TOKENS
+     - Executive Palette: Obsidian Luxe & Warm Amber
+     - Primary brand & action buttons: Deep Obsidian #18181B
+     - Main links and active navigation: Deep Obsidian #18181B
+     - Amber / Gold highlights & indicator: Warm Amber #F59E0B
+     - Page backgrounds: Clean Canvas White #FFFFFF / Off-White #FAFAFA
+     - Success messages & SLAs: Emerald #047857
+     - Alert & emphasis: Crimson Rose #E11D48
+     - Warnings: Amber #D97706
+     - Main text: Executive Slate #0F172A
+     - Neutral borders & dividers: Zinc Slate #E4E4E7
      ============================================================ */
 
-  /* --- 1. PRIMARY BUTTONS --- */
-  --color-primary-button: #4F46E5;
-  --color-primary-button-hover: #4338CA;
-  --color-primary-button-active: #3730A3;
+  /* --- 1. PRIMARY BUTTONS & ACTIONS (OBSIDIAN) --- */
+  --color-primary-button: #18181B;
+  --color-primary-button-hover: #27272A;
+  --color-primary-button-active: #09090B;
   --color-primary-button-text: #FFFFFF;
-  --shadow-primary-button: 0 4px 14px 0 rgba(79, 70, 229, 0.35);
-  --shadow-primary-button-lg: 0 10px 25px -4px rgba(79, 70, 229, 0.45);
+  --shadow-primary-button: 0 4px 14px 0 rgba(24, 24, 27, 0.22);
+  --shadow-primary-button-lg: 0 10px 25px -4px rgba(24, 24, 27, 0.32);
 
   /* --- 2. MAIN LINKS & ACTIVE NAVIGATION --- */
-  --color-link-main: #4338CA;
-  --color-link-hover: #3730A3;
-  --color-link-active: #312E81;
-  --color-nav-active: #4338CA;
-  --color-nav-active-bg: #F5F3FF;
-  --color-nav-indicator: #4338CA;
+  --color-link-main: #18181B;
+  --color-link-hover: #D97706;
+  --color-link-active: #B45309;
+  --color-nav-active: #18181B;
+  --color-nav-active-bg: #F4F4F5;
+  --color-nav-indicator: #F59E0B;
 
   /* --- 3. PAGE BACKGROUNDS & SURFACES --- */
   --color-white: #FFFFFF;
   --color-bg-white: #FFFFFF;
-  --color-bg-indigo-soft: #F5F3FF;
+  --color-bg-indigo-soft: #F4F4F5;
   --color-canvas-bg: #FFFFFF;
   --color-canvas-card: #FFFFFF;
-  --color-canvas-muted: #F5F3FF;
+  --color-canvas-muted: #FAFAFA;
   --color-canvas-subtle: #F8FAFC;
-  --color-surface-soft: #F5F3FF;
-  --color-surface-muted: #F8FAFC;
+  --color-surface-soft: #F4F4F5;
+  --color-surface-muted: #FAFAFA;
   --color-surface-subtle: #F1F5F9;
 
-  /* --- 4. SUCCESS MESSAGES --- */
+  /* --- 4. SUCCESS MESSAGES & SLAS --- */
   --color-success: #047857;
   --color-success-hover: #065F46;
   --color-success-light: #ECFDF5;
@@ -50,17 +51,26 @@
   --shadow-emerald: 0 4px 14px 0 rgba(4, 120, 87, 0.2);
   --shadow-emerald-lg: 0 12px 28px -4px rgba(4, 120, 87, 0.25);
 
-  /* --- 5. PREMIUM FEATURES --- */
-  --color-premium: #7C3AED;
-  --color-premium-hover: #6D28D9;
-  --color-premium-light: #EDE9FE;
-  --color-premium-lighter: #F5F3FF;
-  --color-premium-text: #6D28D9;
-  --color-premium-border: #DDD6FE;
-  --shadow-violet: 0 4px 14px 0 rgba(124, 58, 237, 0.25);
-  --shadow-violet-lg: 0 12px 28px -4px rgba(124, 58, 237, 0.3);
+  /* --- 5. WARM AMBER / PRESTIGE ACCENTS --- */
+  --color-brand-gold: #F59E0B;
+  --color-brand-gold-hover: #D97706;
+  --color-brand-gold-light: #FEF3C7;
+  --color-brand-gold-lighter: #FFFBEB;
+  --color-brand-gold-text: #B45309;
+  --color-brand-gold-border: #FDE68A;
+  --color-brand-gold-shadow: rgba(245, 158, 11, 0.2);
+  --color-brand-gold-glow: rgba(245, 158, 11, 0.3);
 
-  /* --- 6. ALERTS & HIGHLIGHTS --- */
+  --color-premium: #F59E0B;
+  --color-premium-hover: #D97706;
+  --color-premium-light: #FEF3C7;
+  --color-premium-lighter: #FFFBEB;
+  --color-premium-text: #B45309;
+  --color-premium-border: #FDE68A;
+  --shadow-gold: 0 4px 14px 0 rgba(245, 158, 11, 0.25);
+  --shadow-gold-lg: 0 12px 28px -4px rgba(245, 158, 11, 0.3);
+
+  /* --- 6. ALERTS & HIGHLIGHTS (ROSE CRIMSON) --- */
   --color-alert: #E11D48;
   --color-alert-hover: #BE123C;
   --color-alert-light: #FFE4E6;
@@ -73,7 +83,7 @@
   --color-danger-border: #FECDD3;
   --shadow-rose: 0 4px 14px 0 rgba(225, 29, 72, 0.2);
 
-  /* --- 7. WARNINGS & REWARDS --- */
+  /* --- 7. WARNINGS & REWARDS (AMBER) --- */
   --color-warning: #D97706;
   --color-warning-hover: #B45309;
   --color-warning-light: #FEF3C7;
@@ -83,55 +93,55 @@
   --shadow-amber: 0 4px 14px 0 rgba(217, 119, 6, 0.2);
 
   /* --- 8. MAIN TEXT & TYPOGRAPHY COLORS --- */
-  --color-text-primary: #1F2937;
-  --color-text-secondary: #4B5563;
-  --color-text-tertiary: #9CA3AF;
-  --color-text-muted: #6B7280;
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #334155;
+  --color-text-tertiary: #64748B;
+  --color-text-muted: #64748B;
   --color-text-inverse: #FFFFFF;
   --color-text-on-primary: #FFFFFF;
 
   /* --- 9. BORDERS & DIVIDERS --- */
-  --color-border: #E0E7FF;
-  --color-border-subtle: #E0E7FF;
-  --color-border-medium: #C7D2FE;
-  --color-border-strong: #A5B4FC;
+  --color-border: #E4E4E7;
+  --color-border-subtle: #E4E4E7;
+  --color-border-medium: #CBD5E1;
+  --color-border-strong: #94A3B8;
 
   /* --- SYSTEM ALIASES FOR CONSISTENCY ACROSS EXISTING COMPONENTS --- */
-  --color-primary: #4F46E5;
-  --color-primary-hover: #4338CA;
-  --color-primary-light: #EEF2FF;
-  --color-primary-lighter: #F5F3FF;
-  --color-primary-text: #4338CA;
-  --color-primary-border: #E0E7FF;
-  --color-primary-glow: rgba(79, 70, 229, 0.2);
-  --color-primary-shadow: rgba(79, 70, 229, 0.15);
+  --color-primary: #18181B;
+  --color-primary-hover: #27272A;
+  --color-primary-light: #F4F4F5;
+  --color-primary-lighter: #FAFAFA;
+  --color-primary-text: #18181B;
+  --color-primary-border: #E4E4E7;
+  --color-primary-glow: rgba(24, 24, 27, 0.2);
+  --color-primary-shadow: rgba(24, 24, 27, 0.15);
 
-  --color-brand-violet: #4F46E5;
-  --color-brand-violet-hover: #4338CA;
-  --color-brand-violet-light: #EEF2FF;
-  --color-brand-violet-lighter: #F5F3FF;
-  --color-brand-violet-text: #4338CA;
-  --color-brand-violet-border: #C7D2FE;
-  --color-brand-violet-shadow: rgba(79, 70, 229, 0.15);
-  --color-brand-violet-glow: rgba(79, 70, 229, 0.25);
+  --color-brand-emerald: #18181B;
+  --color-brand-emerald-hover: #27272A;
+  --color-brand-emerald-light: #F4F4F5;
+  --color-brand-emerald-lighter: #FAFAFA;
+  --color-brand-emerald-text: #18181B;
+  --color-brand-emerald-border: #E4E4E7;
+  --color-brand-emerald-shadow: rgba(24, 24, 27, 0.15);
+  --color-brand-emerald-glow: rgba(24, 24, 27, 0.2);
 
-  --color-brand-emerald: #047857;
-  --color-brand-emerald-hover: #065F46;
-  --color-brand-emerald-light: #ECFDF5;
-  --color-brand-emerald-lighter: #F0FDF4;
-  --color-brand-emerald-text: #047857;
-  --color-brand-emerald-border: #A7F3D0;
-  --color-brand-emerald-shadow: rgba(4, 120, 87, 0.15);
-  --color-brand-emerald-glow: rgba(4, 120, 87, 0.2);
+  --color-brand-violet: #18181B;
+  --color-brand-violet-hover: #27272A;
+  --color-brand-violet-light: #F4F4F5;
+  --color-brand-violet-lighter: #FAFAFA;
+  --color-brand-violet-text: #18181B;
+  --color-brand-violet-border: #E4E4E7;
+  --color-brand-violet-shadow: rgba(24, 24, 27, 0.15);
+  --color-brand-violet-glow: rgba(24, 24, 27, 0.2);
 
-  --color-brand-orange: #D97706;
-  --color-brand-orange-hover: #B45309;
+  --color-brand-orange: #F59E0B;
+  --color-brand-orange-hover: #D97706;
   --color-brand-orange-light: #FEF3C7;
   --color-brand-orange-lighter: #FFFBEB;
-  --color-brand-orange-text: #D97706;
+  --color-brand-orange-text: #B45309;
   --color-brand-orange-border: #FDE68A;
-  --color-brand-orange-shadow: rgba(217, 119, 6, 0.15);
-  --color-brand-orange-glow: rgba(217, 119, 6, 0.2);
+  --color-brand-orange-shadow: rgba(245, 158, 11, 0.15);
+  --color-brand-orange-glow: rgba(245, 158, 11, 0.2);
 
   --color-brand-magenta: #E11D48;
   --color-brand-magenta-hover: #BE123C;
@@ -142,58 +152,50 @@
   --color-brand-magenta-shadow: rgba(225, 29, 72, 0.15);
   --color-brand-magenta-glow: rgba(225, 29, 72, 0.2);
 
-  --color-brand-gold: #4F46E5;
-  --color-brand-gold-hover: #4338CA;
-  --color-brand-gold-light: #EEF2FF;
-  --color-brand-gold-lighter: #F5F3FF;
-  --color-brand-gold-text: #4338CA;
-  --color-brand-gold-border: #E0E7FF;
-  --color-brand-gold-shadow: rgba(79, 70, 229, 0.15);
-  --color-brand-gold-glow: rgba(79, 70, 229, 0.2);
-
-  /* Legacy brand tokens mapped directly to user recommended palette */
-  --color-primary-green: #4338CA;
-  --color-dark-forest: #1F2937;
-  --color-dark-maroon: #1F2937;
-  --color-gold-from: #4F46E5;
-  --color-gold-to: #4338CA;
+  /* Legacy brand tokens mapped directly to Azaroth identity */
+  --color-primary-green: #18181B;
+  --color-primary-maroon: #E11D48;
+  --color-dark-forest: #09090B;
+  --color-dark-maroon: #9F1239;
+  --color-gold-from: #F59E0B;
+  --color-gold-to: #D97706;
   --color-canvas-card-elevated: #FFFFFF;
 
-  --color-secondary: var(--color-brand-emerald);
-  --color-secondary-hover: var(--color-brand-emerald-hover);
-  --color-secondary-light: var(--color-brand-emerald-light);
-  --color-secondary-lighter: var(--color-brand-emerald-lighter);
-  --color-secondary-text: var(--color-brand-emerald-text);
-  --color-secondary-border: var(--color-brand-emerald-border);
-  --color-secondary-glow: var(--color-brand-emerald-glow);
-  --color-secondary-shadow: var(--color-brand-emerald-shadow);
+  --color-secondary: var(--color-brand-gold);
+  --color-secondary-hover: var(--color-brand-gold-hover);
+  --color-secondary-light: var(--color-brand-gold-light);
+  --color-secondary-lighter: var(--color-brand-gold-lighter);
+  --color-secondary-text: var(--color-brand-gold-text);
+  --color-secondary-border: var(--color-brand-gold-border);
+  --color-secondary-glow: var(--color-brand-gold-glow);
+  --color-secondary-shadow: var(--color-brand-gold-shadow);
 
-  --color-accent: var(--color-brand-orange);
-  --color-accent-hover: var(--color-brand-orange-hover);
-  --color-accent-light: var(--color-brand-orange-light);
-  --color-accent-lighter: var(--color-brand-orange-lighter);
-  --color-accent-text: var(--color-brand-orange-text);
-  --color-accent-border: var(--color-brand-orange-border);
-  --color-accent-glow: var(--color-brand-orange-glow);
-  --color-accent-shadow: var(--color-brand-orange-shadow);
+  --color-accent: var(--color-brand-magenta);
+  --color-accent-hover: var(--color-brand-magenta-hover);
+  --color-accent-light: var(--color-brand-magenta-light);
+  --color-accent-lighter: var(--color-brand-magenta-lighter);
+  --color-accent-text: var(--color-brand-magenta-text);
+  --color-accent-border: var(--color-brand-magenta-border);
+  --color-accent-glow: var(--color-brand-magenta-glow);
+  --color-accent-shadow: var(--color-brand-magenta-shadow);
 
-  --color-warm: #D97706;
-  --color-warm-hover: #B45309;
+  --color-warm: #F59E0B;
+  --color-warm-hover: #D97706;
   --color-warm-light: #FEF3C7;
   --color-warm-lighter: #FFFBEB;
-  --color-warm-text: #D97706;
+  --color-warm-text: #B45309;
   --color-warm-border: #FDE68A;
-  --color-warm-glow: rgba(217, 119, 6, 0.2);
-  --color-warm-shadow: rgba(217, 119, 6, 0.15);
+  --color-warm-glow: rgba(245, 158, 11, 0.2);
+  --color-warm-shadow: rgba(245, 158, 11, 0.15);
 
-  --color-luxury: #7C3AED;
-  --color-luxury-hover: #6D28D9;
-  --color-luxury-light: #EDE9FE;
-  --color-luxury-lighter: #F5F3FF;
-  --color-luxury-text: #6D28D9;
-  --color-luxury-border: #DDD6FE;
-  --color-luxury-glow: rgba(124, 58, 237, 0.2);
-  --color-luxury-shadow: rgba(124, 58, 237, 0.15);
+  --color-luxury: #F59E0B;
+  --color-luxury-hover: #D97706;
+  --color-luxury-light: #FEF3C7;
+  --color-luxury-lighter: #FFFBEB;
+  --color-luxury-text: #B45309;
+  --color-luxury-border: #FDE68A;
+  --color-luxury-glow: rgba(245, 158, 11, 0.2);
+  --color-luxury-shadow: rgba(245, 158, 11, 0.15);
 
   /* --- TYPOGRAPHY --- */
   --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -226,28 +228,26 @@
   --radius-full: 9999px;
 
   /* --- SHADOWS & ELEVATION --- */
-  --shadow-xs: 0 1px 2px 0 rgba(31, 41, 55, 0.04);
-  --shadow-sm: 0 2px 4px 0 rgba(31, 41, 55, 0.06);
-  --shadow-md: 0 4px 12px -2px rgba(31, 41, 55, 0.08);
-  --shadow-lg: 0 12px 24px -4px rgba(31, 41, 55, 0.12);
-  --shadow-xl: 0 20px 32px -8px rgba(31, 41, 55, 0.16);
-  --shadow-2xl: 0 25px 50px -12px rgba(31, 41, 55, 0.2);
+  --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 2px 4px 0 rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 24px -4px rgba(15, 23, 42, 0.12);
+  --shadow-xl: 0 20px 32px -8px rgba(15, 23, 42, 0.16);
+  --shadow-2xl: 0 25px 50px -12px rgba(15, 23, 42, 0.2);
 
   --shadow-primary: var(--shadow-primary-button);
   --shadow-primary-lg: var(--shadow-primary-button-lg);
-  --shadow-secondary: var(--shadow-emerald);
-  --shadow-accent: var(--shadow-amber);
+  --shadow-secondary: var(--shadow-gold);
+  --shadow-accent: var(--shadow-rose);
   --shadow-warm: var(--shadow-amber);
-  --shadow-luxury: var(--shadow-violet);
-  --shadow-gold: var(--shadow-primary-button);
-  --shadow-gold-lg: var(--shadow-primary-button-lg);
+  --shadow-luxury: var(--shadow-gold);
 
-  --shadow-glow-primary: 0 0 20px rgba(79, 70, 229, 0.35);
-  --shadow-glow-secondary: 0 0 20px rgba(4, 120, 87, 0.25);
-  --shadow-glow-accent: 0 0 20px rgba(217, 119, 6, 0.25);
+  --shadow-glow-primary: 0 0 20px rgba(24, 24, 27, 0.25);
+  --shadow-glow-secondary: 0 0 20px rgba(245, 158, 11, 0.25);
+  --shadow-glow-accent: 0 0 20px rgba(225, 29, 72, 0.25);
   --shadow-glow-warm: 0 0 20px rgba(217, 119, 6, 0.25);
-  --shadow-glow-luxury: 0 0 20px rgba(124, 58, 237, 0.25);
-  --shadow-glow-gold: 0 0 20px rgba(79, 70, 229, 0.35);
+  --shadow-glow-luxury: 0 0 20px rgba(245, 158, 11, 0.25);
+  --shadow-glow-gold: 0 0 20px rgba(245, 158, 11, 0.3);
 
   /* --- TRANSITIONS --- */
   --transition-fast: 120ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -280,12 +280,12 @@
   --text-7xl: 4.5rem;
 
   /* Neutral aliases */
-  --color-neutral-50: #F8FAFC;
-  --color-neutral-100: #F1F5F9;
-  --color-neutral-200: #E0E7FF;
+  --color-neutral-50: #FAFAFA;
+  --color-neutral-100: #F4F4F5;
+  --color-neutral-200: #E4E4E7;
   --color-neutral-300: #CBD5E1;
   --color-neutral-400: #94A3B8;
-  --color-neutral-900: #1F2937;
+  --color-neutral-900: #0F172A;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -300,8 +300,6 @@
 
 @media (forced-colors: active) {
   :root {
-    --color-brand-violet: CanvasText;
-    --color-brand-emerald: CanvasText;
     --color-brand-orange: CanvasText;
     --color-brand-magenta: CanvasText;
     --color-brand-gold: CanvasText;

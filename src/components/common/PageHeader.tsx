@@ -29,10 +29,11 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
           <span
             key={index}
             style={{
-              background: 'linear-gradient(135deg, #2563EB 0%, #10B981 100%)',
+              background: 'linear-gradient(135deg, var(--color-primary, #18181B) 0%, var(--color-accent, #7C3AED) 60%, var(--color-brand-gold, #F59E0B) 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
+              display: 'inline-block',
             }}
           >
             {part}
@@ -46,48 +47,76 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   return (
     <section
       style={{
-        backgroundColor: '#F3E8FF',
+        backgroundColor: 'var(--color-canvas-bg, #FFFFFF)',
         paddingTop: '5rem',
         paddingBottom: actions ? '4rem' : '5rem',
         position: 'relative',
         overflow: 'hidden',
+        borderBottom: '1px solid var(--color-border, #E2E8F0)',
       }}
       className="page-header-section"
     >
-      {/* Decorative circles in top left */}
+      {/* Decorative architectural background pattern */}
       <div
         style={{
           position: 'absolute',
-          top: '2rem',
-          left: '2rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: `
+            radial-gradient(circle at 20% 50%, rgba(24, 24, 27, 0.03) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.04) 0%, transparent 40%),
+            radial-gradient(circle at 40% 80%, rgba(24, 24, 27, 0.02) 0%, transparent 50%),
+            linear-gradient(135deg, rgba(24, 24, 27, 0.01) 0%, transparent 50%)
+          `,
+          pointerEvents: 'none',
         }}
-      >
-        {/* Dashed yellow circle */}
-        <div
-          style={{
-            width: '3rem',
-            height: '3rem',
-            borderRadius: '50%',
-            border: '2px dashed #FBBF24',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          {/* Small green circle */}
-          <div
-            style={{
-              width: '1rem',
-              height: '1rem',
-              borderRadius: '50%',
-              backgroundColor: '#10B981',
-            }}
-          />
-        </div>
-      </div>
+      />
+      {/* Grid pattern overlay */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: `
+            linear-gradient(rgba(24, 24, 27, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(24, 24, 27, 0.03) 1px, transparent 1px)
+          `,
+          backgroundSize: '40px 40px',
+          opacity: 0.5,
+          pointerEvents: 'none',
+        }}
+      />
+      {/* Floating brand ambient glows */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '10%',
+          right: '10%',
+          width: '300px',
+          height: '300px',
+          borderRadius: '50%',
+          background: 'linear-gradient(135deg, rgba(24, 24, 27, 0.05) 0%, rgba(245, 158, 11, 0.03) 100%)',
+          filter: 'blur(60px)',
+          pointerEvents: 'none',
+        }}
+      />
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '20%',
+          left: '5%',
+          width: '200px',
+          height: '200px',
+          borderRadius: '50%',
+          background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.05) 0%, rgba(24, 24, 27, 0.02) 100%)',
+          filter: 'blur(40px)',
+          pointerEvents: 'none',
+        }}
+      />
 
       <div
         className="container"
@@ -109,7 +138,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
             letterSpacing: '0.2em',
             textTransform: 'uppercase',
             marginBottom: '1rem',
-            color: '#2563EB',
+            color: 'var(--color-brand-gold, #F59E0B)',
             animation: 'fadeInUp 1s ease-out 0.3s forwards',
             opacity: 0,
           }}
@@ -123,7 +152,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
           style={{
             fontSize: 'clamp(2.5rem, 5vw, 3.75rem)',
             fontWeight: 800,
-            color: '#1E293B',
+            color: '#0F172A',
             lineHeight: 1.2,
             marginBottom: '1.25rem',
             animation: 'fadeInUp 1s ease-out 0.5s forwards',
@@ -139,7 +168,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
           <p
             style={{
               fontSize: '1.1875rem',
-              color: '#4B5563',
+              color: '#334155',
               lineHeight: 1.7,
               maxWidth: '720px',
               margin: '0 auto',

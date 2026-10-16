@@ -389,8 +389,8 @@ export const RfqWizard: React.FC = () => {
                     style={{
                       padding: '1.25rem',
                       borderRadius: 'var(--radius-lg)',
-                      border: isSelected ? '2px solid var(--color-primary-green, #006C35)' : '1px solid var(--color-border-medium)',
-                      backgroundColor: isSelected ? 'rgba(0, 108, 53, 0.06)' : '#ffffff',
+                      border: isSelected ? '2px solid var(--color-primary, #18181B)' : '1px solid var(--color-border-medium)',
+                      backgroundColor: isSelected ? 'rgba(24, 24, 27, 0.04)' : '#ffffff',
                       cursor: 'pointer',
                       display: 'flex',
                       flexDirection: 'column',
@@ -469,12 +469,12 @@ export const RfqWizard: React.FC = () => {
                       style={{
                         padding: '1rem',
                         borderRadius: 'var(--radius-md)',
-                        border: isSelected ? '2px solid var(--color-primary-green, #006C35)' : '1px solid var(--color-border-medium)',
-                        backgroundColor: isSelected ? 'rgba(0, 108, 53, 0.06)' : '#ffffff',
+                        border: isSelected ? '2px solid var(--color-primary, #18181B)' : '1px solid var(--color-border-medium)',
+                        backgroundColor: isSelected ? 'rgba(24, 24, 27, 0.04)' : '#ffffff',
                         cursor: 'pointer',
                         fontWeight: isSelected ? 700 : 500,
                         fontSize: '0.875rem',
-                        color: isSelected ? 'var(--color-primary-green, #006C35)' : 'var(--color-text-primary)',
+                        color: isSelected ? 'var(--color-primary, #18181B)' : 'var(--color-text-primary)',
                         textAlign: 'left',
                       }}
                     >
@@ -502,13 +502,13 @@ export const RfqWizard: React.FC = () => {
                       style={{
                         padding: '1rem',
                         borderRadius: 'var(--radius-md)',
-                        border: isSelected ? '2px solid var(--color-primary-green, #006C35)' : '1px solid var(--color-border-medium)',
-                        backgroundColor: isSelected ? 'rgba(0, 108, 53, 0.06)' : '#ffffff',
+                        border: isSelected ? '2px solid var(--color-primary, #18181B)' : '1px solid var(--color-border-medium)',
+                        backgroundColor: isSelected ? 'rgba(24, 24, 27, 0.04)' : '#ffffff',
                         cursor: 'pointer',
                         textAlign: 'center',
                         fontWeight: isSelected ? 700 : 500,
                         fontSize: '0.875rem',
-                        color: isSelected ? 'var(--color-primary-green, #006C35)' : 'var(--color-text-primary)',
+                        color: isSelected ? 'var(--color-primary, #18181B)' : 'var(--color-text-primary)',
                       }}
                     >
                       {time}
@@ -548,13 +548,13 @@ export const RfqWizard: React.FC = () => {
                       style={{
                         padding: '1rem',
                         borderRadius: 'var(--radius-md)',
-                        border: isSelected ? '2px solid var(--color-primary-green, #006C35)' : '1px solid var(--color-border-medium)',
-                        backgroundColor: isSelected ? 'rgba(0, 108, 53, 0.06)' : '#ffffff',
+                        border: isSelected ? '2px solid var(--color-primary, #18181B)' : '1px solid var(--color-border-medium)',
+                        backgroundColor: isSelected ? 'rgba(24, 24, 27, 0.04)' : '#ffffff',
                         cursor: 'pointer',
                         textAlign: 'center',
                         fontWeight: isSelected ? 700 : 500,
                         fontSize: '0.875rem',
-                        color: isSelected ? 'var(--color-primary-green, #006C35)' : 'var(--color-text-primary)',
+                        color: isSelected ? 'var(--color-primary, #18181B)' : 'var(--color-text-primary)',
                       }}
                     >
                       {b}

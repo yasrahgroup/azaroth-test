@@ -82,27 +82,10 @@ async function seedData() {
 
     console.log(`✅ Seeded ${contactSubmissions.length} contact submissions`);
 
-    // Create sample admin user (if needed)
-    const bcrypt = require('bcrypt');
-    const hashedPassword = await bcrypt.hash('admin123', 10);
-
-    const adminQuery = `
-      INSERT INTO users 
-      (email, password, first_name, last_name, role, is_active)
-      VALUES ($1, $2, $3, $4, $5, $6)
-      ON CONFLICT (email) DO NOTHING
-    `;
-
-    await pool.query(adminQuery, [
-      'admin@azaroth-techhive.com',
-      hashedPassword,
-      'Admin',
-      'User',
-      'super_admin',
-      true,
-    ]);
-
-    console.log('✅ Created admin user (password: admin123)');
+    // SECURITY NOTE: Admin user creation removed for production security.
+    // Use the bootstrap-admin.js script to create an admin account with a secure password.
+    // This script should only be run once in a controlled environment.
+    console.log('⚠️  Admin user not created by seed script. Run bootstrap-admin.js to create an admin account.');
 
     console.log('🎉 Database seeding complete!');
 

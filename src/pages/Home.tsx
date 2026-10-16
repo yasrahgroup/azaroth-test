@@ -11,47 +11,46 @@ import { BlogSection } from '../components/home/BlogSection';
 import { FAQSection } from '../components/home/FAQSection';
 import { FinalCTA } from '../components/home/FinalCTA';
 import { SEOHead } from '../components/common/SEOHead';
+import { useCMS } from '../context/CMSContext';
 
 export const Home: React.FC = () => {
+  const { settings } = useCMS();
+
+  const isModuleEnabled = (slug: string): boolean => {
+    if (!settings.modulesConfig) return true;
+    const mod = settings.modulesConfig.find((m) => m.slug === slug);
+    return mod ? mod.isEnabled : true;
+  };
+
   return (
     <div>
       <SEOHead
-        title="Azaroth Tech-Hive — Enterprise Technology Solutions & Engineering"
-        description="Azaroth Tech-Hive architects mission-critical digital systems, resilient microservice ecosystems, high-availability software platforms, and dedicated engineering pods for global enterprises."
+        title={settings.metaTitle || "Azaroth Tech-Hive — Enterprise Technology Solutions & Engineering"}
+        description={settings.metaDescription || "Azaroth Tech-Hive architects mission-critical digital systems, resilient microservice ecosystems, high-availability software platforms, and dedicated engineering pods for global enterprises."}
         canonicalPath="/"
       />
-      {/* 1. Hero banner with approved headline & CTAs */}
+      {/* 1. Hero banner matching reference */}
       <Hero />
 
-      {/* 2. Enterprise Software Solutions (Products in one row / responsive reflow) */}
-      <ProductsSection />
+      {/* 2. Comprehensive Digital Solutions (Our Services) */}
+      {isModuleEnabled('services') && <FeaturedSolutions />}
 
-      {/* 3. Comprehensive Digital Solutions (Our Services) */}
-      <FeaturedSolutions />
+      {/* 3. Turning Ideas into Digital Reality (About Azaroth Techhive) */}
+      {isModuleEnabled('about') && <AboutSection />}
 
-      {/* 4. Turning Ideas into Digital Reality (Company introduction & engineering capabilities) */}
-      <AboutSection />
+      {/* 4. Strategic Solutions & Featured Case Studies (Featured Projects) */}
+      {isModuleEnabled('portfolio') && <StrategicSolutions />}
 
-      {/* 5. Industrial Expertise across sectors */}
+      {/* 5. Client Partnerships & Perspectives (Testimonials) */}
+      {isModuleEnabled('testimonials') && <Testimonials />}
+
+      {/* Secondary Modular Capabilities (Configurable via Admin CMS) */}
+      {isModuleEnabled('products') && <ProductsSection />}
       <IndustryExpertise />
-
-      {/* 6. Strategic Solutions & Featured Case Studies */}
-      <StrategicSolutions />
-
-      {/* 7. Client Partnerships & Perspectives */}
-      <Testimonials />
-
-      {/* 8. Delivery Framework / How We Work Overview */}
-      <ProcessSection />
-
-      {/* 9. Resource Hub / Engineering Publications Highlights */}
-      <BlogSection />
-
-      {/* 10. Frequently Asked Questions */}
+      {isModuleEnabled('delivery-framework') && <ProcessSection />}
+      {isModuleEnabled('insights') && <BlogSection />}
       <FAQSection />
-
-      {/* 11. Final Conversion CTA */}
-      <FinalCTA />
+      {(isModuleEnabled('connect') || isModuleEnabled('rfq')) && <FinalCTA />}
     </div>
   );
 };

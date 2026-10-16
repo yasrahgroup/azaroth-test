@@ -14,6 +14,7 @@ import { Button } from '../components/common/Button';
 import { SEOHead } from '../components/common/SEOHead';
 import { PageHeader } from '../components/common/PageHeader';
 import { Link } from 'react-router-dom';
+import { useCMS } from '../context/CMSContext';
 
 interface ServiceDetail {
   id: string;
@@ -127,6 +128,39 @@ const detailedServices: ServiceDetail[] = [
 ];
 
 export const Services: React.FC = () => {
+  const { services: cmsServices } = useCMS();
+
+  const getServiceIcon = (name?: string) => {
+    switch (name?.toLowerCase()) {
+      case 'code2': case 'web development': case 'web': return <Code2 size={24} />;
+      case 'smartphone': case 'mobile applications': case 'mobile': return <Smartphone size={24} />;
+      case 'cloud': case 'cloud solutions': return <Cloud size={24} />;
+      case 'settings': case 'it consulting': return <Settings size={24} />;
+      case 'shieldcheck': case 'cybersecurity': return <ShieldCheck size={24} />;
+      case 'lightbulb': case 'ui/ux design': return <Lightbulb size={24} />;
+      default: return <Code2 size={24} />;
+    }
+  };
+
+  const effectiveServices = (cmsServices && cmsServices.length > 0)
+    ? cmsServices.map((s, idx) => {
+        const match = detailedServices.find(ds => ds.id === s.slug || ds.id === s.id);
+        return {
+          id: s.slug || s.id || `srv-${idx}`,
+          title: s.title,
+          category: (s as any).category || match?.category || 'Enterprise Engineering',
+          icon: getServiceIcon(s.iconName || s.icon_name || match?.title),
+          iconBg: match?.iconBg || (idx % 2 === 0 ? '#EDE9FE' : '#D1FAE5'),
+          iconColor: match?.iconColor || (idx % 2 === 0 ? '#7C3AED' : '#059669'),
+          description: s.description || s.shortDescription || s.summary || match?.description || '',
+          deliverables: s.capabilities && Array.isArray(s.capabilities) && s.capabilities.length > 0
+            ? s.capabilities.map((c: any) => typeof c === 'string' ? c : (c.title || c.description || JSON.stringify(c)))
+            : (match?.deliverables || ['End-to-end architecture delivery', 'Automated test suite coverage', 'Dedicated sprint cadence']),
+          sla: (s as any).sla || match?.sla || 'Standard Enterprise SLA',
+        };
+      })
+    : detailedServices;
+
   return (
     <div>
       <SEOHead
@@ -175,7 +209,7 @@ export const Services: React.FC = () => {
               margin: '0 auto',
             }}
           >
-            {detailedServices.map((service) => (
+            {effectiveServices.map((service: any) => (
               <div
                 key={service.id}
                 id={service.id}
@@ -240,7 +274,7 @@ export const Services: React.FC = () => {
                     Key Deliverables:
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    {service.deliverables.map((item, idx) => (
+                    {service.deliverables.map((item: string, idx: number) => (
                       <div key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', fontSize: '0.8125rem', color: '#475569' }}>
                         <CheckCircle2 size={15} style={{ color: '#059669', flexShrink: 0, marginTop: '0.15rem' }} />
                         <span>{item}</span>

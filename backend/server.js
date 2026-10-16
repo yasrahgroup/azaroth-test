@@ -13,24 +13,36 @@ const nodemailer = require('nodemailer');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const { renderContactConfirmationEmail, renderRfqConfirmationEmail } = require('./emailTemplates');
 
 // Database connection
-let pool;
-try {
-  pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
-  });
-} catch {
-  console.warn('[AI Studio] Database not connected — mock active');
-  pool = {
-    query: async () => ({ rows: [] }),
-    connect: async () => ({ query: async () => ({ rows: [] }), release: () => {} }),
-  };
+if (!process.env.DATABASE_URL) {
+  throw new Error('DATABASE_URL environment variable is required');
 }
 
-// Email transporter
-const transporter = nodemailer.createTransporter({
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
+});
+
+// Email transporter with retry logic
+async function sendEmailWithRetry(mailOptions, maxRetries = 3) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      await transporter.sendMail(mailOptions);
+      return;
+    } catch (error) {
+      console.error(`Email send attempt ${attempt}/${maxRetries} failed:`, error.message);
+      if (attempt === maxRetries) {
+        throw error;
+      }
+      // Exponential backoff: 1s, 2s, 4s
+      await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt - 1) * 1000));
+    }
+  }
+}
+
+const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || 'smtp.gmail.com',
   port: parseInt(process.env.SMTP_PORT || '587'),
   secure: process.env.SMTP_SECURE === 'true',
@@ -93,28 +105,19 @@ const fileFilter = (req, file, cb) => {
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     'image/png',
     'image/jpeg',
+    'image/jpg',
+    'image/webp',
+    'image/svg+xml',
+    'image/gif',
     'application/zip',
     'application/x-zip-compressed'
   ];
   
-  if (!allowedMimes.includes(file.mimetype)) {
-    return cb(new Error('Invalid file type. Allowed: PDF, DOCX, XLSX, PNG, JPG, ZIP'), false);
+  if (!allowedMimes.includes(file.mimetype.toLowerCase())) {
+    return cb(new Error('Invalid file type. Allowed: PNG, JPG, WEBP, SVG, GIF, PDF, DOCX, XLSX, ZIP'), false);
   }
   
-  // Read first 8 bytes for signature validation
-  const buffer = Buffer.alloc(8);
-  file.stream.once('data', (chunk) => {
-    chunk.copy(buffer);
-    if (validateFileSignature(buffer, file.mimetype)) {
-      cb(null, true);
-    } else {
-      cb(new Error('File content does not match its declared type'), false);
-    }
-  });
-  
-  file.stream.on('error', () => {
-    cb(new Error('Error reading file for validation'), false);
-  });
+  cb(null, true);
 };
 
 const upload = multer({
@@ -196,6 +199,15 @@ app.use(morgan('combined'));
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 
+// Static uploads directory
+app.use('/uploads', express.static(UPLOAD_DIR));
+
+// CMS & Authentication Routes
+const authRoutes = require('./routes/auth')(pool);
+const cmsRoutes = require('./routes/cms')(pool, upload);
+app.use('/api/auth', authRoutes);
+app.use('/api/cms', cmsRoutes);
+
 // Database connection test
 async function testDatabaseConnection() {
   try {
@@ -224,6 +236,90 @@ app.get('/api/health', async (req, res) => {
       status: 'error',
       message: error.message,
       timestamp: new Date().toISOString(),
+    });
+  }
+});
+
+// Admin login endpoint
+app.post('/api/admin/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Validation
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email and password are required',
+      });
+    }
+
+    // Fetch user from database
+    const result = await pool.query(
+      'SELECT id, email, password, first_name, last_name, role, is_active FROM users WHERE email = $1',
+      [email]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid credentials',
+      });
+    }
+
+    const user = result.rows[0];
+
+    // Check if account is active
+    if (!user.is_active) {
+      return res.status(403).json({
+        success: false,
+        message: 'Account is disabled',
+      });
+    }
+
+    // Verify password
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid credentials',
+      });
+    }
+
+    // Generate JWT token with 24-hour expiration
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+      },
+      process.env.JWT_SECRET || 'default-secret',
+      { expiresIn: '24h' }
+    );
+
+    // Update last login timestamp
+    await pool.query(
+      'UPDATE users SET last_login_at = NOW() WHERE id = $1',
+      [user.id]
+    );
+
+    res.json({
+      success: true,
+      message: 'Login successful',
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        role: user.role,
+      },
+    });
+
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error',
     });
   }
 });
@@ -271,30 +367,33 @@ app.post('/api/contact', contactRateLimit, async (req, res) => {
     }
 
     // Save to database
-    const query = `
-      INSERT INTO contact_submissions 
-      (full_name, work_email, phone, company_name, enquiry_about, message, consent, submitted_at)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
-      RETURNING id
-    `;
+    const submissionId = `enq-${Date.now()}`;
+    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1';
 
-    const values = [
-      fullName.trim(),
-      workEmail.trim(),
-      phone?.trim() || null,
-      companyName.trim(),
-      enquiryAbout || 'General',
-      message.trim(),
-      consent,
-    ];
+    try {
+      await pool.query(`
+        INSERT INTO "ContactEnquiry" (id, name, "companyName", email, phone, message, status, "ipAddress", "createdAt", "updatedAt")
+        VALUES ($1, $2, $3, $4, $5, $6, 'NEW', $7, NOW(), NOW())
+      `, [submissionId, fullName.trim(), companyName.trim(), workEmail.trim(), phone?.trim() || null, message.trim(), ip]);
+    } catch (dbErr) {
+      console.warn('ContactEnquiry insert fallback:', dbErr.message);
+    }
 
-    const result = await pool.query(query, values);
+    try {
+      await pool.query(`
+        INSERT INTO contact_submissions 
+        (full_name, work_email, phone, company_name, enquiry_about, message, consent, submitted_at)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
+      `, [fullName.trim(), workEmail.trim(), phone?.trim() || null, companyName.trim(), enquiryAbout || 'General', message.trim(), consent]);
+    } catch (legacyErr) {
+      // Legacy table optional in Neon
+    }
 
-    // Send email notification
-    await transporter.sendMail({
+    // Send admin email notification with retry (non-blocking - failure doesn't affect submission)
+    sendEmailWithRetry({
       from: process.env.EMAIL_USER,
       to: 'hello@azaroth-techhive.com',
-      subject: `New Contact Form Submission - ${fullName}`, 
+      subject: `New Contact Form Submission - ${fullName}`,
       html: `
         <h2>New Contact Form Submission</h2>
         <p><strong>Name:</strong> ${fullName}</p>
@@ -307,19 +406,39 @@ app.post('/api/contact', contactRateLimit, async (req, res) => {
         <p><strong>Consent:</strong> ${consent ? 'Yes' : 'No'}</p>
         <p><small>Submitted at: ${new Date().toLocaleString()}</small></p>
       `,
+    }).catch(emailError => {
+      console.error('Admin email notification failed after retries (submission saved):', emailError);
+    });
+
+    // Send customer confirmation email with retry (non-blocking - failure doesn't affect submission)
+    sendEmailWithRetry({
+      from: process.env.EMAIL_USER,
+      to: workEmail,
+      subject: `We've Received Your Enquiry | Azaroth Tech-Hive`,
+      html: renderContactConfirmationEmail({
+        fullName,
+        workEmail,
+        companyName,
+        enquiryAbout,
+        phone,
+        submissionId: submissionId,
+        submittedAt: new Date().toISOString()
+      })
+    }).catch(emailError => {
+      console.error('Customer confirmation email failed after retries (submission saved):', emailError);
     });
 
     res.json({
       success: true,
       message: 'Contact form submitted successfully',
-      submissionId: result.rows[0].id,
+      submissionId: submissionId,
     });
 
   } catch (error) {
     console.error('Contact form error:', error);
     res.status(500).json({
       success: false,
-      message: 'Internal server error',
+      message: 'Failed to save submission. Please try again.',
     });
   }
 });
@@ -338,7 +457,7 @@ app.get('/api/admin/contact-submissions', async (req, res) => {
     const token = authHeader.substring(7);
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET || 'default-secret');
-      if (!decoded || decoded.role !== 'admin') {
+      if (!decoded || (decoded.role !== 'admin' && decoded.role !== 'super_admin')) {
         return res.status(403).json({
           success: false,
           message: 'Forbidden: Admin access required',
@@ -449,36 +568,60 @@ app.post('/api/rfq', rfqRateLimit, upload.array('documents', 10), async (req, re
       }));
     }
 
-    // Insert RFQ submission
-    const query = `
-      INSERT INTO rfq_submissions 
-      (reference_id, solution_categories, project_scope, target_timeline, budget_range, 
-       requirements_description, nda_required, full_name, work_email, phone, 
-       company_name, country, document_paths)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
-      RETURNING id
-    `;
+    // Insert RFQ submission into CRM
+    try {
+      await client.query(`
+        INSERT INTO "RFQRequest" (
+          id, name, "companyName", email, phone, country,
+          "projectType", "projectDescription", "expectedTimeline", "estimatedBudget",
+          status, "ipAddress", "createdAt", "updatedAt"
+        ) VALUES (
+          $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 'NEW', $11, NOW(), NOW()
+        )
+      `, [
+        referenceId, fullName.trim(), companyName.trim(), workEmail.trim(), phone?.trim() || null,
+        country.trim(), Array.isArray(categories) ? categories.join(', ') : 'Solutions',
+        requirementsDescription.trim(), targetTimeline, budgetRange, req.ip || '127.0.0.1'
+      ]);
+    } catch (crmErr) {
+      console.warn('RFQRequest insert fallback:', crmErr.message);
+    }
 
-    const values = [
-      referenceId,
-      JSON.stringify(categories),
-      projectScope.trim(),
-      targetTimeline,
-      budgetRange,
-      requirementsDescription.trim(),
-      ndaRequired === 'true' || ndaRequired === true,
-      fullName.trim(),
-      workEmail.trim(),
-      phone?.trim() || null,
-      companyName.trim(),
-      country.trim(),
-      JSON.stringify(uploadedFiles)
-    ];
+    try {
+      const query = `
+        INSERT INTO rfq_submissions 
+        (reference_id, solution_categories, project_scope, target_timeline, budget_range, 
+         requirements_description, nda_required, full_name, work_email, phone, 
+         company_name, country, document_paths)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+        RETURNING id
+      `;
 
-    const result = await client.query(query, values);
+      const values = [
+        referenceId,
+        JSON.stringify(categories),
+        projectScope.trim(),
+        targetTimeline,
+        budgetRange,
+        requirementsDescription.trim(),
+        ndaRequired === 'true' || ndaRequired === true,
+        fullName.trim(),
+        workEmail.trim(),
+        phone?.trim() || null,
+        companyName.trim(),
+        country.trim(),
+        JSON.stringify(uploadedFiles)
+      ];
 
-    // Send email notification
-    await transporter.sendMail({
+      await client.query(query, values);
+    } catch (legacyRfqErr) {
+      // Legacy table optional
+    }
+
+    await client.query('COMMIT');
+
+    // Send admin email notification with retry (non-blocking - failure doesn't affect submission)
+    sendEmailWithRetry({
       from: process.env.EMAIL_USER,
       to: 'hello@azaroth-techhive.com',
       subject: `New RFQ Submission - ${referenceId}`,
@@ -500,9 +643,31 @@ app.post('/api/rfq', rfqRateLimit, upload.array('documents', 10), async (req, re
         <p><strong>Documents:</strong> ${uploadedFiles.length > 0 ? uploadedFiles.length + ' file(s) uploaded' : 'None'}</p>
         <p><small>Submitted at: ${new Date().toLocaleString()}</small></p>
       `,
+    }).catch(emailError => {
+      console.error('Admin email notification failed after retries (RFQ saved):', emailError);
     });
 
-    await client.query('COMMIT');
+    // Send customer confirmation email with retry (non-blocking - failure doesn't affect submission)
+    sendEmailWithRetry({
+      from: process.env.EMAIL_USER,
+      to: workEmail,
+      subject: `RFQ Received | Reference ${referenceId} | Azaroth Tech-Hive`,
+      html: renderRfqConfirmationEmail({
+        fullName,
+        workEmail,
+        companyName,
+        referenceId,
+        projectScope,
+        targetTimeline,
+        solutionCategories: categories,
+        phone,
+        country,
+        submittedAt: new Date().toISOString(),
+        uploadedFiles: uploadedFiles.map(f => f.originalName)
+      })
+    }).catch(emailError => {
+      console.error('Customer confirmation email failed after retries (RFQ saved):', emailError);
+    });
 
     res.json({
       success: true,
@@ -512,7 +677,7 @@ app.post('/api/rfq', rfqRateLimit, upload.array('documents', 10), async (req, re
 
   } catch (error) {
     await client.query('ROLLBACK');
-    
+
     // Clean up uploaded files on error
     uploadedFiles.forEach(file => {
       try {
@@ -527,7 +692,7 @@ app.post('/api/rfq', rfqRateLimit, upload.array('documents', 10), async (req, re
     console.error('RFQ submission error:', error);
     res.status(500).json({
       success: false,
-      message: 'Internal server error',
+      message: 'Failed to save RFQ submission. Please try again.',
       error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   } finally {

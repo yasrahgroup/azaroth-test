@@ -71,15 +71,15 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({
                 height: '2.5rem',
                 borderRadius: '50%',
                 backgroundColor: isCompleted 
-                  ? 'var(--color-link-main, #4338CA)' 
+                  ? 'var(--color-link-main, #18181B)' 
                   : isCurrent 
-                  ? 'var(--color-primary-button, #4F46E5)' 
+                  ? 'var(--color-primary-button, #18181B)' 
                   : '#ffffff',
                 border: isCurrent 
-                  ? '2px solid var(--color-primary-button, #4F46E5)' 
+                  ? '2px solid var(--color-brand-gold, #F59E0B)' 
                   : isCompleted 
-                  ? '2px solid var(--color-link-main, #4338CA)' 
-                  : '2px solid var(--color-border, #E0E7FF)',
+                  ? '2px solid var(--color-link-main, #18181B)' 
+                  : '2px solid var(--color-border, #E4E4E7)',
                 color: (isCompleted || isCurrent)
                   ? '#ffffff' 
                   : 'var(--color-text-muted, #6B7280)',
@@ -89,12 +89,12 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({
                 alignItems: 'center',
                 justifyContent: 'center',
                 background: isCurrent 
-                  ? 'linear-gradient(135deg, #4F46E5 0%, #4338CA 100%)' 
+                  ? 'linear-gradient(135deg, #18181B 0%, #27272A 100%)' 
                   : isCompleted 
-                  ? 'var(--color-link-main, #4338CA)' 
+                  ? 'var(--color-link-main, #18181B)' 
                   : '#ffffff',
                 boxShadow: isCurrent 
-                  ? '0 0 14px rgba(79, 70, 229, 0.4)' 
+                  ? '0 0 14px rgba(24, 24, 27, 0.35)' 
                   : 'var(--shadow-xs)',
                 transition: 'all 240ms ease-out',
               }}>
